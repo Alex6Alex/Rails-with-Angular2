@@ -1,0 +1,122 @@
+body{
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+
+/*header*/
+.header-wrap{
+  background: #14960F;
+  height: 150px;
+  //width: 1350px;
+}
+
+.header{
+  margin: 0 auto;
+  width: 1000px;
+  height: 150px;
+  position: relative;
+  background-color: #14960F;
+}
+
+/*logo*/
+.logo{
+  height: inherit;
+  width: 250px;
+  float: left;
+  margin: 0 auto;
+  display: inline;
+}
+
+.logo a{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 250px;
+  top: 30px;
+}
+
+.logo-img{
+  display: inline-block;
+  float: left;
+}
+
+.logo-text {
+  display: inline-block;
+  float: right;
+  font-size: 1.4em;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: bold;
+  line-height: 1;
+  text-decoration: none;
+}
+
+/*navbar-center*/
+.navigation{
+  margin: 0 auto;
+  width: 450px;
+  height: inherit;
+}
+
+.navigation>.contacts{
+  margin-top: 20px;
+  width: 240px;
+  color: #fff;
+  float: right;
+}
+
+.navigation>.contacts>span{
+  font-size: 1.2em;
+}
+
+.navigation>.contacts>.phone{
+  font-size: 1.4em;
+}
+
+.navbar-center{
+  position: absolute;
+  bottom: 0;
+}
+
+.navbar-center>li{
+  width: 150px;
+  text-align: center;
+  font-size: 1.1em;
+  height: 50px;
+}
+
+.navbar-center>li>a{
+  color: #fff;
+}
+
+.navbar-center>li>a:hover{
+  background-color: #14960F;
+}
+
+.navbar-center>li>a:visited{
+  background-color: #14960F;
+}
+
+/*if link selcted*/
+.navbar-center>.selectedLink>a{
+  color: #000;
+  background-color: #fff;
+  border-radius: 10px 10px 0 0;
+}
+
+.navbar-center>.selectedLink>a:hover{
+  background-color: #fff;
+}
+
+.navbar-center>.selectedLink>a:visited{
+  background-color: #fff;
+}
+
+/*div content*/
+.content{
+  width: 1000px;
+  margin: 0 auto;
+ }

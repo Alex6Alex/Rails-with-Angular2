@@ -1,0 +1,40 @@
+/*home divs*/
+ .description{
+ 	margin-top: 20px;
+	margin-bottom: 20px;
+ 	display: inline-block;
+ 	float: left;
+ 	width: 700px;
+ }
+
+ .description p{
+ 	color: #616161;
+ 	font-size: 1.1em;
+ }
+
+ .auth-fast{
+ 	margin-top: 20px;
+	margin-bottom: 20px;
+	margin-right: 20px;
+ 	display: inline-block;
+ 	float: right;
+ 	width: 260px;
+ 	background-color: #F7FBD5;
+
+ 	padding-left: 25px;
+ 	padding-right: 25px;
+ 	padding-bottom: 10px;
+
+ 	border-radius: 5px;
+ 	border: 1px solid #C2C798;
+ }
+
+ .auth-fast>.form-control{
+ 	margin-bottom: 15px;
+ }
+
+ .auth-fast>button{
+ 	width: 100%;
+ 	margin-bottom: 15px;
+ 	border-radius: 0px;
+ }

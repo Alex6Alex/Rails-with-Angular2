@@ -1,0 +1,36 @@
+<header>
+	<div class="header-wrap">
+		<div class="header">
+			<div class="logo">
+				<a routerLink="/home" routerLinkActive="active" (click)="setTitle('Справочная система аптек')">
+					<img class="logo-img" src="../pharmacy1.png">
+					<span class="logo-text">Справочная система аптек Севастополя</span>
+				</a>
+			</div>
+			<nav>
+				<div class="navigation">
+					<div class="contacts">
+						<span>Телефон справочной слубы:</span>
+						<span class="phone">8-800-555-35-35</span>
+					</div>
+					<ul class="nav navbar-nav navbar-center">
+					<li [class.selectedLink]="router.url === '/home'">
+					<a routerLink="/home" routerLinkActive="active" (click)="setTitle('Справочная система аптек')">Главная</a>
+					</li>
+						
+					<li [class.selectedLink]="router.url === '/medicines'">
+					<a routerLink="/medicines" routerLinkActive="active" (click)="setTitle('Поиск лекарств')">Поиск лекарств</a>
+					</li>
+
+					<li [class.selectedLink]="router.url === '/pharmacies'">
+					<a routerLink="/pharmacies" routerLinkActive="active" (click)="setTitle('Поиск аптек')">Поиск аптек</a>
+					</li>
+					</ul>	
+				</div>
+			</nav>
+		</div>
+	</div>
+</header>
+<div class="content">
+	<router-outlet></router-outlet>
+</div>
