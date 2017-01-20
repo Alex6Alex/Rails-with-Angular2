@@ -1,0 +1,19 @@
+<div class="new_user">
+	<form>
+		<label for="name">Логин</label>
+		<input type="text" class="form-control" id="name" required required [(ngModel)]="model.name" [ngModelOptions]="{standalone: true}"/>
+		<label for="email">Email</label>
+		<input type="email" class="form-control" id="email" required required [(ngModel)]="model.email" [ngModelOptions]="{standalone: true}"/>
+		<label for="password">Пароль</label>
+		<input type="password" class="form-control" id="password" required [(ngModel)]="model.password" [ngModelOptions]="{standalone: true}"/>
+		<label for="password_confirm">Потверждение пароля</label>
+		<input type="password" class="form-control" id="password_confirm" required required [(ngModel)]="model.password_confirm" [ngModelOptions]="{standalone: true}"/>
+		<button type="submit" class="btn btn-success">Зарегистрироваться</button>
+	</form>	
+</div>
+
+<div class="registr">
+	<h2>Регистрация</h2>
+        <p>Регистрация на данном сайте позволяет Вам оформлять заказы лекарств в аптеках.</p>
+        <p>Просмотреть заказы можно на персональной странице.</p>
+</div>

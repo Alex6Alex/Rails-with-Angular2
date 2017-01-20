@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :users
   resources :medicines
   resources :pharmacies
 	resources :static_pages

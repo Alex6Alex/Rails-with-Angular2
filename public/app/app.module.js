@@ -16,6 +16,7 @@ var app_component_1 = require('./app.component');
 var home_component_1 = require('./components/home/home.component');
 var pharmacies_component_1 = require('./components/pharmacies/pharmacies.component');
 var medicines_component_1 = require('./components/medicines/medicines.component');
+var registration_component_1 = require('./components/registration/registration.component');
 var app_routing_module_1 = require('./app-routing.module');
 var AppModule = (function () {
     function AppModule() {
@@ -32,7 +33,8 @@ var AppModule = (function () {
                 app_component_1.AppComponent,
                 home_component_1.HomeComponent,
                 pharmacies_component_1.PharmaciesComponent,
-                medicines_component_1.MedicinesComponent
+                medicines_component_1.MedicinesComponent,
+                registration_component_1.RegistrationComponent
             ],
             bootstrap: [app_component_1.AppComponent]
         }), 
