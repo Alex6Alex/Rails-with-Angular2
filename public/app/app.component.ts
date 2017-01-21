@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
 import { HomeService } from './services/home.service';
+import { SessionService } from './services/session.service';
 
 @Component({
 	moduleId: module.id,
@@ -10,7 +11,7 @@ import { HomeService } from './services/home.service';
   	encapsulation: ViewEncapsulation.None,
   	templateUrl: 'app.component.html',
   	styleUrls: ['../styles.css'],
-  	providers: [ HomeService ]
+  	providers: [ HomeService, SessionService ]
 })
 
 export class AppComponent {

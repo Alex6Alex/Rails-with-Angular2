@@ -12,6 +12,7 @@ var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
 var platform_browser_1 = require('@angular/platform-browser');
 var home_service_1 = require('./services/home.service');
+var session_service_1 = require('./services/session.service');
 var AppComponent = (function () {
     //router: Router;
     function AppComponent(router, titleService) {
@@ -30,7 +31,7 @@ var AppComponent = (function () {
             encapsulation: core_1.ViewEncapsulation.None,
             templateUrl: 'app.component.html',
             styleUrls: ['../styles.css'],
-            providers: [home_service_1.HomeService]
+            providers: [home_service_1.HomeService, session_service_1.SessionService]
         }), 
         __metadata('design:paramtypes', [router_1.Router, platform_browser_1.Title])
     ], AppComponent);

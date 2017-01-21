@@ -10,10 +10,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var user_1 = require('../../models/user');
+var session_service_1 = require('../../services/session.service');
 var RegistrationComponent = (function () {
-    function RegistrationComponent() {
+    function RegistrationComponent(sessionService) {
+        this.sessionService = sessionService;
         this.model = new user_1.User("", "", "", "");
+        this.email_valid = false;
+        this.pattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$";
     }
+    RegistrationComponent.prototype.newUser = function () {
+        this.sessionService.newUser(this.model).subscribe(function (data) {
+            alert(data);
+        }, function (error) {
+            console.log(JSON.stringify(error.json()));
+        });
+    };
+    RegistrationComponent.prototype.onSubmit = function () {
+        this.newUser();
+    };
     RegistrationComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
@@ -21,7 +35,7 @@ var RegistrationComponent = (function () {
             templateUrl: 'registration.component.html',
             styleUrls: ['registration.css']
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [session_service_1.SessionService])
     ], RegistrationComponent);
     return RegistrationComponent;
 }());
