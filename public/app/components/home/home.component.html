@@ -8,10 +8,12 @@
     </div>
     <div class="auth-fast">
         <h3>Войти на сайт</h3>
-        <span>Email</span>
-        <input type="text" class="form-control"/>
-        <span>Пароль</span>
-        <input type="text" class="form-control"/>
-        <button class="btn btn-success">Войти</button>
-        <button class="btn btn-primary" routerLink="/users/new" routerLinkActive="active">Регистрация</button>
+        <form>
+            <label>Email</label>
+            <input type="email" class="form-control" maxlength="30" required/>
+            <label>Пароль</label>
+            <input type="password" class="form-control" maxlength="50" required/>
+            <button type="submit" class="btn btn-success">Войти</button>
+        </form>
+        <button class="btn btn-primary" routerLink="/signup" routerLinkActive="active">Регистрация</button>
     </div>

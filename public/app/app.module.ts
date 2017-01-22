@@ -8,6 +8,7 @@ import { HomeComponent } from './components/home/home.component';
 import { PharmaciesComponent } from './components/pharmacies/pharmacies.component';
 import { MedicinesComponent } from './components/medicines/medicines.component';
 import { RegistrationComponent } from './components/registration/registration.component';
+import { AccountComponent} from './components/account/account.component';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -23,7 +24,8 @@ import { AppRoutingModule } from './app-routing.module';
   	HomeComponent,
     PharmaciesComponent,
     MedicinesComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    AccountComponent
   ],
   bootstrap: [ AppComponent ]
 })

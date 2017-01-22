@@ -15,8 +15,8 @@ var HomeService = (function () {
     function HomeService(http) {
         this.http = http;
     }
-    HomeService.prototype.getData = function () {
-        return this.http.get('/home.json')
+    HomeService.prototype.getData = function (path) {
+        return this.http.get(path + '.json')
             .map(function (res) { return res.json(); });
     };
     HomeService.prototype.getDates = function () {

@@ -29,12 +29,16 @@
  	border: 1px solid #C2C798;
  }
 
- .auth-fast>.form-control{
+ .auth-fast>form>.form-control{
  	margin-bottom: 15px;
  }
 
- .auth-fast>button{
+ .auth-fast>button, .auth-fast>form>button{
  	width: 100%;
  	margin-bottom: 15px;
  	border-radius: 0px;
+ }
+
+ .auth-fast>form>label{
+ 	font-weight: normal;
  }

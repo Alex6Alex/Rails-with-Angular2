@@ -16,12 +16,12 @@ export class HomeComponent implements OnInit {
 	}
 
 	getData(): void{
-		this.homeService.getData().subscribe(data => {
-			this.title = data;
-		});
+		//this.homeService.getData().subscribe(data => {
+		//	this.title = data;
+		//});
 	}
 
 	ngOnInit(): void{
-		this.getData();
+		//this.getData();
 	}
 }

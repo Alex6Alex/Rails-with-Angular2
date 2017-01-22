@@ -24,7 +24,7 @@ var SessionService = (function () {
             password: user.password,
             password_confirmation: user.password_confirmation
         });
-        return this.http.post('/users', body, options);
+        return this.http.post('/users.json', body, options).map(function (res) { return res.json(); });
     };
     SessionService = __decorate([
         core_1.Injectable(), 

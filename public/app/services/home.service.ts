@@ -6,8 +6,8 @@ import 'rxjs/add/operator/map';
 export class HomeService{
 	constructor(private http: Http){}
 
-	getData(){
-		return this.http.get('/home.json')
+	getData(path: string){
+		return this.http.get(path + '.json')
 			.map(res => res.json());
 	}	
 

@@ -19,6 +19,6 @@ export class SessionService{
 			password_confirmation: user.password_confirmation
     	});
 
-    	return this.http.post('/users', body, options);
+    	return this.http.post('/users.json', body, options).map(res => res.json());
 	}
 }

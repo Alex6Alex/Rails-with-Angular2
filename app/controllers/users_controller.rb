@@ -6,6 +6,10 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     @users = User.all
+    respond_to do |format|
+      format.html { render 'layouts/application' }
+      format.json { render :json => @users.to_json()}
+    end
   end
 
   # GET /users/1
@@ -32,10 +36,9 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.save
         format.html { render 'layouts/application' } #, notice: 'User was successfully created.' }
-        format.json { render :json => 'qwert'.to_json() }
-      #else
-        #format.html { render :new }
-        #format.json { render json: @user.errors, status: :unprocessable_entity }
+        format.json { render :json => @user.to_json() }
+      else
+        format.json { render json: @user.errors.to_json(), status: :unprocessable_entity }
       end
     end
   end
