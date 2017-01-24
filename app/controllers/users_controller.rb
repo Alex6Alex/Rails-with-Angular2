@@ -35,6 +35,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     respond_to do |format|
       if @user.save
+        sign_in @user
         format.html { render 'layouts/application' } #, notice: 'User was successfully created.' }
         format.json { render :json => @user.to_json() }
       else

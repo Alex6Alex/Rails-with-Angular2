@@ -21,4 +21,20 @@ export class SessionService{
 
     	return this.http.post('/users.json', body, options).map(res => res.json());
 	}
+
+	signIn(sessionData){
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({headers: headers});
+		let body = JSON.stringify(sessionData);
+
+		return this.http.post('/sessions.json', body, options).map(res => res.json());
+	}
+
+	sign_in(){
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({headers: headers});
+		let body = "";
+
+		return this.http.post('/signstate.json', body, options).map(res => res.json());
+	}
 }

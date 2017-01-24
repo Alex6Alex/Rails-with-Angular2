@@ -26,6 +26,18 @@ var SessionService = (function () {
         });
         return this.http.post('/users.json', body, options).map(function (res) { return res.json(); });
     };
+    SessionService.prototype.signIn = function (sessionData) {
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        var body = JSON.stringify(sessionData);
+        return this.http.post('/sessions.json', body, options).map(function (res) { return res.json(); });
+    };
+    SessionService.prototype.sign_in = function () {
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        var body = "";
+        return this.http.post('/signstate.json', body, options).map(function (res) { return res.json(); });
+    };
     SessionService = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [http_1.Http])

@@ -14,15 +14,28 @@ import { SessionService } from './services/session.service';
   	providers: [ HomeService, SessionService ]
 })
 
-export class AppComponent {
-	selectedLink: string;
-	//router: Router;
+export class AppComponent implements OnInit {
 
-	constructor(private router: Router, private titleService: Title){
-		//this.router = _router;
-	}
+	sign: false;
+
+	constructor(private router: Router, private titleService: Title,
+		private sessionService: SessionService){}
 
 	setTitle(title: string){
 		this.titleService.setTitle(title);
 	};
+
+	ngOnInit(): void{
+		this.sign_in();
+	}
+
+	sign_in(): void{
+		this.sessionService.sign_in().subscribe(data => {
+			this.sign = data;
+			console.log(data);
+		},
+		error => {
+			console.log(JSON.stringify(error.json()));
+		});
+	}
 }

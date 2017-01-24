@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
-import { HomeService } from '../../services/home.service';
+import { SessionService } from '../../services/session.service';
 
 @Component({
 	moduleId: module.id,
@@ -9,19 +9,28 @@ import { HomeService } from '../../services/home.service';
 	styleUrls: ['home.css']
 })
 
-export class HomeComponent implements OnInit { 
+export class HomeComponent { 
 	title: string;
 
-	constructor(private homeService: HomeService){
+	session = {email: "", password: ""};
+
+	pattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$";
+
+	errorLog = false;
+
+	constructor(private sessionService: SessionService){}
+
+	onSubmit(): void{
+		this.signIn();
 	}
 
-	getData(): void{
-		//this.homeService.getData().subscribe(data => {
-		//	this.title = data;
-		//});
-	}
-
-	ngOnInit(): void{
-		//this.getData();
+	signIn(): void{
+		this.sessionService.signIn(this.session).subscribe(data => {
+			console.log(data)
+		}, 
+		error => {
+			this.errorLog = true;
+			console.log(this.errorLog);
+		});
 	}
 }

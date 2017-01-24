@@ -10,10 +10,16 @@
         <h3>Войти на сайт</h3>
         <form>
             <label>Email</label>
-            <input type="email" class="form-control" maxlength="30" required/>
+            <input type="email" maxlength="30" class="form-control" id="email" required [(ngModel)]="session.email" name="email" [pattern]="pattern" #email="ngModel"/>
+
             <label>Пароль</label>
-            <input type="password" class="form-control" maxlength="50" required/>
-            <button type="submit" class="btn btn-success">Войти</button>
+            <input type="password" minlength="6" maxlength="50" class="form-control" id="password" required [(ngModel)]="session.password" name="password" #password="ngModel"/>
+
+            <div *ngIf="errorLog" class="alert alert-danger">
+            Неверный email или пароль
+            </div>
+            <button type="submit" (click)="onSubmit()" class="btn btn-success">Войти</button>
+
         </form>
         <button class="btn btn-primary" routerLink="/signup" routerLinkActive="active">Регистрация</button>
     </div>

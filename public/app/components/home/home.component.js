@@ -9,18 +9,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var home_service_1 = require('../../services/home.service');
+var session_service_1 = require('../../services/session.service');
 var HomeComponent = (function () {
-    function HomeComponent(homeService) {
-        this.homeService = homeService;
+    function HomeComponent(sessionService) {
+        this.sessionService = sessionService;
+        this.session = { email: "", password: "" };
+        this.pattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$";
+        this.errorLog = false;
     }
-    HomeComponent.prototype.getData = function () {
-        //this.homeService.getData().subscribe(data => {
-        //	this.title = data;
-        //});
+    HomeComponent.prototype.onSubmit = function () {
+        this.signIn();
     };
-    HomeComponent.prototype.ngOnInit = function () {
-        //this.getData();
+    HomeComponent.prototype.signIn = function () {
+        var _this = this;
+        this.sessionService.signIn(this.session).subscribe(function (data) {
+            console.log(data);
+        }, function (error) {
+            _this.errorLog = true;
+            console.log(_this.errorLog);
+        });
     };
     HomeComponent = __decorate([
         core_1.Component({
@@ -29,7 +36,7 @@ var HomeComponent = (function () {
             templateUrl: 'home.component.html',
             styleUrls: ['home.css']
         }), 
-        __metadata('design:paramtypes', [home_service_1.HomeService])
+        __metadata('design:paramtypes', [session_service_1.SessionService])
     ], HomeComponent);
     return HomeComponent;
 }());

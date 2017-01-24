@@ -14,16 +14,27 @@ var platform_browser_1 = require('@angular/platform-browser');
 var home_service_1 = require('./services/home.service');
 var session_service_1 = require('./services/session.service');
 var AppComponent = (function () {
-    //router: Router;
-    function AppComponent(router, titleService) {
+    function AppComponent(router, titleService, sessionService) {
         this.router = router;
         this.titleService = titleService;
-        //this.router = _router;
+        this.sessionService = sessionService;
     }
     AppComponent.prototype.setTitle = function (title) {
         this.titleService.setTitle(title);
     };
     ;
+    AppComponent.prototype.ngOnInit = function () {
+        this.sign_in();
+    };
+    AppComponent.prototype.sign_in = function () {
+        var _this = this;
+        this.sessionService.sign_in().subscribe(function (data) {
+            _this.sign = data;
+            console.log(data);
+        }, function (error) {
+            console.log(JSON.stringify(error.json()));
+        });
+    };
     AppComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
@@ -33,7 +44,7 @@ var AppComponent = (function () {
             styleUrls: ['../styles.css'],
             providers: [home_service_1.HomeService, session_service_1.SessionService]
         }), 
-        __metadata('design:paramtypes', [router_1.Router, platform_browser_1.Title])
+        __metadata('design:paramtypes', [router_1.Router, platform_browser_1.Title, session_service_1.SessionService])
     ], AppComponent);
     return AppComponent;
 }());
