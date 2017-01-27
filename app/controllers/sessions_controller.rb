@@ -1,5 +1,4 @@
 class SessionsController < ApplicationController
-	protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
 	exclude_xsrf_token_cookie
 
 	def new
