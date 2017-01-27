@@ -1,7 +1,11 @@
 body{
   margin: 0;
   padding: 0;
-  display: block;
+  display: block; 
+}
+
+::-webkit-scrollbar { 
+    display: none; 
 }
 
 /*header*/
@@ -28,7 +32,7 @@ body{
   display: inline;
 }
 
-.logo a{
+.logo>a{
   position: absolute;
   top: 0;
   left: 0;
@@ -93,7 +97,7 @@ body{
 }
 
 .navbar-center>li>a:hover{
-  background-color: #14960F;
+  background-color: transparent;
 }
 
 .navbar-center>li>a:visited{
@@ -125,27 +129,45 @@ body{
 .login{
   float: right;
   width: 250px;
+  margin: 0 auto;
+  display: inline;
 }
 
-.user-icon{
-  width: 40px;
-  height: 40px;
+.icon{
+  width: 30px;
+  height: 30px;
   background-color: #fff;
 
   display: table-cell;
 
 }
 
-.user-header{
+.login>.login-header{
   margin-top: 15px;
   margin-bottom: 15px;
   height: 40px;
   display: table;
   border-collapse: separate;
   border-spacing: 5px;
+
+  position: absolute;
+  width: 250px;
+  top: 30px;
 }
 
-.user-header>h3{
+.login-header>p{
   display: table-cell;
   vertical-align: middle;
+  color: #fff;
+  font-size: 1.2em;
+}
+
+.login-registr{
+  color: #fff;
+  font-size: 1.2em;
+}
+
+.login-registr>a{
+  color: #fff;
+  text-decoration: none;
 }

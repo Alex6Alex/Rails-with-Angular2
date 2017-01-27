@@ -1,16 +1,56 @@
 .search{
 	margin-top: 20px;
+	margin-bottom: 20px;
 }
-
-
-
+/*форма поиска*/
 .search>form>.input-group>.form-control{
 	font-size: 1.6em;
 	height: 40px;
-	display: inline-block;
 }
 
-.search>form>.input-group>span>button{
-	width: 100%;
-	height: 100%;
+.search>form>.input-group>span{
+	position: static;
+	cursor: pointer;
+
+	background-color: #fff;
+	border-right: none;
+}
+/*раойн*/
+.area{
+	margin-top: 15px;
+	border-bottom: 1px solid #eaeaea;
+}
+
+.area-title{
+	display: inline-block;
+	margin-left: 20px;
+	width: 80px;
+}
+
+.area-title>p{
+	font-size: 1.2em;
+	color: #555;
+}
+/*список районов*/
+.area-list{
+	width: 800px;
+	display: inline-block;
+	margin-left: 10px;
+}
+
+.area-list>p{
+	font-size: 1.1em;
+	display: inline-block;
+	margin-right: 10px;
+	cursor: pointer;
+}
+
+.area-list>.select{
+	color: red;
+}
+
+/*yandex map*/
+.ymap{
+	width: 450px;
+	height: 550px;
 }

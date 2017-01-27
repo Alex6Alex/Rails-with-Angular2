@@ -11,7 +11,8 @@
 				<div class="navigation">
 					<div class="contacts">
 						<span>Телефон справочной слубы:</span>
-						<span class="glyphicon glyphicon-earphone phone">8-800-555-35-35</span>
+						<span class="glyphicon glyphicon-earphone"></span>
+						<span class="phone">8-800-555-35-35</span>
 					</div>
 					<ul class="nav navbar-nav navbar-center">
 					<li [class.selectedLink]="router.url === '/home'">
@@ -28,10 +29,16 @@
 					</ul>	
 				</div>
 			</nav>
-			<div *ngIf="sign" class="login">
-				<div class="user-header">
-            		<div class="user-icon"></div>
-            		<h3>{{user_name}}</h3>
+			<div class="login">
+				<div *ngIf="sign" class="login-header">
+            		<div class="icon"></div>
+            		<p>{{user_name}}</p>
+        		</div>
+        		<div *ngIf="!sign" class="login-registr">
+        			<span class="glyphicon glyphicon-log-in"></span>
+        			<a routerLink="/home" routerLinkActive="active" (click)="setTitle('Справочная система аптек')">Вход</a>
+        			<span class="glyphicon glyphicon-user"></span>
+        			<a routerLink="/signup" routerLinkActive="active" (click)="setTitle('Справочная система аптек')">Регистрация</a>
         		</div>
 			</div>
 		</div>
