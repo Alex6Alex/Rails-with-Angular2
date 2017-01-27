@@ -2,7 +2,6 @@ class StaticPagesController < ApplicationController
   prepend_view_path(Rails.root.join('public'))
 
   def home
-  	#render 'layouts/application'
   	respond_to do |format|
   		format.html { render 'layouts/application' }
       format.json { render :json => 'qwert'.to_json() }

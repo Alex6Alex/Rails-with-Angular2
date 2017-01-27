@@ -14,19 +14,41 @@ var HomeComponent = (function () {
     function HomeComponent(sessionService) {
         this.sessionService = sessionService;
         this.session = { email: "", password: "" };
+        this.sign = false;
+        this.user_name = "";
         this.pattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$";
         this.errorLog = false;
     }
+    HomeComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.sessionService.sign_in().subscribe(function (data) {
+            if (data.sign) {
+                _this.sign = data.sign;
+                _this.user_id = data.user.id;
+                _this.user_name = data.user.name;
+            }
+        });
+    };
     HomeComponent.prototype.onSubmit = function () {
         this.signIn();
     };
     HomeComponent.prototype.signIn = function () {
         var _this = this;
         this.sessionService.signIn(this.session).subscribe(function (data) {
-            console.log(data);
+            _this.sign = true;
+            _this.errorLog = false;
+            _this.user_id = data.id;
+            _this.user_name = data.name;
         }, function (error) {
             _this.errorLog = true;
-            console.log(_this.errorLog);
+            console.log(JSON.stringify(error.json()));
+        });
+    };
+    HomeComponent.prototype.logOut = function () {
+        var _this = this;
+        this.sessionService.logOut(this.user_id).subscribe(function (data) {
+            _this.sign = false;
+            console.log(data);
         });
     };
     HomeComponent = __decorate([

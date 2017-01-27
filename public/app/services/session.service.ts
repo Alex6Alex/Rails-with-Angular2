@@ -1,12 +1,13 @@
-import { Headers, RequestOptions, Response, Http } from '@angular/http';
+import { Headers, RequestOptions, Response, Http, Jsonp } from '@angular/http';
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/toPromise';
 
 import { User } from '../models/user';
 
 @Injectable()
 export class SessionService{
-	constructor(private http: Http){}
+	constructor(private http: Http, private jsonp: Jsonp){}
 
 	newUser(user: User){
 
@@ -28,6 +29,10 @@ export class SessionService{
 		let body = JSON.stringify(sessionData);
 
 		return this.http.post('/sessions.json', body, options).map(res => res.json());
+	}
+
+	logOut(id: number){
+		return this.http.delete('/sessions/'+ id +'.json').map(res => res.json());
 	}
 
 	sign_in(){

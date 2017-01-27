@@ -119,4 +119,33 @@ body{
 .content{
   width: 1000px;
   margin: 0 auto;
- }
+}
+
+ /*user info*/
+.login{
+  float: right;
+  width: 250px;
+}
+
+.user-icon{
+  width: 40px;
+  height: 40px;
+  background-color: #fff;
+
+  display: table-cell;
+
+}
+
+.user-header{
+  margin-top: 15px;
+  margin-bottom: 15px;
+  height: 40px;
+  display: table;
+  border-collapse: separate;
+  border-spacing: 5px;
+}
+
+.user-header>h3{
+  display: table-cell;
+  vertical-align: middle;
+}

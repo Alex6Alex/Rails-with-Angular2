@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
 	protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
+	exclude_xsrf_token_cookie
 
 	def new
 		puts sign_state
@@ -13,19 +14,24 @@ class SessionsController < ApplicationController
 				format.html { render 'layouts/application' }
 				format.json { render json: user.to_json() }
 			else
-				format.json { render json: "error".to_json(), status: :unprocessable_entity }
+				format.json { render json: "Invalid email or password".to_json(), status: :unprocessable_entity }
 			end
 		end
 	end
 
-	def delete
+	def destroy
 		sign_out
+		respond_to do |format|
+			format.html { render 'layouts/application' }
+			format.json { render json: signed_in?.to_json() }
+		end
 	end
 
 	def sign_state
 		respond_to do |format|
+			json_data = { 'sign' => signed_in?, 'user' => current_user }
 			format.html { render 'layouts/application' }
-			format.json { render json: signed_in?.to_json() }
+			format.json { render json: json_data.to_json() }
 		end
 	end
 

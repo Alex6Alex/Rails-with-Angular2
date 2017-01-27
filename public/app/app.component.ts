@@ -16,7 +16,9 @@ import { SessionService } from './services/session.service';
 
 export class AppComponent implements OnInit {
 
-	sign: false;
+	sign: boolean;
+	id: number;
+	user_name: string;
 
 	constructor(private router: Router, private titleService: Title,
 		private sessionService: SessionService){}
@@ -31,11 +33,18 @@ export class AppComponent implements OnInit {
 
 	sign_in(): void{
 		this.sessionService.sign_in().subscribe(data => {
+			if(data.sign){
+				this.sign = data.sign;
+				this.id = data.user.id;
+				this.user_name = data.user.name;
+			}
+		});
+	}
+
+	logOut(): void{
+		this.sessionService.logOut(this.id).subscribe(data => {
 			this.sign = data;
 			console.log(data);
-		},
-		error => {
-			console.log(JSON.stringify(error.json()));
 		});
 	}
 }

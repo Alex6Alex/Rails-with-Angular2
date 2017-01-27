@@ -12,7 +12,7 @@
  	font-size: 1.1em;
  }
 
- .auth-fast{
+ .auth-fast, .auth-user{
  	margin-top: 20px;
 	margin-bottom: 20px;
 	margin-right: 20px;
@@ -41,4 +41,21 @@
 
  .auth-fast>form>label{
  	font-weight: normal;
+ }
+
+ 
+
+ .user-item{
+ 	margin-bottom: 5px;
+ }
+
+ .user-link{
+ 	text-decoration: none;
+ 	font-size: 1.1em;
+ 	color: #000;
+ }
+
+ .auth-user>div>button{
+ 	margin-top: 15px;
+ 	float: left;
  }

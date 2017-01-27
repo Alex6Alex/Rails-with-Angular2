@@ -29,10 +29,18 @@ var AppComponent = (function () {
     AppComponent.prototype.sign_in = function () {
         var _this = this;
         this.sessionService.sign_in().subscribe(function (data) {
+            if (data.sign) {
+                _this.sign = data.sign;
+                _this.id = data.user.id;
+                _this.user_name = data.user.name;
+            }
+        });
+    };
+    AppComponent.prototype.logOut = function () {
+        var _this = this;
+        this.sessionService.logOut(this.id).subscribe(function (data) {
             _this.sign = data;
             console.log(data);
-        }, function (error) {
-            console.log(JSON.stringify(error.json()));
         });
     };
     AppComponent = __decorate([

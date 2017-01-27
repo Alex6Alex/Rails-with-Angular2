@@ -11,9 +11,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var http_1 = require('@angular/http');
 var core_1 = require('@angular/core');
 require('rxjs/add/operator/map');
+require('rxjs/add/operator/toPromise');
 var SessionService = (function () {
-    function SessionService(http) {
+    function SessionService(http, jsonp) {
         this.http = http;
+        this.jsonp = jsonp;
     }
     SessionService.prototype.newUser = function (user) {
         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
@@ -32,6 +34,9 @@ var SessionService = (function () {
         var body = JSON.stringify(sessionData);
         return this.http.post('/sessions.json', body, options).map(function (res) { return res.json(); });
     };
+    SessionService.prototype.logOut = function (id) {
+        return this.http.delete('/sessions/' + id + '.json').map(function (res) { return res.json(); });
+    };
     SessionService.prototype.sign_in = function () {
         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         var options = new http_1.RequestOptions({ headers: headers });
@@ -40,7 +45,7 @@ var SessionService = (function () {
     };
     SessionService = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [http_1.Http])
+        __metadata('design:paramtypes', [http_1.Http, http_1.Jsonp])
     ], SessionService);
     return SessionService;
 }());
