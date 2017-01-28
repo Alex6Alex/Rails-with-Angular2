@@ -10,8 +10,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var PharmaciesComponent = (function () {
-    function PharmaciesComponent() {
+    function PharmaciesComponent(elementRef) {
+        this.elementRef = elementRef;
     }
+    PharmaciesComponent.prototype.ngAfterViewInit = function () {
+        var ymaps = document.createElement("script");
+        ymaps.type = "text/javascript";
+        ymaps.src = "ymaps.js";
+        this.elementRef.nativeElement.appendChild(ymaps);
+        /*ymaps.ready().then(() => {
+            let myMap = new ymaps.Map("mymap", {
+                center: [55.76, 37.64],
+                zoom: 7
+            });
+
+            let myPlacemark = new ymaps.Placemark([55.76, 37.64], {
+                hintContent: 'Москва!',
+                balloonContent: 'Столица России'
+            });
+        });*/
+    };
     PharmaciesComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
@@ -19,7 +37,7 @@ var PharmaciesComponent = (function () {
             templateUrl: 'pharmacies.component.html',
             styleUrls: ['pharmacies.css']
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [core_1.ElementRef])
     ], PharmaciesComponent);
     return PharmaciesComponent;
 }());
