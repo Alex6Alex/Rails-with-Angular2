@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Справочная система аптек</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="./bower_component/bootstrap/dist/css/bootstrap.css">
+    <!-- 1. Load libraries <link rel="stylesheet" href="styles.css">-->
+    <!-- Polyfill for older browsers -->
+    <script src="assets/core-js/client/shim.min.js"></script>
+
+    <script src="assets/zone.js/dist/zone.js"></script>
+    <script src="assets/reflect-metadata/Reflect.js"></script>
+    <script src="assets/systemjs/dist/system.src.js"></script>
+
+    <!-- 2. Configure SystemJS -->
+    <script src="systemjs.config.js"></script>
+    <script>
+        System.import('app').catch(function (err) {
+            console.error(err);
+        })
+    </script>
+
+    <script src="https://api-maps.yandex.ru/2.1/?lang=tr_TR" type="text/javascript"></script>
+    <script type="text/javascript">
+        ymaps.ready(init);
+        var myMap, 
+            myPlacemark;
+
+        function init(){ 
+            myMap = new ymaps.Map("mymap", {
+                center: [55.76, 37.64],
+                zoom: 7
+            }); 
+            
+            myPlacemark = new ymaps.Placemark([55.76, 37.64], {
+                hintContent: 'Москва!',
+                balloonContent: 'Столица России'
+            });
+            
+            myMap.geoObjects.add(myPlacemark);
+        }
+    </script>
+
+</head>
+<body>
+<!-- 3. Display the application -->
+    <my-app></my-app>
+</body>
+</html>
