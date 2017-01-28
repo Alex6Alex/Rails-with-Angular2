@@ -2,12 +2,15 @@ import { Headers, RequestOptions, Response, Http, Jsonp } from '@angular/http';
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { User } from '../models/user';
 
 @Injectable()
 export class SessionService{
 	constructor(private http: Http, private jsonp: Jsonp){}
+
+	changes = new BehaviorSubject(false);
 
 	newUser(user: User){
 

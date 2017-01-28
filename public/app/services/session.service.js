@@ -12,10 +12,12 @@ var http_1 = require('@angular/http');
 var core_1 = require('@angular/core');
 require('rxjs/add/operator/map');
 require('rxjs/add/operator/toPromise');
+var BehaviorSubject_1 = require('rxjs/BehaviorSubject');
 var SessionService = (function () {
     function SessionService(http, jsonp) {
         this.http = http;
         this.jsonp = jsonp;
+        this.changes = new BehaviorSubject_1.BehaviorSubject(false);
     }
     SessionService.prototype.newUser = function (user) {
         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });

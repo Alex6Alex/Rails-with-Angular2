@@ -15,9 +15,7 @@ export class HomeComponent implements OnInit {
 	sign = false;
 	user_id: number;
 	user_name: string = "";
-
 	pattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$";
-
 	errorLog = false;
 
 	constructor(private sessionService: SessionService){}
@@ -25,6 +23,7 @@ export class HomeComponent implements OnInit {
 	ngOnInit(): void{
 		this.sessionService.sign_in().subscribe(data => {
 			if(data.sign){
+				this.onLogin(true);
 				this.sign = data.sign;
 				this.user_id = data.user.id;
 				this.user_name = data.user.name;
@@ -36,9 +35,14 @@ export class HomeComponent implements OnInit {
 		this.signIn();
 	}
 
+	onLogin(value: boolean){
+		this.sessionService.changes.next(value);
+	}
+
 	signIn(): void{
 		this.sessionService.signIn(this.session).subscribe(data => {
 			this.sign = true;
+			this.onLogin(true);
 			this.errorLog = false;
 			this.user_id = data.id;
 			this.user_name = data.name;
@@ -52,6 +56,7 @@ export class HomeComponent implements OnInit {
 	logOut(): void{
 		this.sessionService.logOut(this.user_id).subscribe(data => {
 			this.sign = false;
+			this.onLogin(false);
 			console.log(data);
 		});
 	}

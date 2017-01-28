@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
 import { HomeService } from './services/home.service';
 import { SessionService } from './services/session.service';
+import { HomeComponent } from './components/home/home.component';
 
 @Component({
 	moduleId: module.id,
@@ -14,9 +15,9 @@ import { SessionService } from './services/session.service';
   	providers: [ HomeService, SessionService ]
 })
 
-export class AppComponent implements OnInit {
+export class AppComponent implements AfterViewInit {
 
-	sign: boolean;
+	sign = false;
 	id: number;
 	user_name: string;
 
@@ -27,8 +28,16 @@ export class AppComponent implements OnInit {
 		this.titleService.setTitle(title);
 	};
 
-	ngOnInit(): void{
+	/*ngOnInit(): void{
 		this.sign_in();
+	}*/
+
+	ngAfterViewInit(){
+		this.onLogin();
+	}
+
+	onLogin(){
+		this.sessionService.changes.subscribe(status => this.sign = status);
 	}
 
 	sign_in(): void{

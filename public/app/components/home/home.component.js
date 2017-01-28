@@ -23,6 +23,7 @@ var HomeComponent = (function () {
         var _this = this;
         this.sessionService.sign_in().subscribe(function (data) {
             if (data.sign) {
+                _this.onLogin(true);
                 _this.sign = data.sign;
                 _this.user_id = data.user.id;
                 _this.user_name = data.user.name;
@@ -32,10 +33,14 @@ var HomeComponent = (function () {
     HomeComponent.prototype.onSubmit = function () {
         this.signIn();
     };
+    HomeComponent.prototype.onLogin = function (value) {
+        this.sessionService.changes.next(value);
+    };
     HomeComponent.prototype.signIn = function () {
         var _this = this;
         this.sessionService.signIn(this.session).subscribe(function (data) {
             _this.sign = true;
+            _this.onLogin(true);
             _this.errorLog = false;
             _this.user_id = data.id;
             _this.user_name = data.name;
@@ -48,6 +53,7 @@ var HomeComponent = (function () {
         var _this = this;
         this.sessionService.logOut(this.user_id).subscribe(function (data) {
             _this.sign = false;
+            _this.onLogin(false);
             console.log(data);
         });
     };

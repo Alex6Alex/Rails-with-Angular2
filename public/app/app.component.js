@@ -18,13 +18,21 @@ var AppComponent = (function () {
         this.router = router;
         this.titleService = titleService;
         this.sessionService = sessionService;
+        this.sign = false;
     }
     AppComponent.prototype.setTitle = function (title) {
         this.titleService.setTitle(title);
     };
     ;
-    AppComponent.prototype.ngOnInit = function () {
+    /*ngOnInit(): void{
         this.sign_in();
+    }*/
+    AppComponent.prototype.ngAfterViewInit = function () {
+        this.onLogin();
+    };
+    AppComponent.prototype.onLogin = function () {
+        var _this = this;
+        this.sessionService.changes.subscribe(function (status) { return _this.sign = status; });
     };
     AppComponent.prototype.sign_in = function () {
         var _this = this;
