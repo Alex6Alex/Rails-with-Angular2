@@ -10,10 +10,13 @@ import { HomeService } from '../../services/home.service';
 })
 
 export class PharmaciesComponent implements AfterViewInit {
+	//change class for selected area
+	area = 0;
 
 	constructor(private elementRef: ElementRef){}
 
 	ngAfterViewInit(): void{
+		/*ymaps initialzation*/
 		let ymaps = document.createElement("script");
 		ymaps.type = "text/javascript";
 		ymaps.src = "ymaps.js";
@@ -30,5 +33,4 @@ export class PharmaciesComponent implements AfterViewInit {
 		    });
 		});*/
 	}
-
 }

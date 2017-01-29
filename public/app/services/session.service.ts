@@ -10,10 +10,11 @@ import { User } from '../models/user';
 export class SessionService{
 	constructor(private http: Http, private jsonp: Jsonp){}
 
-	changes = new BehaviorSubject(false);
+	//for update header wher user sign in
+	signInState = new BehaviorSubject(false);
 
+	//registrate new user
 	newUser(user: User){
-
 		let headers = new Headers({ 'Content-Type': 'application/json' });
     	let options = new RequestOptions({ headers: headers });
     	let body = JSON.stringify({
@@ -26,6 +27,7 @@ export class SessionService{
     	return this.http.post('/users.json', body, options).map(res => res.json());
 	}
 
+	//sign in function for registrated user
 	signIn(sessionData){
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({headers: headers});
@@ -34,11 +36,12 @@ export class SessionService{
 		return this.http.post('/sessions.json', body, options).map(res => res.json());
 	}
 
+	//exit from service
 	logOut(id: number){
 		return this.http.delete('/sessions/'+ id +'.json').map(res => res.json());
 	}
 
-	sign_in(){
+	isSignIn(){
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({headers: headers});
 		let body = "";

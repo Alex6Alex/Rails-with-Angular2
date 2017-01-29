@@ -39,3 +39,34 @@ function init(){
     
     myMap.geoObjects.add(myPlacemark);
 }
+
+//change city areas
+function setArea(num){
+    switch(num){
+        case 0:{
+            myMap.setCenter([44.578526, 33.532156]);
+            myMap.setZoom(11);
+            break;
+        }
+        case 1:{
+            myMap.setCenter([44.568588, 33.452416]);
+            myMap.setZoom(13);
+            break;
+        }
+        case 2:{
+            myMap.setCenter([44.584961, 33.524793]);
+            myMap.setZoom(13);
+            break;
+        }
+        case 3:{
+            myMap.setCenter([44.615463, 33.568546]);
+            myMap.setZoom(13);
+            break;
+        }
+        case 4:{
+            myMap.setCenter([44.528813, 33.594336]);
+            myMap.setZoom(13);
+            break;
+        }
+    }
+}

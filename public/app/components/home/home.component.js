@@ -13,48 +13,62 @@ var session_service_1 = require('../../services/session.service');
 var HomeComponent = (function () {
     function HomeComponent(sessionService) {
         this.sessionService = sessionService;
+        //session model
         this.session = { email: "", password: "" };
+        //sign user or not
         this.sign = false;
         this.user_name = "";
+        //pattern for mail
         this.pattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$";
+        //error if login data invalid
         this.errorLog = false;
     }
     HomeComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.sessionService.sign_in().subscribe(function (data) {
+        //get data from server
+        this.sessionService.isSignIn().subscribe(function (data) {
             if (data.sign) {
-                _this.onLogin(true);
+                //get current user information
                 _this.sign = data.sign;
                 _this.user_id = data.user.id;
                 _this.user_name = data.user.name;
+                //function for send bool data to header
+                _this.signInState(true);
             }
         });
     };
+    //functon for sign in button
     HomeComponent.prototype.onSubmit = function () {
         this.signIn();
     };
-    HomeComponent.prototype.onLogin = function (value) {
-        this.sessionService.changes.next(value);
+    //function for send bool data to header
+    HomeComponent.prototype.signInState = function (value) {
+        this.sessionService.signInState.next(value);
     };
+    //sign registered user in 
     HomeComponent.prototype.signIn = function () {
         var _this = this;
         this.sessionService.signIn(this.session).subscribe(function (data) {
             _this.sign = true;
-            _this.onLogin(true);
+            //don't show error message
             _this.errorLog = false;
+            //get current user information
             _this.user_id = data.id;
             _this.user_name = data.name;
+            _this.signInState(true);
         }, function (error) {
+            //show error message
             _this.errorLog = true;
-            console.log(JSON.stringify(error.json()));
         });
     };
+    //exit form system
     HomeComponent.prototype.logOut = function () {
         var _this = this;
         this.sessionService.logOut(this.user_id).subscribe(function (data) {
             _this.sign = false;
-            _this.onLogin(false);
-            console.log(data);
+            //send to header
+            _this.signInState(false);
+            //console.log(data);
         });
     };
     HomeComponent = __decorate([

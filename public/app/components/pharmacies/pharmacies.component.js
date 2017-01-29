@@ -12,8 +12,11 @@ var core_1 = require('@angular/core');
 var PharmaciesComponent = (function () {
     function PharmaciesComponent(elementRef) {
         this.elementRef = elementRef;
+        //change class for selected area
+        this.area = 0;
     }
     PharmaciesComponent.prototype.ngAfterViewInit = function () {
+        /*ymaps initialzation*/
         var ymaps = document.createElement("script");
         ymaps.type = "text/javascript";
         ymaps.src = "ymaps.js";

@@ -17,8 +17,10 @@ var SessionService = (function () {
     function SessionService(http, jsonp) {
         this.http = http;
         this.jsonp = jsonp;
-        this.changes = new BehaviorSubject_1.BehaviorSubject(false);
+        //for update header wher user sign in
+        this.signInState = new BehaviorSubject_1.BehaviorSubject(false);
     }
+    //registrate new user
     SessionService.prototype.newUser = function (user) {
         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         var options = new http_1.RequestOptions({ headers: headers });
@@ -30,16 +32,18 @@ var SessionService = (function () {
         });
         return this.http.post('/users.json', body, options).map(function (res) { return res.json(); });
     };
+    //sign in function for registrated user
     SessionService.prototype.signIn = function (sessionData) {
         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         var options = new http_1.RequestOptions({ headers: headers });
         var body = JSON.stringify(sessionData);
         return this.http.post('/sessions.json', body, options).map(function (res) { return res.json(); });
     };
+    //exit from service
     SessionService.prototype.logOut = function (id) {
         return this.http.delete('/sessions/' + id + '.json').map(function (res) { return res.json(); });
     };
-    SessionService.prototype.sign_in = function () {
+    SessionService.prototype.isSignIn = function () {
         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         var options = new http_1.RequestOptions({ headers: headers });
         var body = "";

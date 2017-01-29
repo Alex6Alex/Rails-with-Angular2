@@ -18,37 +18,48 @@ var AppComponent = (function () {
         this.router = router;
         this.titleService = titleService;
         this.sessionService = sessionService;
+        //sign user or not
         this.sign = false;
     }
+    //title for pages
     AppComponent.prototype.setTitle = function (title) {
         this.titleService.setTitle(title);
     };
     ;
-    /*ngOnInit(): void{
-        this.sign_in();
-    }*/
+    //we need it if reload page which is not home page
+    AppComponent.prototype.ngOnInit = function () {
+        this.isSignIn();
+    };
+    //listen changes from another rendering parts
     AppComponent.prototype.ngAfterViewInit = function () {
-        this.onLogin();
+        this.signInState();
     };
-    AppComponent.prototype.onLogin = function () {
+    AppComponent.prototype.signInState = function () {
         var _this = this;
-        this.sessionService.changes.subscribe(function (status) { return _this.sign = status; });
+        this.sessionService.signInState.subscribe(function (status) {
+            _this.sign = status;
+            if (_this.sign)
+                _this.isSignIn();
+        });
     };
-    AppComponent.prototype.sign_in = function () {
+    //is user in system
+    AppComponent.prototype.isSignIn = function () {
         var _this = this;
-        this.sessionService.sign_in().subscribe(function (data) {
+        this.sessionService.isSignIn().subscribe(function (data) {
             if (data.sign) {
+                //user in system
                 _this.sign = data.sign;
-                _this.id = data.user.id;
+                _this.user_id = data.user.id;
                 _this.user_name = data.user.name;
             }
         });
     };
+    //user exit from system
     AppComponent.prototype.logOut = function () {
         var _this = this;
-        this.sessionService.logOut(this.id).subscribe(function (data) {
+        this.sessionService.logOut(this.user_id).subscribe(function (data) {
             _this.sign = data;
-            console.log(data);
+            //console.log(data);
         });
     };
     AppComponent = __decorate([

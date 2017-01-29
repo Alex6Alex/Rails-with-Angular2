@@ -19,6 +19,7 @@
 .area{
 	margin-top: 15px;
 	border-bottom: 1px solid #eaeaea;
+	margin-bottom: 15px;
 }
 
 .area-title{
@@ -51,6 +52,8 @@
 
 /*yandex map*/
 .ymap{
-	width: 450px;
-	height: 550px;
+	width: 550px;
+	height: 650px;
+	float: right;
+	display: inline-block;
 }

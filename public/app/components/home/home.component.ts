@@ -10,54 +10,68 @@ import { SessionService } from '../../services/session.service';
 })
 
 export class HomeComponent implements OnInit { 
-
+	//session model
 	session = {email: "", password: ""};
+	//sign user or not
 	sign = false;
+	//user attributes
 	user_id: number;
 	user_name: string = "";
+	//pattern for mail
 	pattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$";
+	//error if login data invalid
 	errorLog = false;
 
 	constructor(private sessionService: SessionService){}
 
 	ngOnInit(): void{
-		this.sessionService.sign_in().subscribe(data => {
+		//get data from server
+		this.sessionService.isSignIn().subscribe(data => {
 			if(data.sign){
-				this.onLogin(true);
+				//get current user information
 				this.sign = data.sign;
 				this.user_id = data.user.id;
 				this.user_name = data.user.name;
+				//function for send bool data to header
+				this.signInState(true);
 			}
 		});
 	}
 
+	//functon for sign in button
 	onSubmit(): void{
 		this.signIn();
 	}
 
-	onLogin(value: boolean){
-		this.sessionService.changes.next(value);
+	//function for send bool data to header
+	signInState(value: boolean){
+		this.sessionService.signInState.next(value);
 	}
 
+	//sign registered user in 
 	signIn(): void{
 		this.sessionService.signIn(this.session).subscribe(data => {
 			this.sign = true;
-			this.onLogin(true);
+			//don't show error message
 			this.errorLog = false;
+			//get current user information
 			this.user_id = data.id;
 			this.user_name = data.name;
+			this.signInState(true);
 		}, 
 		error => {
+			//show error message
 			this.errorLog = true;
-			console.log(JSON.stringify(error.json()));
 		});
 	}
 
+	//exit form system
 	logOut(): void{
 		this.sessionService.logOut(this.user_id).subscribe(data => {
 			this.sign = false;
-			this.onLogin(false);
-			console.log(data);
+			//send to header
+			this.signInState(false);
+			//console.log(data);
 		});
 	}
 }
