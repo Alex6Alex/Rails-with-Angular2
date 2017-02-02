@@ -6,8 +6,7 @@ import { PharmacyService } from '../../services/pharmacy.service';
 	moduleId: module.id,
 	selector: 'pharmacies',
 	templateUrl: 'pharmacies.component.html',
-	styleUrls: ['pharmacies.css'],
-	providers: [PharmacyService]
+	styleUrls: ['pharmacies.css']
 })
 
 export class PharmaciesComponent implements AfterViewInit {

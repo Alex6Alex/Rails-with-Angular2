@@ -47,8 +47,7 @@ var PharmaciesComponent = (function () {
             moduleId: module.id,
             selector: 'pharmacies',
             templateUrl: 'pharmacies.component.html',
-            styleUrls: ['pharmacies.css'],
-            providers: [pharmacy_service_1.PharmacyService]
+            styleUrls: ['pharmacies.css']
         }), 
         __metadata('design:paramtypes', [core_1.ElementRef, pharmacy_service_1.PharmacyService])
     ], PharmaciesComponent);
