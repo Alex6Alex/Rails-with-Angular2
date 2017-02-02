@@ -20,7 +20,7 @@ module LunchesV2
 
     config.assets.paths << Rails.root.join('public', 'node_modules')
     config.assets.enabled = true
-    #config.serve_static_assets = true
+    config.serve_static_assets = true
 
     config.i18n.default_locale = :ru
 
