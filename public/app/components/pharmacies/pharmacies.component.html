@@ -20,5 +20,16 @@
 		</div>
 	</div>
 
+	<div class="pharms">
+		<div *ngFor="let pharm of pharms" class="pharm">
+			<p class="name">{{pharm.name}}</p>
+			<p class="adress">{{pharm.address}}</p>
+			<p class="phone"><span class="glyphicon glyphicon-phone-alt"></span>  {{pharm.phone}}</p>
+			<p class="time">
+				<span class="glyphicon glyphicon-time"></span> {{pharm.worktime}}
+			</p>
+		</div>
+	</div>
+
 	<div class="ymap" id="mymap"></div>
 </div>

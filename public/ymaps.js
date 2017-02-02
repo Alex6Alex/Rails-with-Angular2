@@ -1,6 +1,7 @@
 ymaps.ready(init);
 var myMap, 
-    myPlacemark;
+    myPlacemark,
+    myGeocoder;
 
 function init(){ 
     myMap = new ymaps.Map("mymap", {
@@ -26,6 +27,25 @@ function init(){
                 }
                 return result;
             }
+        }
+    );
+
+    var lat = 0;
+    var lng = 0;
+
+    myGeocoder = ymaps.geocode("Севастополь, Ульянова 2");
+    myGeocoder.then(
+        function(res){
+            //alert(res.geoObjects.get(0).geometry.getCoordinates());
+            myPlacemark = new ymaps.Placemark(res.geoObjects.get(0).geometry.getCoordinates(), {
+                title: 'Аптека №2',
+                address: 'Центр Севастополя'
+            }, {
+                hintLayout: HintLayout,
+                preset: 'islands#darkGreenMedicalIcon'
+            });
+            
+            myMap.geoObjects.add(myPlacemark);
         }
     );
     

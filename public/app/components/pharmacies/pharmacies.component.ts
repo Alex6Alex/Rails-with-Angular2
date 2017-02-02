@@ -1,19 +1,21 @@
 import { Component, AfterViewInit, ElementRef } from '@angular/core';
 
-import { HomeService } from '../../services/home.service';
+import { PharmacyService } from '../../services/pharmacy.service';
 
 @Component({
 	moduleId: module.id,
 	selector: 'pharmacies',
 	templateUrl: 'pharmacies.component.html',
-	styleUrls: ['pharmacies.css']
+	styleUrls: ['pharmacies.css'],
+	providers: [PharmacyService]
 })
 
 export class PharmaciesComponent implements AfterViewInit {
 	//change class for selected area
 	area = 0;
+	pharms: Array<Object>;
 
-	constructor(private elementRef: ElementRef){}
+	constructor(private elementRef: ElementRef, private pharmacyService: PharmacyService){}
 
 	ngAfterViewInit(): void{
 		/*ymaps initialzation*/
@@ -32,5 +34,12 @@ export class PharmaciesComponent implements AfterViewInit {
 		        balloonContent: 'Столица России'
 		    });
 		});*/
+		this.getPharms();
+	}
+
+	getPharms(){
+		this.pharmacyService.getPharms().subscribe(data => {
+			this.pharms = data;
+		});
 	}
 }

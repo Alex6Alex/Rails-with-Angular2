@@ -14,6 +14,7 @@ export class HomeComponent implements OnInit {
 	session = {email: "", password: ""};
 	//sign user or not
 	sign = false;
+	m = 0;
 	//user attributes
 	user_id: number;
 	user_name: string = "";
@@ -34,7 +35,10 @@ export class HomeComponent implements OnInit {
 				this.user_name = data.user.name;
 				//function for send bool data to header
 				this.signInState(true);
+
+				this.m = 2;
 			}
+			else{this.m = 1}
 		});
 	}
 
@@ -58,6 +62,7 @@ export class HomeComponent implements OnInit {
 			this.user_id = data.id;
 			this.user_name = data.name;
 			this.signInState(true);
+			this.m = 2; 
 		}, 
 		error => {
 			//show error message
@@ -69,6 +74,7 @@ export class HomeComponent implements OnInit {
 	logOut(): void{
 		this.sessionService.logOut(this.user_id).subscribe(data => {
 			this.sign = false;
+			this.m = 1;
 			//send to header
 			this.signInState(false);
 			//console.log(data);

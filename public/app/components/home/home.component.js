@@ -17,6 +17,7 @@ var HomeComponent = (function () {
         this.session = { email: "", password: "" };
         //sign user or not
         this.sign = false;
+        this.m = 0;
         this.user_name = "";
         //pattern for mail
         this.pattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$";
@@ -34,6 +35,10 @@ var HomeComponent = (function () {
                 _this.user_name = data.user.name;
                 //function for send bool data to header
                 _this.signInState(true);
+                _this.m = 2;
+            }
+            else {
+                _this.m = 1;
             }
         });
     };
@@ -56,6 +61,7 @@ var HomeComponent = (function () {
             _this.user_id = data.id;
             _this.user_name = data.name;
             _this.signInState(true);
+            _this.m = 2;
         }, function (error) {
             //show error message
             _this.errorLog = true;
@@ -66,6 +72,7 @@ var HomeComponent = (function () {
         var _this = this;
         this.sessionService.logOut(this.user_id).subscribe(function (data) {
             _this.sign = false;
+            _this.m = 1;
             //send to header
             _this.signInState(false);
             //console.log(data);

@@ -9,9 +9,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var pharmacy_service_1 = require('../../services/pharmacy.service');
 var PharmaciesComponent = (function () {
-    function PharmaciesComponent(elementRef) {
+    function PharmaciesComponent(elementRef, pharmacyService) {
         this.elementRef = elementRef;
+        this.pharmacyService = pharmacyService;
         //change class for selected area
         this.area = 0;
     }
@@ -32,15 +34,23 @@ var PharmaciesComponent = (function () {
                 balloonContent: 'Столица России'
             });
         });*/
+        this.getPharms();
+    };
+    PharmaciesComponent.prototype.getPharms = function () {
+        var _this = this;
+        this.pharmacyService.getPharms().subscribe(function (data) {
+            _this.pharms = data;
+        });
     };
     PharmaciesComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
             selector: 'pharmacies',
             templateUrl: 'pharmacies.component.html',
-            styleUrls: ['pharmacies.css']
+            styleUrls: ['pharmacies.css'],
+            providers: [pharmacy_service_1.PharmacyService]
         }), 
-        __metadata('design:paramtypes', [core_1.ElementRef])
+        __metadata('design:paramtypes', [core_1.ElementRef, pharmacy_service_1.PharmacyService])
     ], PharmaciesComponent);
     return PharmaciesComponent;
 }());

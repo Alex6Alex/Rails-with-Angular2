@@ -30,9 +30,15 @@
 				</div>
 			</nav>
 			<div class="login">
-				<div *ngIf="sign" class="login-header">
+				<div *ngIf="sign" class="login-header" dropdown>
             		<div class="icon"></div>
-            		<p>{{user_name}}</p>
+            		<p dropdown-open>{{user_name}}</p>
+            		<ul class="dropdown-menu">
+			            <li><a routerLink="/users/{{user_id}}" routerLinkActive="active"><span class="glyphicon glyphicon-home"></span> Профиль</a></li>
+			            <li><a href="#"><span class="glyphicon glyphicon-wrench"></span> Редактировать</a></li>
+			            <li role="separator" class="divider"></li>
+			            <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Выйти</a></li>
+			        </ul>
         		</div>
         		<div *ngIf="!sign" class="login-registr">
         			<span class="glyphicon glyphicon-log-in"></span>

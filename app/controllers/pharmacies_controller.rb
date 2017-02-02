@@ -4,9 +4,31 @@ class PharmaciesController < ApplicationController
   # GET /pharmacies
   # GET /pharmacies.json
   def index
+    #Pharmacy.where(area: nil).destroy_all
+    @pharmacies = Pharmacy.all
     respond_to do |format|
       format.html { render 'layouts/application' }
-      format.json { render :json => 'qwert'.to_json() }
+      format.json { render :json => @pharmacies.to_json() }
+    end
+  end
+
+  def change_area
+    area ||= params[:area]
+    case area
+    when 0
+      @pharmacies = Pharmacy.all
+    when 1
+      @pharmacies = Pharmacy.where(area: "Гагаринский")
+    when 2
+      @pharmacies = Pharmacy.where(area: "Ленинский")
+    when 3
+      @pharmacies = Pharmacy.where(area: "Нахимовский")
+    when 4
+      @pharmacies = Pharmacy.where(area: "Балаклавский")
+    end
+    respond_to do |format|
+      format.html { render 'layouts/application' }
+      format.json { render :json => @pharmacies.to_json() }
     end
   end
 

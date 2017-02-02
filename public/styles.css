@@ -4,9 +4,9 @@ body{
   display: block; 
 }
 
-::-webkit-scrollbar { 
+/*::-webkit-scrollbar { 
     display: none; 
-}
+}*/
 
 /*header*/
 .header-wrap{
@@ -159,6 +159,7 @@ body{
   vertical-align: middle;
   color: #fff;
   font-size: 1.4em;
+  cursor: pointer;
 }
 
 .login-registr{
