@@ -37,7 +37,7 @@
       rxjs: {
         defaultExtension: 'js'
       },
-      'ngx-dropdown': { "main": "index.js", "defaultExtension": "js" }
+      'ngx-dropdown': { main: "index.js", defaultExtension: "js" }
     }
   });
 })(this);
