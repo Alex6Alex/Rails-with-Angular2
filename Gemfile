@@ -23,7 +23,7 @@ gem 'jquery-turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 gem 'pg'
-
+gem 'rails_12factor'
 gem 'angular_rails_csrf'
 
 gem 'rails-i18n', '~> 5.0.0'
