@@ -19,10 +19,10 @@ var PharmaciesComponent = (function () {
     }
     PharmaciesComponent.prototype.ngAfterViewInit = function () {
         /*ymaps initialzation*/
-        /*let ymaps = document.createElement("script");
+        var ymaps = document.createElement("script");
         ymaps.type = "text/javascript";
         ymaps.src = "ymaps.js";
-        this.elementRef.nativeElement.appendChild(ymaps);*/
+        this.elementRef.nativeElement.appendChild(ymaps);
         /*ymaps.ready().then(() => {
             let myMap = new ymaps.Map("mymap", {
                 center: [55.76, 37.64],
