@@ -18,10 +18,10 @@ export class PharmaciesComponent implements AfterViewInit {
 
 	ngAfterViewInit(): void{
 		/*ymaps initialzation*/
-		let ymaps = document.createElement("script");
+		/*let ymaps = document.createElement("script");
 		ymaps.type = "text/javascript";
 		ymaps.src = "ymaps.js";
-		this.elementRef.nativeElement.appendChild(ymaps);
+		this.elementRef.nativeElement.appendChild(ymaps);*/
 		/*ymaps.ready().then(() => {
 			let myMap = new ymaps.Map("mymap", {
 				center: [55.76, 37.64],
