@@ -13,7 +13,7 @@ class PharmaciesController < ApplicationController
   end
 
   def change_area
-    area ||= params[:area]
+    `area ||= params[:area]
     case area
     when 0
       @pharmacies = Pharmacy.all
@@ -29,7 +29,7 @@ class PharmaciesController < ApplicationController
     respond_to do |format|
       format.html { render 'layouts/application' }
       format.json { render :json => @pharmacies.to_json() }
-    end
+    end`
   end
 
   # GET /pharmacies/1
