@@ -12,11 +12,11 @@
 			<p>Район <span class="glyphicon glyphicon-chevron-right"></span></p>
 		</div>
 		<div class="area-list">
-			<p onclick="setArea(0)" (click)="area = 0" [ngClass]="{'select': area === 0}">Все районы</p>
-			<p onclick="setArea(1)" (click)="area = 1" [ngClass]="{'select': area === 1}">Гагаринский</p>
-			<p onclick="setArea(2)" (click)="area = 2" [ngClass]="{'select': area === 2}">Ленинский</p>
-			<p onclick="setArea(3)" (click)="area = 3" [ngClass]="{'select': area === 3}">Нахимовский</p>
-			<p onclick="setArea(4)" (click)="area = 4" [ngClass]="{'select': area === 4}">Балаклавский</p>
+			<p (click)="setArea(0)" [ngClass]="{'select': area === 0}">Все районы</p>
+			<p (click)="setArea(1)" [ngClass]="{'select': area === 1}">Гагаринский</p>
+			<p (click)="setArea(2)" [ngClass]="{'select': area === 2}">Ленинский</p>
+			<p (click)="setArea(3)" [ngClass]="{'select': area === 3}">Нахимовский</p>
+			<p (click)="setArea(4)" [ngClass]="{'select': area === 4}">Балаклавский</p>
 		</div>
 	</div>
 
