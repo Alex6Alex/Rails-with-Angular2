@@ -1,7 +1,5 @@
 /*home divs*/
  .description{
- 	margin-top: 20px;
-	margin-bottom: 20px;
  	display: inline-block;
  	float: left;
  	width: 700px;
@@ -13,8 +11,6 @@
  }
 
  .auth-fast, .auth-user{
- 	margin-top: 20px;
-	margin-bottom: 20px;
 	margin-right: 20px;
  	display: inline-block;
  	float: right;
