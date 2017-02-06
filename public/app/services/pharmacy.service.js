@@ -17,13 +17,16 @@ var PharmacyService = (function () {
         this.http = http;
         this.jsonp = jsonp;
     }
-    /*get all pharms*/
     PharmacyService.prototype.getPharms = function () {
-        /*let headers = new Headers({ 'Content-Type': 'application/json' });
-        let options = new RequestOptions({ headers: headers });
-        let body = JSON.stringify({ area: area });*/
-        return this.http.get('/pharmacies.json')
-            .map(function (res) { return res.json(); });
+        return this.http.get('/pharmacies.json').toPromise()
+            .then(function (res) { return res.json(); });
+    };
+    PharmacyService.prototype.getArea = function (area) {
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        var body = JSON.stringify({ area: area });
+        return this.http.post('/change_area.json', body, options).toPromise()
+            .then(function (res) { return res.json(); });
     };
     PharmacyService = __decorate([
         core_1.Injectable(), 

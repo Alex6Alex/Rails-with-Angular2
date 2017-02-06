@@ -13,7 +13,7 @@ class PharmaciesController < ApplicationController
   end
 
   def change_area
-    `area ||= params[:area]
+    area = params[:area]
     case area
     when 0
       @pharmacies = Pharmacy.all
@@ -27,9 +27,9 @@ class PharmaciesController < ApplicationController
       @pharmacies = Pharmacy.where(area: "Балаклавский")
     end
     respond_to do |format|
-      format.html { render 'layouts/application' }
+      #format.html { render 'layouts/application' }
       format.json { render :json => @pharmacies.to_json() }
-    end`
+    end
   end
 
   # GET /pharmacies/1

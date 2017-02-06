@@ -1,5 +1,6 @@
 import { Headers, RequestOptions, Response, Http, Jsonp } from '@angular/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -8,13 +9,17 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 export class PharmacyService{
 	constructor(private http: Http, private jsonp: Jsonp){}
 
-	/*get all pharms*/
-	getPharms(){
-		/*let headers = new Headers({ 'Content-Type': 'application/json' });
-    	let options = new RequestOptions({ headers: headers });
-    	let body = JSON.stringify({ area: area });*/
+	getPharms(): Promise<any[]>{
+		return this.http.get('/pharmacies.json').toPromise()
+			.then(res => res.json());
+	}
 
-		return this.http.get('/pharmacies.json')
-			.map(res => res.json());
+	getArea(area: number): Promise<any>{
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({ headers: headers });
+		let body = JSON.stringify({ area: area });
+
+		return this.http.post('/change_area.json', body, options).toPromise()
+			.then(res => res.json());
 	}
 }

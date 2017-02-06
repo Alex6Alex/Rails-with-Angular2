@@ -9,6 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+require('rxjs/add/operator/toPromise');
 var pharmacy_service_1 = require('../../services/pharmacy.service');
 /// <reference path="ymaps.d.ts"/>
 var PharmaciesComponent = (function () {
@@ -19,15 +20,26 @@ var PharmaciesComponent = (function () {
         this.pharms = [];
     }
     PharmaciesComponent.prototype.ngOnInit = function () {
-        var _this = this;
+        this.ymapsInit();
         this.getPharms();
+    };
+    PharmaciesComponent.prototype.getPharms = function () {
+        var _this = this;
+        this.pharmacyService.getPharms().then(function (data) {
+            _this.pharms = data;
+            _this.pharmsToMap();
+        });
+        return Promise.resolve(0);
+    };
+    PharmaciesComponent.prototype.ymapsInit = function () {
+        var _this = this;
         ymaps.ready().then(function () {
             _this.myMap = new ymaps.Map("mymap", {
                 center: [44.578526, 33.532156],
                 zoom: 11,
                 controls: ['zoomControl', 'fullscreenControl']
             });
-            var HintLayout = ymaps.templateLayoutFactory.createClass("<div class='my-hint'>" +
+            _this.HintLayout = ymaps.templateLayoutFactory.createClass("<div class='my-hint'>" +
                 "<b>{{ properties.title }}</b><br/> {{ properties.address }}" +
                 "</div>", {
                 getShape: function () {
@@ -42,6 +54,76 @@ var PharmaciesComponent = (function () {
                     return result;
                 }
             });
+        });
+    };
+    PharmaciesComponent.prototype.setArea = function (num) {
+        var _this = this;
+        switch (num) {
+            case 0: {
+                this.pharmacyService.getArea(0)
+                    .then(function (data) {
+                    _this.myMap.geoObjects.removeAll();
+                    _this.pharms = data;
+                    _this.pharmsToMap();
+                });
+                this.area = 0;
+                this.myMap.setCenter([44.578526, 33.532156]);
+                this.myMap.setZoom(11);
+                break;
+            }
+            case 1: {
+                this.pharmacyService.getArea(1)
+                    .then(function (data) {
+                    _this.myMap.geoObjects.removeAll();
+                    _this.pharms = data;
+                    _this.pharmsToMap();
+                });
+                this.area = 1;
+                this.myMap.setCenter([44.568588, 33.452416]);
+                this.myMap.setZoom(13);
+                break;
+            }
+            case 2: {
+                this.pharmacyService.getArea(2)
+                    .then(function (data) {
+                    _this.myMap.geoObjects.removeAll();
+                    _this.pharms = data;
+                    _this.pharmsToMap();
+                });
+                this.area = 2;
+                this.myMap.setCenter([44.584961, 33.524793]);
+                this.myMap.setZoom(13);
+                break;
+            }
+            case 3: {
+                this.pharmacyService.getArea(3)
+                    .then(function (data) {
+                    _this.myMap.geoObjects.removeAll();
+                    _this.pharms = data;
+                    _this.pharmsToMap();
+                });
+                this.area = 3;
+                this.myMap.setCenter([44.615463, 33.568546]);
+                this.myMap.setZoom(13);
+                break;
+            }
+            case 4: {
+                this.pharmacyService.getArea(4)
+                    .then(function (data) {
+                    _this.myMap.geoObjects.removeAll();
+                    _this.pharms = data;
+                    _this.pharmsToMap();
+                });
+                this.area = 4;
+                this.myMap.setCenter([44.528813, 33.594336]);
+                this.myMap.setZoom(13);
+                break;
+            }
+        }
+    };
+    PharmaciesComponent.prototype.pharmsToMap = function () {
+        var _this = this;
+        ymaps.ready().then(function () {
             var _loop_1 = function(pharm) {
                 var myGeocoder = ymaps.geocode("\u0421\u0435\u0432\u0430\u0441\u0442\u043E\u043F\u043E\u043B\u044C, " + pharm.address);
                 myGeocoder.then(function (res) {
@@ -49,7 +131,7 @@ var PharmaciesComponent = (function () {
                         title: pharm.name,
                         address: pharm.address
                     }, {
-                        hintLayout: HintLayout,
+                        hintLayout: _this.HintLayout,
                         preset: 'islands#darkGreenMedicalIcon'
                     });
                     _this.myMap.geoObjects.add(myPlacemark);
@@ -60,46 +142,6 @@ var PharmaciesComponent = (function () {
                 _loop_1(pharm);
             }
         });
-    };
-    PharmaciesComponent.prototype.getPharms = function () {
-        var _this = this;
-        this.pharmacyService.getPharms().subscribe(function (data) {
-            _this.pharms = data;
-        });
-    };
-    PharmaciesComponent.prototype.setArea = function (num) {
-        switch (num) {
-            case 0: {
-                this.area = 0;
-                this.myMap.setCenter([44.578526, 33.532156]);
-                this.myMap.setZoom(11);
-                break;
-            }
-            case 1: {
-                this.area = 1;
-                this.myMap.setCenter([44.568588, 33.452416]);
-                this.myMap.setZoom(13);
-                break;
-            }
-            case 2: {
-                this.area = 2;
-                this.myMap.setCenter([44.584961, 33.524793]);
-                this.myMap.setZoom(13);
-                break;
-            }
-            case 3: {
-                this.area = 3;
-                this.myMap.setCenter([44.615463, 33.568546]);
-                this.myMap.setZoom(13);
-                break;
-            }
-            case 4: {
-                this.area = 4;
-                this.myMap.setCenter([44.528813, 33.594336]);
-                this.myMap.setZoom(13);
-                break;
-            }
-        }
     };
     PharmaciesComponent = __decorate([
         core_1.Component({
