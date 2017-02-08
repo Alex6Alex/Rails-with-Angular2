@@ -1,0 +1,30 @@
+<div class="medicines">
+	<form>
+		<div class="input-group">
+			<span class="input-group-addon glyphicon glyphicon-search">
+			</span>
+			<input type="text" class="form-control" placeholder="Название лекарства"/>
+		</div>
+	</form>
+	<h2>Классификация АТХ</h2>
+	<p>Анатомо-терапевтическо-химическая классификация (АТХ) - международная система классификации лекарственных средств. Рекомендована Всемирной организацией здравоохранения.</p>
+	<p>По классификации все лекартства делятся на группы по их основному терапевтическому применению.</p>
+	<div class="system first-row">
+		<ul>
+			<li *ngFor="let group of atcGroups | slice:0:7">
+				<a routerLink='{{group.path}}' routerLinkActive="active">
+					<p><strong>{{group.code}}</strong> {{group.title}}</p>
+				</a>
+			</li>
+		</ul>
+	</div>
+	<div class="system second-row">
+		<ul>
+			<li *ngFor="let group of atcGroups | slice:7">
+				<a routerLink='{{group.path}}' routerLinkActive="active">
+					<p><strong>{{group.code}}</strong> {{group.title}}</p>
+				</a>
+			</li>
+		</ul>
+	</div>
+</div>

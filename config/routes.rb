@@ -14,5 +14,7 @@ Rails.application.routes.draw do
 	match '/signout', to: 'sessions#destroy', via: 'delete'
 	match '/signstate', to: 'sessions#sign_state', via: 'post'
 	match '/change_area', to: 'pharmacies#change_area', via: 'post'
+
+	match '*path' => redirect('/'), via: :get
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

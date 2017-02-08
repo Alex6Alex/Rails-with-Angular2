@@ -17,8 +17,22 @@ export class PharmaciesComponent implements OnInit {
 	pharms = [];
 	myMap; HintLayout;
 
+	showSortList = false;
+	sortBy = 'name';
+	sortTitle = 'по названию';
+
 	constructor(private pharmacyService: PharmacyService){}
 	
+	onSort(sortBy: string){
+		this.sortBy = sortBy;
+		this.getArea(this.area, sortBy);
+		if(this.sortBy === 'name')
+			this.sortTitle = 'по названию';
+		else
+			this.sortTitle = 'по адресу';
+		this.showSortList = false;
+	}
+
 	ngOnInit(): void{
 		this.ymapsInit();
 		this.getPharms();
@@ -67,66 +81,50 @@ export class PharmaciesComponent implements OnInit {
 	setArea(num: number){
 		switch(num){
 	        case 0:{
-	        	this.pharmacyService.getArea(0)
-	        		.then(data => {
-	        			this.myMap.geoObjects.removeAll();
-	        			this.pharms = data;
-	        			this.pharmsToMap();
-	        		});
+	        	this.getArea(0, this.sortBy);
 	        	this.area = 0;
 	            this.myMap.setCenter([44.578526, 33.532156]);
 	            this.myMap.setZoom(11);
 	            break;
 	        }
 	        case 1:{
-	        	this.pharmacyService.getArea(1)
-	        		.then(data => {
-	        			this.myMap.geoObjects.removeAll();
-	        			this.pharms = data;
-	        			this.pharmsToMap();
-	        		});
+	        	this.getArea(1, this.sortBy);
 	        	this.area = 1;
 	            this.myMap.setCenter([44.568588, 33.452416]);
 	            this.myMap.setZoom(13);
 	            break;
 	        }
 	        case 2:{
-	        	this.pharmacyService.getArea(2)
-	        		.then(data => {
-	        			this.myMap.geoObjects.removeAll();
-	        			this.pharms = data;
-	        			this.pharmsToMap();
-	        		});
+	        	this.getArea(2, this.sortBy);
 	        	this.area = 2;
 	            this.myMap.setCenter([44.584961, 33.524793]);
 	            this.myMap.setZoom(13);
 	            break;
 	        }
 	        case 3:{
-	        	this.pharmacyService.getArea(3)
-	        		.then(data => {
-	        			this.myMap.geoObjects.removeAll();
-	        			this.pharms = data;
-						this.pharmsToMap();
-	        		});
+	        	this.getArea(3, this.sortBy);
 	        	this.area = 3;
 	            this.myMap.setCenter([44.615463, 33.568546]);
 	            this.myMap.setZoom(13);
 	            break;
 	        }
 	        case 4:{
-	        	this.pharmacyService.getArea(4)
-	        		.then(data => {
-	        			this.myMap.geoObjects.removeAll();
-	        			this.pharms = data;
-	        			this.pharmsToMap();
-	        		});
+	        	this.getArea(4, this.sortBy);
 	        	this.area = 4;
 	            this.myMap.setCenter([44.528813, 33.594336]);
 	            this.myMap.setZoom(13);
 	            break;
 	        }
 	    }
+	}
+
+	getArea(num: number, sortBy: string): void{
+		this.pharmacyService.getArea(num, sortBy)
+    		.then(data => {
+    			this.myMap.geoObjects.removeAll();
+    			this.pharms = data;
+    			this.pharmsToMap();
+    		});
 	}
 
 	pharmsToMap(): void{

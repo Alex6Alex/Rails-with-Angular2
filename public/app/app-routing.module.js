@@ -21,7 +21,8 @@ var routes = [
     { path: 'pharmacies', component: pharmacies_component_1.PharmaciesComponent },
     { path: 'medicines', component: medicines_component_1.MedicinesComponent },
     { path: 'signup', component: registration_component_1.RegistrationComponent },
-    { path: 'users/:id', component: account_component_1.AccountComponent }
+    { path: 'users/:id', component: account_component_1.AccountComponent },
+    { path: 'medicines1/:category', component: medicines_component_1.MedicinesComponent }
 ];
 var AppRoutingModule = (function () {
     function AppRoutingModule() {

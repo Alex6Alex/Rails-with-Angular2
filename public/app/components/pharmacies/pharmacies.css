@@ -1,13 +1,13 @@
-.search{
+.pharmacies{
 	margin-bottom: 20px;
 }
 /*форма поиска*/
-.search>form>.input-group>.form-control{
+.pharmacies>form>.input-group>.form-control{
 	font-size: 1.6em;
 	height: 40px;
 }
 
-.search>form>.input-group>span{
+.pharmacies>form>.input-group>span{
 	position: static;
 	cursor: pointer;
 
@@ -18,7 +18,7 @@
 .area{
 	margin-top: 15px;
 	border-bottom: 1px solid #eaeaea;
-	margin-bottom: 15px;
+	margin-bottom: 5px;
 }
 
 .area-title{
@@ -47,6 +47,44 @@
 
 .area-list>.select{
 	color: red;
+}
+/*параметры*/
+.parameters{
+	position: relative;
+}
+
+.parameters>span{
+	color: #696969;
+}
+
+.parameters>.sort-type{
+	color: red;
+	cursor: pointer;
+}
+
+.sortlist{
+	width: 130px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 15px;
+	padding-right: 15px;
+	background-color: #FCF7DB;
+	border: 1px solid #C2C798;
+	border-radius: 3px;
+
+	position: absolute;
+	top: 20px;
+	left: 90px;
+	z-index: 10;
+}
+
+.sortlist>span{
+	display: block;
+	cursor: pointer;
+}
+
+.sortlist>.select{
+	font-weight: bolder;
 }
 
 /*yandex map*/

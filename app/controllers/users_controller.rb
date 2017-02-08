@@ -15,13 +15,25 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+    if !@user.nil?
+      respond_to do |format|
+        format.html { render 'layouts/application' }
+        format.json { render :json => @user.to_json()}
+      end
+    else
+      redirect_to root_url
+    end
   end
 
   # GET /users/new
   def new
-    @user = User.new
-    respond_to do |format|
-      format.html { render 'layouts/application' }
+    if !current_user
+      @user = User.new
+      respond_to do |format|
+        format.html { render 'layouts/application' }
+      end
+    else
+      redirect_to root_url
     end
   end
 
@@ -73,7 +85,7 @@ class UsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      @user = User.find(params[:id])
+      @user ||= User.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

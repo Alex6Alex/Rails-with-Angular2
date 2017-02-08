@@ -1,4 +1,4 @@
-<div class="search">
+<div class="pharmacies">
 	<form>
 		<div class="input-group">
 			<span class="input-group-addon glyphicon glyphicon-search">
@@ -17,6 +17,16 @@
 			<p (click)="setArea(2)" [ngClass]="{'select': area === 2}">Ленинский</p>
 			<p (click)="setArea(3)" [ngClass]="{'select': area === 3}">Нахимовский</p>
 			<p (click)="setArea(4)" [ngClass]="{'select': area === 4}">Балаклавский</p>
+		</div>
+	</div>
+
+	<div class="parameters">
+		<span>Сортировать: </span><span class="sort-type" (click)="showSortList = !showSortList">{{sortTitle}}</span>
+	
+
+		<div class="sortlist" *ngIf="showSortList">
+			<span (click)="onSort('name')" [ngClass]="{'select': sortBy === 'name'}">по названию</span>
+			<span (click)="onSort('address')" [ngClass]="{'select': sortBy === 'address'}">по адресу</span>
 		</div>
 	</div>
 

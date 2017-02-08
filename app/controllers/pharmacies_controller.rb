@@ -5,7 +5,7 @@ class PharmaciesController < ApplicationController
   # GET /pharmacies.json
   def index
     #Pharmacy.where(area: nil).destroy_all
-    @pharmacies = Pharmacy.all
+    @pharmacies = Pharmacy.order(:name)
     respond_to do |format|
       format.html { render 'layouts/application' }
       format.json { render :json => @pharmacies.to_json() }
@@ -14,17 +14,18 @@ class PharmaciesController < ApplicationController
 
   def change_area
     area = params[:area]
+    order = params[:order]
     case area
     when 0
-      @pharmacies = Pharmacy.all
+      @pharmacies = Pharmacy.order(order)
     when 1
-      @pharmacies = Pharmacy.where(area: "Гагаринский")
+      @pharmacies = Pharmacy.where(area: "Гагаринский").order(order)
     when 2
-      @pharmacies = Pharmacy.where(area: "Ленинский")
+      @pharmacies = Pharmacy.where(area: "Ленинский").order(order)
     when 3
-      @pharmacies = Pharmacy.where(area: "Нахимовский")
+      @pharmacies = Pharmacy.where(area: "Нахимовский").order(order)
     when 4
-      @pharmacies = Pharmacy.where(area: "Балаклавский")
+      @pharmacies = Pharmacy.where(area: "Балаклавский").order(order)
     end
     respond_to do |format|
       #format.html { render 'layouts/application' }

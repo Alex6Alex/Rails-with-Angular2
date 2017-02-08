@@ -13,7 +13,8 @@ const routes: Routes = [
 	{ path: 'pharmacies', component: PharmaciesComponent },
 	{ path: 'medicines', component: MedicinesComponent },
 	{ path: 'signup', component: RegistrationComponent },
-	{ path: 'users/:id', component: AccountComponent }
+	{ path: 'users/:id', component: AccountComponent },
+	{ path: 'medicines1/:category', component: MedicinesComponent }
 ];
 
 @NgModule({
