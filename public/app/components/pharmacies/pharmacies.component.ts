@@ -12,26 +12,23 @@ import { PharmacyService } from '../../services/pharmacy.service';
 })
 
 export class PharmaciesComponent implements OnInit {
-	//change class for selected area
-	area = 0;
+
 	pharms = [];
 	myMap; HintLayout;
 
+	//параметры выбора района
+	area = 0;
+	areaName = 'Все';
+	//параметры сортировки
 	showSortList = false;
 	sortBy = 'name';
 	sortTitle = 'по названию';
+	//параметры режима работы
+	showWorkTimes = false;
+	workTime = 'all';
+	workTitle = 'все';
 
 	constructor(private pharmacyService: PharmacyService){}
-	
-	onSort(sortBy: string){
-		this.sortBy = sortBy;
-		this.getArea(this.area, sortBy);
-		if(this.sortBy === 'name')
-			this.sortTitle = 'по названию';
-		else
-			this.sortTitle = 'по адресу';
-		this.showSortList = false;
-	}
 
 	ngOnInit(): void{
 		this.ymapsInit();
@@ -78,55 +75,92 @@ export class PharmaciesComponent implements OnInit {
 
 	}
 
-	setArea(num: number){
+	//сортировка
+	onSort(sortBy: string){
+		if(this.sortBy === sortBy)
+			return;
+
+		this.sortBy = sortBy;
+
+		this.getArea(this.areaName, sortBy, this.workTime);
+
+		if(this.sortBy === 'name')
+			this.sortTitle = 'по названию';
+		else
+			this.sortTitle = 'по адресу';
+		this.showSortList = false;
+	}
+
+	//выбор времени работы
+	onWorktimeChange(time: string){
+		if(this.workTime === time)
+			return;
+
+		this.workTime = time;
+
+		this.getArea(this.areaName, this.sortBy, time);
+		//this.myMap.geoObjects.removeAll();
+		//this.pharmsToMap();
+
+		if(this.workTime === 'all')
+			this.workTitle = 'все';
+		else if(this.workTime === 'day')
+				this.workTitle = 'дневные';
+			else
+				this.workTitle = 'круглосуточные';
+		this.showWorkTimes = false;
+	}
+	//выбор района
+	setArea(num: number, area: string){
+		if(this.areaName == area)
+			return;
+
+		this.areaName = area;
+		this.area = num;
+
+		this.getArea(this.areaName, this.sortBy, this.workTime);
+		//this.myMap.geoObjects.removeAll();
+		//this.pharmsToMap();
+
 		switch(num){
 	        case 0:{
-	        	this.getArea(0, this.sortBy);
-	        	this.area = 0;
 	            this.myMap.setCenter([44.578526, 33.532156]);
 	            this.myMap.setZoom(11);
 	            break;
 	        }
 	        case 1:{
-	        	this.getArea(1, this.sortBy);
-	        	this.area = 1;
 	            this.myMap.setCenter([44.568588, 33.452416]);
 	            this.myMap.setZoom(13);
 	            break;
 	        }
 	        case 2:{
-	        	this.getArea(2, this.sortBy);
-	        	this.area = 2;
 	            this.myMap.setCenter([44.584961, 33.524793]);
 	            this.myMap.setZoom(13);
 	            break;
 	        }
 	        case 3:{
-	        	this.getArea(3, this.sortBy);
-	        	this.area = 3;
 	            this.myMap.setCenter([44.615463, 33.568546]);
 	            this.myMap.setZoom(13);
 	            break;
 	        }
 	        case 4:{
-	        	this.getArea(4, this.sortBy);
-	        	this.area = 4;
 	            this.myMap.setCenter([44.528813, 33.594336]);
 	            this.myMap.setZoom(13);
 	            break;
 	        }
 	    }
 	}
-
-	getArea(num: number, sortBy: string): void{
-		this.pharmacyService.getArea(num, sortBy)
+	//запрос о районе на сервер
+	getArea(area: string, sortBy: string, workTime: string): void{
+		this.pharmacyService.getArea(area, sortBy, workTime)
     		.then(data => {
-    			this.myMap.geoObjects.removeAll();
     			this.pharms = data;
-    			this.pharmsToMap();
+
+    			this.myMap.geoObjects.removeAll();
+		this.pharmsToMap();
     		});
 	}
-
+	//отобразить аптеки на карте
 	pharmsToMap(): void{
 		ymaps.ready().then(() => {
 			for (let pharm of this.pharms){

@@ -21,10 +21,10 @@ var PharmacyService = (function () {
         return this.http.get('/pharmacies.json').toPromise()
             .then(function (res) { return res.json(); });
     };
-    PharmacyService.prototype.getArea = function (area, sortBy) {
+    PharmacyService.prototype.getArea = function (area, sortBy, workTime) {
         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         var options = new http_1.RequestOptions({ headers: headers });
-        var body = JSON.stringify({ area: area, order: sortBy });
+        var body = JSON.stringify({ area: area, order: sortBy, time: workTime });
         return this.http.post('/change_area.json', body, options).toPromise()
             .then(function (res) { return res.json(); });
     };

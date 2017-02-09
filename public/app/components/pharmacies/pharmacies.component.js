@@ -15,22 +15,19 @@ var pharmacy_service_1 = require('../../services/pharmacy.service');
 var PharmaciesComponent = (function () {
     function PharmaciesComponent(pharmacyService) {
         this.pharmacyService = pharmacyService;
-        //change class for selected area
-        this.area = 0;
         this.pharms = [];
+        //параметры выбора района
+        this.area = 0;
+        this.areaName = 'Все';
+        //параметры сортировки
         this.showSortList = false;
         this.sortBy = 'name';
         this.sortTitle = 'по названию';
+        //параметры режима работы
+        this.showWorkTimes = false;
+        this.workTime = 'all';
+        this.workTitle = 'все';
     }
-    PharmaciesComponent.prototype.onSort = function (sortBy) {
-        this.sortBy = sortBy;
-        this.getArea(this.area, sortBy);
-        if (this.sortBy === 'name')
-            this.sortTitle = 'по названию';
-        else
-            this.sortTitle = 'по адресу';
-        this.showSortList = false;
-    };
     PharmaciesComponent.prototype.ngOnInit = function () {
         this.ymapsInit();
         this.getPharms();
@@ -68,54 +65,82 @@ var PharmaciesComponent = (function () {
             });
         });
     };
-    PharmaciesComponent.prototype.setArea = function (num) {
+    //сортировка
+    PharmaciesComponent.prototype.onSort = function (sortBy) {
+        if (this.sortBy === sortBy)
+            return;
+        this.sortBy = sortBy;
+        this.getArea(this.areaName, sortBy, this.workTime);
+        if (this.sortBy === 'name')
+            this.sortTitle = 'по названию';
+        else
+            this.sortTitle = 'по адресу';
+        this.showSortList = false;
+    };
+    //выбор времени работы
+    PharmaciesComponent.prototype.onWorktimeChange = function (time) {
+        if (this.workTime === time)
+            return;
+        this.workTime = time;
+        this.getArea(this.areaName, this.sortBy, time);
+        //this.myMap.geoObjects.removeAll();
+        //this.pharmsToMap();
+        if (this.workTime === 'all')
+            this.workTitle = 'все';
+        else if (this.workTime === 'day')
+            this.workTitle = 'дневные';
+        else
+            this.workTitle = 'круглосуточные';
+        this.showWorkTimes = false;
+    };
+    //выбор района
+    PharmaciesComponent.prototype.setArea = function (num, area) {
+        if (this.areaName == area)
+            return;
+        this.areaName = area;
+        this.area = num;
+        this.getArea(this.areaName, this.sortBy, this.workTime);
+        //this.myMap.geoObjects.removeAll();
+        //this.pharmsToMap();
         switch (num) {
             case 0: {
-                this.getArea(0, this.sortBy);
-                this.area = 0;
                 this.myMap.setCenter([44.578526, 33.532156]);
                 this.myMap.setZoom(11);
                 break;
             }
             case 1: {
-                this.getArea(1, this.sortBy);
-                this.area = 1;
                 this.myMap.setCenter([44.568588, 33.452416]);
                 this.myMap.setZoom(13);
                 break;
             }
             case 2: {
-                this.getArea(2, this.sortBy);
-                this.area = 2;
                 this.myMap.setCenter([44.584961, 33.524793]);
                 this.myMap.setZoom(13);
                 break;
             }
             case 3: {
-                this.getArea(3, this.sortBy);
-                this.area = 3;
                 this.myMap.setCenter([44.615463, 33.568546]);
                 this.myMap.setZoom(13);
                 break;
             }
             case 4: {
-                this.getArea(4, this.sortBy);
-                this.area = 4;
                 this.myMap.setCenter([44.528813, 33.594336]);
                 this.myMap.setZoom(13);
                 break;
             }
         }
     };
-    PharmaciesComponent.prototype.getArea = function (num, sortBy) {
+    //запрос о районе на сервер
+    PharmaciesComponent.prototype.getArea = function (area, sortBy, workTime) {
         var _this = this;
-        this.pharmacyService.getArea(num, sortBy)
+        this.pharmacyService.getArea(area, sortBy, workTime)
             .then(function (data) {
-            _this.myMap.geoObjects.removeAll();
             _this.pharms = data;
+            _this.myMap.geoObjects.removeAll();
             _this.pharmsToMap();
         });
     };
+    //отобразить аптеки на карте
     PharmaciesComponent.prototype.pharmsToMap = function () {
         var _this = this;
         ymaps.ready().then(function () {

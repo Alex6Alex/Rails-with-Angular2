@@ -38,7 +38,7 @@
 			            <li><a routerLink="/users/{{user_id}}" routerLinkActive="active"><span class="glyphicon glyphicon-home"></span> Профиль</a></li>
 			            <li><a href="#"><span class="glyphicon glyphicon-wrench"></span> Редактировать</a></li>
 			            <li role="separator" class="divider"></li>
-			            <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Выйти</a></li>
+			            <li><a class="logout" (click)="logOut()"><span class="glyphicon glyphicon-log-out"></span> Выйти</a></li>
 			        </ul>
         		</div>
         		<div *ngIf="!sign" class="login-registr">

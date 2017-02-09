@@ -22,6 +22,7 @@ var RegistrationComponent = (function () {
     RegistrationComponent.prototype.newUser = function () {
         var _this = this;
         this.sessionService.newUser(this.model).subscribe(function (data) {
+            _this.sessionService.signInState.next(true);
             var id = data.id;
             _this.router.navigateByUrl('/users/' + id);
         }, function (error) {

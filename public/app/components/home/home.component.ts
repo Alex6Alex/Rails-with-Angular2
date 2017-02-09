@@ -26,6 +26,7 @@ export class HomeComponent implements OnInit {
 	constructor(private sessionService: SessionService){}
 
 	ngOnInit(): void{
+		this.signState();
 		//get data from server
 		this.sessionService.isSignIn().subscribe(data => {
 			if(data.sign){
@@ -40,8 +41,8 @@ export class HomeComponent implements OnInit {
 			}
 			else{this.m = 1}
 		});
-	}
 
+	}
 	//functon for sign in button
 	onSubmit(): void{
 		this.signIn();
@@ -50,6 +51,14 @@ export class HomeComponent implements OnInit {
 	//function for send bool data to header
 	signInState(value: boolean){
 		this.sessionService.signInState.next(value);
+	}
+
+	//if log out via header
+	signState(){
+		this.sessionService.signInState.subscribe(status => {
+			this.sign = status;
+			if(!this.sign) this.m = 1;
+		});
 	}
 
 	//sign registered user in 

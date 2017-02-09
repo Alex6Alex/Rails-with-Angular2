@@ -181,6 +181,10 @@ html, body{
   text-decoration: none;
 }
 
+.logout{
+  cursor: pointer;
+}
+
 /*for ymaps*/
 /*for marker hint*/
 .my-hint {

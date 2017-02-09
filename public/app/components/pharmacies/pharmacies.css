@@ -53,17 +53,26 @@
 	position: relative;
 }
 
-.parameters>span{
+.parameters>div{
+	display: inline-block;
+	width: 200px;
+}
+
+.parameters>.worktime{
+	width: 250px;
+}
+
+.parameters>div>span{
 	color: #696969;
 }
 
-.parameters>.sort-type{
+.parameters>div>.sort-type{
+	
 	color: red;
 	cursor: pointer;
 }
 
 .sortlist{
-	width: 130px;
 	padding-top: 10px;
 	padding-bottom: 10px;
 	padding-left: 15px;
@@ -71,10 +80,19 @@
 	background-color: #FCF7DB;
 	border: 1px solid #C2C798;
 	border-radius: 3px;
+}
 
+.firstList{
 	position: absolute;
 	top: 20px;
 	left: 90px;
+	z-index: 10;
+}
+
+.secondList{
+	position: absolute;
+	top: 20px;
+	left: 303px;
 	z-index: 10;
 }
 

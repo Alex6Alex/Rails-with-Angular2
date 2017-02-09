@@ -37,14 +37,19 @@ export class AppComponent implements AfterViewInit, OnInit {
 
 	//listen changes from another rendering parts
 	ngAfterViewInit(){
-		this.signInState();
+		this.signState();
 	}
 
-	signInState(){
+	signState(){
 		this.sessionService.signInState.subscribe(status => {
 			this.sign = status;
 			if(this.sign) this.isSignIn();
 		});
+	}
+
+	//function for send bool data to listen between components
+	signInState(value: boolean){
+		this.sessionService.signInState.next(value);
 	}
 
 	//is user in system
@@ -62,8 +67,8 @@ export class AppComponent implements AfterViewInit, OnInit {
 	//user exit from system
 	logOut(): void{
 		this.sessionService.logOut(this.user_id).subscribe(data => {
-			this.sign = data;
-			//console.log(data);
+			this.sign = false;
+			this.signInState(false);
 		});
 	}
 }

@@ -33,15 +33,19 @@ var AppComponent = (function () {
     };
     //listen changes from another rendering parts
     AppComponent.prototype.ngAfterViewInit = function () {
-        this.signInState();
+        this.signState();
     };
-    AppComponent.prototype.signInState = function () {
+    AppComponent.prototype.signState = function () {
         var _this = this;
         this.sessionService.signInState.subscribe(function (status) {
             _this.sign = status;
             if (_this.sign)
                 _this.isSignIn();
         });
+    };
+    //function for send bool data to listen between components
+    AppComponent.prototype.signInState = function (value) {
+        this.sessionService.signInState.next(value);
     };
     //is user in system
     AppComponent.prototype.isSignIn = function () {
@@ -59,8 +63,8 @@ var AppComponent = (function () {
     AppComponent.prototype.logOut = function () {
         var _this = this;
         this.sessionService.logOut(this.user_id).subscribe(function (data) {
-            _this.sign = data;
-            //console.log(data);
+            _this.sign = false;
+            _this.signInState(false);
         });
     };
     AppComponent = __decorate([

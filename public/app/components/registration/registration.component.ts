@@ -21,6 +21,8 @@ export class RegistrationComponent {
 
 	newUser(): void{
 		this.sessionService.newUser(this.model).subscribe(data => {
+			this.sessionService.signInState.next(true);
+
             let id = data.id;
         	this.router.navigateByUrl('/users/' + id); 
         }, 

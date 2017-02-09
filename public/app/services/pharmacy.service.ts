@@ -14,10 +14,10 @@ export class PharmacyService{
 			.then(res => res.json());
 	}
 
-	getArea(area: number, sortBy: string): Promise<any>{
+	getArea(area: string, sortBy: string, workTime: string): Promise<any>{
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({ headers: headers });
-		let body = JSON.stringify({ area: area, order: sortBy });
+		let body = JSON.stringify({ area: area, order: sortBy, time: workTime });
 
 		return this.http.post('/change_area.json', body, options).toPromise()
 			.then(res => res.json());

@@ -15,17 +15,31 @@ class PharmaciesController < ApplicationController
   def change_area
     area = params[:area]
     order = params[:order]
-    case area
-    when 0
-      @pharmacies = Pharmacy.order(order)
-    when 1
-      @pharmacies = Pharmacy.where(area: "Гагаринский").order(order)
-    when 2
-      @pharmacies = Pharmacy.where(area: "Ленинский").order(order)
-    when 3
-      @pharmacies = Pharmacy.where(area: "Нахимовский").order(order)
-    when 4
-      @pharmacies = Pharmacy.where(area: "Балаклавский").order(order)
+    time = params[:time]
+    if area == 'Все'
+      if time == 'all'
+        @pharmacies = Pharmacy.order(order)
+      else
+        if time == 'day'
+          @pharmacies = Pharmacy.where.not(worktime: 'круглосуточно').order(order)
+        else
+          if time == 'allday'
+            @pharmacies = Pharmacy.where(worktime: 'круглосуточно').order(order)
+          end
+        end
+      end
+    else
+      if time == 'all'
+        @pharmacies = Pharmacy.where(area: area).order(order)
+      else
+        if time == 'day'
+          @pharmacies = Pharmacy.where(area: area).where.not(worktime: 'круглосуточно').order(order)
+        else
+          if time == 'allday'
+            @pharmacies = Pharmacy.where(area: area, worktime: 'круглосуточно').order(order)
+          end
+        end
+      end
     end
     respond_to do |format|
       #format.html { render 'layouts/application' }
