@@ -1,0 +1,49 @@
+.medicines{
+	margin-bottom: 20px;
+}
+/*форма поиска*/
+.medicines>form>.input-group>.form-control{
+	font-size: 1.6em;
+	height: 40px;
+}
+
+.medicines>form>.input-group>span{
+	position: static;
+	cursor: pointer;
+
+	background-color: #fff;
+	border-right: none;
+}
+
+.medicines>p{
+	color: #616161;
+ 	font-size: 1.1em;
+}
+
+.system{
+	width: 500px;
+	display: inline-block;
+	margin-top: 15px;
+}
+
+.first-row{
+	float: left;
+}
+
+.second-row{
+	float: right;
+}
+
+.system>ul{
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
+.system>ul>li{
+	list-style-type: none;
+}
+
+.system>ul>li>a{
+	text-decoration: none;
+	color: #1D751A;
+}
