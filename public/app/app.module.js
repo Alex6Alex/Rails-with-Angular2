@@ -13,6 +13,7 @@ var platform_browser_1 = require('@angular/platform-browser');
 var forms_1 = require('@angular/forms');
 var http_1 = require('@angular/http');
 var ngx_dropdown_1 = require('ngx-dropdown');
+var router_1 = require('@angular/router');
 var app_component_1 = require('./app.component');
 var home_component_1 = require('./components/home/home.component');
 var pharmacies_component_1 = require('./components/pharmacies/pharmacies.component');
@@ -31,7 +32,8 @@ var AppModule = (function () {
                 app_routing_module_1.AppRoutingModule,
                 http_1.HttpModule,
                 http_1.JsonpModule,
-                ngx_dropdown_1.DropdownModule
+                ngx_dropdown_1.DropdownModule,
+                router_1.RouterModule
             ],
             declarations: [
                 app_component_1.AppComponent,

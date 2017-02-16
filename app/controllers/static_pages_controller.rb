@@ -6,6 +6,7 @@ class StaticPagesController < ApplicationController
   		format.html { render 'layouts/application' }
       format.json { render :json => 'qwert'.to_json() }
   	end
+    #render :json => 'qwert'.to_json()
   end
 
   `def medicines

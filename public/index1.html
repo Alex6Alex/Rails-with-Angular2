@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>RERRR</title>
     <base href="/">
+    <meta charset="UTF-8">
+    <title>Справ1очная система аптек</title>
+    
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="./bower_component/bootstrap/dist/css/bootstrap.css">
-
-    
-    <!-- 1. Load libraries -->
+    <!-- 1. Load libraries <link rel="stylesheet" href="styles.css">-->
     <!-- Polyfill for older browsers -->
     <script src="assets/core-js/client/shim.min.js"></script>
 
@@ -23,9 +22,14 @@
             console.error(err);
         })
     </script>
+
+    <script type="text/javascript" src="https://api-maps.yandex.ru/2.1/?lang=ru_RU"></script>
 </head>
 <body>
-    <my-app></my-app>
-    
+<!-- 3. Display the application -->
+
+    <my-app>
+        <div class="spinner"></div>
+    </my-app>
 </body>
 </html>

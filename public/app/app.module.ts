@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpModule, JsonpModule } from '@angular/http';
 import { DropdownModule } from 'ngx-dropdown';
+import { RouterModule } from '@angular/router';
 
 import { AppComponent }  from './app.component';
 import { HomeComponent } from './components/home/home.component';
@@ -20,7 +21,8 @@ import { AppRoutingModule } from './app-routing.module';
   	AppRoutingModule,
     HttpModule,
     JsonpModule,
-    DropdownModule
+    DropdownModule,
+    RouterModule
   ],
   declarations: [ 
   	AppComponent,

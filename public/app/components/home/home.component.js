@@ -26,7 +26,6 @@ var HomeComponent = (function () {
     }
     HomeComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.signState();
         //get data from server
         this.sessionService.isSignIn().subscribe(function (data) {
             if (data.sign) {
@@ -37,9 +36,11 @@ var HomeComponent = (function () {
                 //function for send bool data to header
                 _this.signInState(true);
                 _this.m = 2;
+                _this.signState();
             }
             else {
                 _this.m = 1;
+                _this.signState();
             }
         });
     };

@@ -70,7 +70,7 @@ var PharmaciesComponent = (function () {
         if (this.sortBy === sortBy)
             return;
         this.sortBy = sortBy;
-        this.getArea(this.areaName, sortBy, this.workTime);
+        this.getArea(this.areaName, sortBy, this.workTime, false);
         if (this.sortBy === 'name')
             this.sortTitle = 'по названию';
         else
@@ -79,12 +79,10 @@ var PharmaciesComponent = (function () {
     };
     //выбор времени работы
     PharmaciesComponent.prototype.onWorktimeChange = function (time) {
-        if (this.workTime === time)
+        if (this.workTime == time)
             return;
         this.workTime = time;
-        this.getArea(this.areaName, this.sortBy, time);
-        //this.myMap.geoObjects.removeAll();
-        //this.pharmsToMap();
+        this.getArea(this.areaName, this.sortBy, this.workTime, true);
         if (this.workTime === 'all')
             this.workTitle = 'все';
         else if (this.workTime === 'day')
@@ -99,9 +97,7 @@ var PharmaciesComponent = (function () {
             return;
         this.areaName = area;
         this.area = num;
-        this.getArea(this.areaName, this.sortBy, this.workTime);
-        //this.myMap.geoObjects.removeAll();
-        //this.pharmsToMap();
+        this.getArea(this.areaName, this.sortBy, this.workTime, true);
         switch (num) {
             case 0: {
                 this.myMap.setCenter([44.578526, 33.532156]);
@@ -131,13 +127,15 @@ var PharmaciesComponent = (function () {
         }
     };
     //запрос о районе на сервер
-    PharmaciesComponent.prototype.getArea = function (area, sortBy, workTime) {
+    PharmaciesComponent.prototype.getArea = function (area, sortBy, workTime, refresh) {
         var _this = this;
         this.pharmacyService.getArea(area, sortBy, workTime)
             .then(function (data) {
             _this.pharms = data;
-            _this.myMap.geoObjects.removeAll();
-            _this.pharmsToMap();
+            if (refresh) {
+                _this.myMap.geoObjects.removeAll();
+                _this.pharmsToMap();
+            }
         });
     };
     //отобразить аптеки на карте

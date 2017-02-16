@@ -24,6 +24,7 @@ var AccountComponent = (function () {
         this.homeService.getData(this.router.url).subscribe(function (data) {
             _this.name = data.name;
             _this.email = data.email;
+            _this.created_at = data.created_at;
         });
     };
     AccountComponent = __decorate([

@@ -82,7 +82,7 @@ export class PharmaciesComponent implements OnInit {
 
 		this.sortBy = sortBy;
 
-		this.getArea(this.areaName, sortBy, this.workTime);
+		this.getArea(this.areaName, sortBy, this.workTime, false);
 
 		if(this.sortBy === 'name')
 			this.sortTitle = 'по названию';
@@ -93,14 +93,12 @@ export class PharmaciesComponent implements OnInit {
 
 	//выбор времени работы
 	onWorktimeChange(time: string){
-		if(this.workTime === time)
+		if(this.workTime == time)
 			return;
 
 		this.workTime = time;
 
-		this.getArea(this.areaName, this.sortBy, time);
-		//this.myMap.geoObjects.removeAll();
-		//this.pharmsToMap();
+		this.getArea(this.areaName, this.sortBy, this.workTime, true);
 
 		if(this.workTime === 'all')
 			this.workTitle = 'все';
@@ -118,9 +116,7 @@ export class PharmaciesComponent implements OnInit {
 		this.areaName = area;
 		this.area = num;
 
-		this.getArea(this.areaName, this.sortBy, this.workTime);
-		//this.myMap.geoObjects.removeAll();
-		//this.pharmsToMap();
+		this.getArea(this.areaName, this.sortBy, this.workTime, true);
 
 		switch(num){
 	        case 0:{
@@ -151,13 +147,14 @@ export class PharmaciesComponent implements OnInit {
 	    }
 	}
 	//запрос о районе на сервер
-	getArea(area: string, sortBy: string, workTime: string): void{
+	getArea(area: string, sortBy: string, workTime: string, refresh: boolean): void{
 		this.pharmacyService.getArea(area, sortBy, workTime)
     		.then(data => {
     			this.pharms = data;
-
-    			this.myMap.geoObjects.removeAll();
-		this.pharmsToMap();
+    			if(refresh){
+    				this.myMap.geoObjects.removeAll();
+					this.pharmsToMap();
+    			}
     		});
 	}
 	//отобразить аптеки на карте

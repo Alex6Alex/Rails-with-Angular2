@@ -13,6 +13,7 @@ import { HomeService } from '../../services/home.service';
 export class AccountComponent implements OnInit {
 	name: string;
 	email: string;
+	created_at: string;
 
 	constructor(private router: Router, private homeService: HomeService){}
 	
@@ -24,6 +25,7 @@ export class AccountComponent implements OnInit {
 		this.homeService.getData(this.router.url).subscribe(data => {
 			this.name = data.name;
 			this.email = data.email;
+			this.created_at = data.created_at;
 		});
 	}
 }

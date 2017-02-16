@@ -1,5 +1,8 @@
 <div class="user-info">
-	<h3>{{name}}</h3>
+	<div class="user-header">
+		<div class="user-icon"></div>
+		<h3>{{name}}</h3>
+	</div>
 	<div class="info-tags">
 		<p>Электронный адрес</p>
 		<p>Контактный номер</p>
@@ -8,11 +11,12 @@
 	</div>
 	<div class="information">
 		<p>{{email}}</p>
-		<p>number</p>
-		<p>count</p>
-		<p>regustr date</p>
+		<p>+7 978 777 555 666</p>
+		<p>0</p>
+		<p>{{created_at | date:'dd.MM.y'}}</p>
 	</div>
 </div>
 <div class="orders">
 	<h3>Заказы</h3>
+	<p>На данный момент заказов нет.</p>
 </div>

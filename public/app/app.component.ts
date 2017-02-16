@@ -29,7 +29,7 @@ export class AppComponent implements AfterViewInit, OnInit {
 	setTitle(title: string){
 		this.titleService.setTitle(title);
 	};
-
+	
 	//we need it if reload page which is not home page
 	ngOnInit(){
 		this.isSignIn();

@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit {
 	constructor(private sessionService: SessionService){}
 
 	ngOnInit(): void{
-		this.signState();
+		
 		//get data from server
 		this.sessionService.isSignIn().subscribe(data => {
 			if(data.sign){
@@ -38,10 +38,13 @@ export class HomeComponent implements OnInit {
 				this.signInState(true);
 
 				this.m = 2;
+				this.signState();
 			}
-			else{this.m = 1}
+			else{
+				this.m = 1
+				this.signState();
+			}
 		});
-
 	}
 	//functon for sign in button
 	onSubmit(): void{
