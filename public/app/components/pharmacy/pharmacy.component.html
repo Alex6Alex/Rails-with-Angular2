@@ -1,0 +1,29 @@
+<div class="pharmacy">
+	<form>
+		<div class="input-group">
+			<span class="input-group-addon glyphicon glyphicon-search">
+			</span>
+			<input class="form-control" placeholder="Название лекарства для поиска в аптеке"/>
+		</div>
+	</form>
+
+	<div class="pharmacy-info">
+		<h3>{{pharmacy.name}}</h3>
+		<table>
+			<tr>
+				<td>Адрес</td>
+				<td>{{pharmacy.address}}</td>
+			</tr>
+			<tr>
+				<td>Телефон</td>
+				<td>{{pharmacy.phone}}</td>
+			</tr>
+			<tr>
+				<td>Время работы</td>
+				<td>{{pharmacy.worktime}}</td>
+			</tr>
+		</table>
+	</div>
+	<div class="ymap" id="mymap">
+	</div>
+</div>

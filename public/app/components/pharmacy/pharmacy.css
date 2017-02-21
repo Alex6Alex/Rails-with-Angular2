@@ -1,0 +1,47 @@
+/*форма поиска*/
+.pharmacy>form>.input-group>.form-control{
+	font-size: 1.6em;
+	height: 40px;
+}
+
+.pharmacy>form>.input-group>span{
+	position: static;
+	cursor: pointer;
+
+	background-color: #fff;
+	border-right: none;
+}
+/*информация*/
+.pharmacy-info{
+	margin-top: 15px;
+	width: 300px;
+	display: inline-block;
+	float: left;
+
+	background-color: #F7FBD5;
+	border-radius: 5px;
+ 	border: 1px solid #C2C798;
+}
+
+.pharmacy-info>h3{
+	margin-left: 10px;
+	margin-top: 10px;
+	margin-bottom: 0;
+	height: 26px;
+}
+
+.pharmacy-info>table{
+	width: 300px;
+
+	border-collapse: separate;
+    border-spacing: 10px;
+}
+
+/*map*/
+.ymap{
+	width: 650px;
+	height: 350px;
+	margin-top: 15px;
+	float: right;
+	display: inline-block;
+}
