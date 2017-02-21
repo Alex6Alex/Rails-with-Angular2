@@ -17,6 +17,7 @@ var router_1 = require('@angular/router');
 var app_component_1 = require('./app.component');
 var home_component_1 = require('./components/home/home.component');
 var pharmacies_component_1 = require('./components/pharmacies/pharmacies.component');
+var pharmacy_component_1 = require('./components/pharmacy/pharmacy.component');
 var medicines_component_1 = require('./components/medicines/medicines.component');
 var registration_component_1 = require('./components/registration/registration.component');
 var account_component_1 = require('./components/account/account.component');
@@ -39,6 +40,7 @@ var AppModule = (function () {
                 app_component_1.AppComponent,
                 home_component_1.HomeComponent,
                 pharmacies_component_1.PharmaciesComponent,
+                pharmacy_component_1.PharmacyComponent,
                 medicines_component_1.MedicinesComponent,
                 registration_component_1.RegistrationComponent,
                 account_component_1.AccountComponent

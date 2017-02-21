@@ -1,5 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+
 import 'rxjs/add/operator/toPromise';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/map';
+import { Subject } from 'rxjs/Subject';
 
 import { PharmacyService } from '../../services/pharmacy.service';
 /// <reference path="ymaps.d.ts"/>
@@ -12,7 +19,11 @@ import { PharmacyService } from '../../services/pharmacy.service';
 })
 
 export class PharmaciesComponent implements OnInit {
+	items: Object;
 
+	showItems: boolean = false;
+	resultsIsShow: boolean = false;
+	
 	pharms = [];
 	myMap; HintLayout;
 
@@ -29,10 +40,30 @@ export class PharmaciesComponent implements OnInit {
 	workTitle = 'все';
 
 	constructor(private pharmacyService: PharmacyService){}
+	//поиск аптек
+	private searchStream = new Subject<string>();
+	searchPharm(term: string) {
+		//this.items = this.pharmacyService.search(term);
+		this.searchStream.next(term); 
+	}
 
-	ngOnInit(): void{
+	//скрывать результаты поиска, если кликнули на др. объект
+	onShowSearchRes(value: boolean){	
+		if (this.resultsIsShow) { return };
+		this.showItems = value;
+	}
+
+	ngOnInit(){
 		this.ymapsInit();
 		this.getPharms();
+
+		this.searchStream
+			.debounceTime(300)
+			.distinctUntilChanged()
+			.switchMap((term: string) => {
+				return this.pharmacyService.search(term)
+			})
+			.subscribe(res => { this.items = res });
 	}
 
 	getPharms(): Promise<number>{

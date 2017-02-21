@@ -12,6 +12,7 @@ var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
 var home_component_1 = require('./components/home/home.component');
 var pharmacies_component_1 = require('./components/pharmacies/pharmacies.component');
+var pharmacy_component_1 = require('./components/pharmacy/pharmacy.component');
 var medicines_component_1 = require('./components/medicines/medicines.component');
 var registration_component_1 = require('./components/registration/registration.component');
 var account_component_1 = require('./components/account/account.component');
@@ -45,6 +46,10 @@ var routes = [
     {
         path: 'medicines1/:category',
         component: medicines_component_1.MedicinesComponent
+    },
+    {
+        path: 'pharmacies/:id',
+        component: pharmacy_component_1.PharmacyComponent
     }
 ];
 var AppRoutingModule = (function () {

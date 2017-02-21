@@ -17,6 +17,7 @@ var PharmacyService = (function () {
         this.http = http;
         this.jsonp = jsonp;
     }
+    //для всех аптек
     PharmacyService.prototype.getPharms = function () {
         return this.http.get('/pharmacies.json').toPromise()
             .then(function (res) { return res.json(); });
@@ -27,6 +28,21 @@ var PharmacyService = (function () {
         var body = JSON.stringify({ area: area, order: sortBy, time: workTime });
         return this.http.post('/change_area.json', body, options).toPromise()
             .then(function (res) { return res.json(); });
+    };
+    PharmacyService.prototype.search = function (term) {
+        var url = '/search_pharms.json';
+        var params = new http_1.URLSearchParams();
+        params.set('search', term); // the user's search value
+        params.set('callback', 'JSONP_CALLBACK');
+        // TODO: Add error handling
+        return this.jsonp
+            .get(url, { search: params })
+            .map(function (res) { return res.json(); });
+    };
+    //для отдельной аптеки
+    PharmacyService.prototype.getPharmacy = function (path) {
+        return this.http.get(path + ".json")
+            .map(function (res) { return res.json(); });
     };
     PharmacyService = __decorate([
         core_1.Injectable(), 

@@ -19,13 +19,13 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@angular/common": "~2.4.0",
-    "@angular/compiler": "~2.4.0",
-    "@angular/core": "~2.4.0",
-    "@angular/forms": "~2.4.0",
-    "@angular/http": "~2.4.0",
-    "@angular/platform-browser": "~2.4.0",
-    "@angular/platform-browser-dynamic": "~2.4.0",
+    "@angular/common": "2.4.5",
+    "@angular/compiler": "2.4.5",
+    "@angular/core": "2.4.5",
+    "@angular/forms": "2.4.5",
+    "@angular/http": "2.4.5",
+    "@angular/platform-browser": "2.4.5",
+    "@angular/platform-browser-dynamic": "2.4.5",
     "@angular/router": "~3.4.0",
     "angular-in-memory-web-api": "~0.2.2",
     "core-js": "^2.4.1",
@@ -36,7 +36,7 @@
     "zone.js": "^0.7.4"
   },
   "devDependencies": {
-    "@types/jasmine": "^2.5.36",
+    "@types/jasmine": "2.5.41",
     "@types/node": "^6.0.46",
     "canonical-path": "0.0.2",
     "concurrently": "^3.1.0",
@@ -55,7 +55,7 @@
     "rimraf": "^2.5.4",
     "sass-loader": "^4.1.1",
     "tslint": "^3.15.1",
-    "typescript": "~2.0.10"
+    "typescript": "^2.0.0"
   },
   "repository": {}
 }

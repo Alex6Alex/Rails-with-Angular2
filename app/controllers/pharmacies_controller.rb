@@ -5,7 +5,8 @@ class PharmaciesController < ApplicationController
   # GET /pharmacies.json
   def index
     #Pharmacy.where(area: nil).destroy_all
-    @pharmacies = Pharmacy.order(:name)
+    @pharmacies = Pharmacy.select(:id, :name, :address, :phone, :worktime)
+      .order(:name)
     respond_to do |format|
       format.html { render 'layouts/application' }
       format.json { render :json => @pharmacies.to_json() }
@@ -18,25 +19,37 @@ class PharmaciesController < ApplicationController
     time = params[:time]
     if area == 'Все'
       if time == 'all'
-        @pharmacies = Pharmacy.order(order)
+        @pharmacies = Pharmacy.select(:id, :name, :address, :phone, :worktime)
+          .order(order)
       else
         if time == 'day'
-          @pharmacies = Pharmacy.where.not(worktime: 'круглосуточно').order(order)
+          @pharmacies = Pharmacy.select(:id, :name, :address, :phone, :worktime)
+            .where.not(worktime: 'круглосуточно')
+            .order(order)
         else
           if time == 'allday'
-            @pharmacies = Pharmacy.where(worktime: 'круглосуточно').order(order)
+            @pharmacies = Pharmacy.select(:id, :name, :address, :phone, :worktime)
+              .where(worktime: 'круглосуточно')
+              .order(order)
           end
         end
       end
     else
       if time == 'all'
-        @pharmacies = Pharmacy.where(area: area).order(order)
+        @pharmacies = Pharmacy.select(:id, :name, :address, :phone, :worktime)
+          .where(area: area)
+          .order(order)
       else
         if time == 'day'
-          @pharmacies = Pharmacy.where(area: area).where.not(worktime: 'круглосуточно').order(order)
+          @pharmacies = Pharmacy.select(:id, :name, :address, :phone, :worktime)
+            .where(area: area)
+            .where.not(worktime: 'круглосуточно')
+            .order(order)
         else
           if time == 'allday'
-            @pharmacies = Pharmacy.where(area: area, worktime: 'круглосуточно').order(order)
+            @pharmacies = Pharmacy.select(:id, :name, :address, :phone, :worktime)
+              .where(area: area, worktime: 'круглосуточно')
+              .order(order)
           end
         end
       end
@@ -47,9 +60,32 @@ class PharmaciesController < ApplicationController
     end
   end
 
+  def search
+    respond_to do |format|
+      #format.html { render 'layouts/application' }
+      if !params[:search].blank?
+        @searchedPharmacies = Pharmacy.select(:id, :name, :address)
+          .where('LOWER(name) LIKE LOWER(:param_name)', 
+          { :param_name => "%#{params[:search]}%" })
+      else
+        @searchedPharmacies = nil
+      end
+        
+      format.json { render :json => @searchedPharmacies.to_json(), 
+        :callback => params[:callback] }
+    end
+  end
+
   # GET /pharmacies/1
   # GET /pharmacies/1.json
   def show
+    if !@pharmacy.nil?
+      respond_to do |format|
+        format.html { render 'layouts/application' }
+        format.json { render :json => @pharmacy.to_json( 
+          :only => [:id, :name, :address, :phone, :worktime]) }
+      end
+    end
   end
 
   # GET /pharmacies/new

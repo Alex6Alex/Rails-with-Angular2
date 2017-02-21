@@ -8,6 +8,7 @@ import { RouterModule } from '@angular/router';
 import { AppComponent }  from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { PharmaciesComponent } from './components/pharmacies/pharmacies.component';
+import { PharmacyComponent } from './components/pharmacy/pharmacy.component';
 import { MedicinesComponent } from './components/medicines/medicines.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { AccountComponent} from './components/account/account.component';
@@ -28,6 +29,7 @@ import { AppRoutingModule } from './app-routing.module';
   	AppComponent,
   	HomeComponent,
     PharmaciesComponent,
+    PharmacyComponent,
     MedicinesComponent,
     RegistrationComponent,
     AccountComponent

@@ -10,11 +10,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 require('rxjs/add/operator/toPromise');
+require('rxjs/add/operator/debounceTime');
+require('rxjs/add/operator/distinctUntilChanged');
+require('rxjs/add/operator/switchMap');
+require('rxjs/add/operator/map');
+var Subject_1 = require('rxjs/Subject');
 var pharmacy_service_1 = require('../../services/pharmacy.service');
 /// <reference path="ymaps.d.ts"/>
 var PharmaciesComponent = (function () {
     function PharmaciesComponent(pharmacyService) {
         this.pharmacyService = pharmacyService;
+        this.showItems = false;
+        this.resultsIsShow = false;
         this.pharms = [];
         //параметры выбора района
         this.area = 0;
@@ -27,10 +34,32 @@ var PharmaciesComponent = (function () {
         this.showWorkTimes = false;
         this.workTime = 'all';
         this.workTitle = 'все';
+        //поиск аптек
+        this.searchStream = new Subject_1.Subject();
     }
+    PharmaciesComponent.prototype.searchPharm = function (term) {
+        //this.items = this.pharmacyService.search(term);
+        this.searchStream.next(term);
+    };
+    //скрывать результаты поиска, если кликнули на др. объект
+    PharmaciesComponent.prototype.onShowSearchRes = function (value) {
+        if (this.resultsIsShow) {
+            return;
+        }
+        ;
+        this.showItems = value;
+    };
     PharmaciesComponent.prototype.ngOnInit = function () {
+        var _this = this;
         this.ymapsInit();
         this.getPharms();
+        this.searchStream
+            .debounceTime(300)
+            .distinctUntilChanged()
+            .switchMap(function (term) {
+            return _this.pharmacyService.search(term);
+        })
+            .subscribe(function (res) { _this.items = res; });
     };
     PharmaciesComponent.prototype.getPharms = function () {
         var _this = this;

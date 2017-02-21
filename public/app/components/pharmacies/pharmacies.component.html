@@ -3,9 +3,15 @@
 		<div class="input-group">
 			<span class="input-group-addon glyphicon glyphicon-search">
 			</span>
-			<input type="text" class="form-control" placeholder="Название аптеки"/>
+			<input (focus)="onShowSearchRes(true)" (blur)="onShowSearchRes(false)" type="text" #pharmTerm (keyup)="searchPharm(pharmTerm.value)" class="form-control" placeholder="Название аптеки"/>
 		</div>
 	</form>
+
+	<ul class="search-result" *ngIf="items?.length>0 && showItems">
+		<li *ngFor="let item of items">
+			<a (mouseover)="(resultsIsShow = true)" (mouseleave)="(resultsIsShow = false)" routerLink="/pharmacies/{{item.id}}" routerLinkActive="active">{{item.name}} ({{item.address}})</a>
+		</li>
+	</ul>
 
 	<div class="area">
 		<div class="area-title">
@@ -44,7 +50,9 @@
 
 	<div class="pharms">
 		<div *ngFor="let pharm of pharms" class="pharm">
-			<p class="name">{{pharm.name}}</p>
+			<div>
+				<a routerLink="/pharmacies/{{pharm.id}}" routerLinkActive="active" class="name">{{pharm.name}}</a>
+			</div>
 			<p class="adress">{{pharm.address}}</p>
 			<p class="phone"><span class="glyphicon glyphicon-phone-alt"></span>  {{pharm.phone}}</p>
 			<p class="time">
