@@ -1,20 +1,28 @@
 <div class="user-info">
 	<div class="user-header">
 		<div class="user-icon"></div>
-		<h3>{{name}}</h3>
+		<h3>{{user.name}}</h3>
 	</div>
-	<div class="info-tags">
-		<p>Электронный адрес</p>
-		<p>Контактный номер</p>
-		<p>Количество заказов</p>
-		<p>Дата регистрации</p>
-	</div>
-	<div class="information">
-		<p>{{email}}</p>
-		<p>+7 978 777 555 666</p>
-		<p>0</p>
-		<p>{{created_at | date:'dd.MM.y'}}</p>
-	</div>
+
+	<table>
+		<tr>
+			<td>Электронный адрес</td>
+			<td>{{user.email}}</td>
+		</tr>
+		<tr>
+			<td>Контактный номер</td>
+			<td>{{user.phone}}</td>
+		</tr>
+		<tr>
+			<td>Количество заказов</td>
+			<td>0</td>
+		</tr>
+		<tr>
+			<td>Дата регистрации</td>
+			<td>{{user.created_at | date:'dd.MM.y'}}</td>
+		</tr>
+	</table>
+	
 </div>
 <div class="orders">
 	<h3>Заказы</h3>

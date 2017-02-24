@@ -19,6 +19,10 @@ var HomeService = (function () {
         return this.http.get(path + '.json')
             .map(function (res) { return res.json(); });
     };
+    HomeService.prototype.getUserData = function (path) {
+        return this.http.get(path + ".json")
+            .map(function (res) { return res.json(); });
+    };
     HomeService.prototype.getDates = function () {
         return this.http.get('/dates.json').map(function (res) { return res.json(); });
     };

@@ -16,15 +16,19 @@ var RegistrationComponent = (function () {
     function RegistrationComponent(sessionService, router) {
         this.sessionService = sessionService;
         this.router = router;
-        this.model = new user_1.User("", "", "", "");
+        this.model = new user_1.User(null, null, null, null, null);
         this.pattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$";
     }
     RegistrationComponent.prototype.newUser = function () {
         var _this = this;
         this.sessionService.newUser(this.model).subscribe(function (data) {
-            var id = data.id;
+            var id = null;
+            if (data.id)
+                id = data.id;
             _this.sessionService.signInState.next(true);
-            _this.router.navigateByUrl('/users/' + id);
+            if (id) {
+                _this.router.navigateByUrl("/users/" + id);
+            }
         }, function (error) {
             console.log(JSON.stringify(error.json()));
         });

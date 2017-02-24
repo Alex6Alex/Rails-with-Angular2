@@ -10,82 +10,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var platform_browser_1 = require('@angular/platform-browser');
+var medicine_service_1 = require('../../services/medicine.service');
 var MedicinesComponent = (function () {
-    function MedicinesComponent(title) {
-        this.atcGroups = [
-            {
-                code: 'A',
-                path: '/medicines1/A',
-                title: 'Пищеварительный тракт и обмен веществ'
-            },
-            {
-                code: 'B',
-                path: '/medicines/B',
-                title: 'Кроветворение и кровь'
-            },
-            {
-                code: 'C',
-                path: '/medicines/C',
-                title: 'Сердечно-сосудистая система'
-            },
-            {
-                code: 'D',
-                path: '/medicines/D',
-                title: 'Дерматологические препараты'
-            },
-            {
-                code: 'G',
-                path: '/medicines/G',
-                title: 'Mочеполовая система и половые гормоны'
-            },
-            {
-                code: 'H',
-                path: '/medicines/H',
-                title: 'Гормональные препараты для системного использования, исключая половые гормоны'
-            },
-            {
-                code: 'J',
-                path: '/medicines/J',
-                title: 'Противомикробные препараты для системного применения'
-            },
-            {
-                code: 'L',
-                path: '/medicines/L',
-                title: 'Противоопухолевые препараты и иммуномодуляторы'
-            },
-            {
-                code: 'M',
-                path: '/medicines/M',
-                title: 'Костно-мышечная система'
-            },
-            {
-                code: 'N',
-                path: '/medicines/N',
-                title: 'Нервная система'
-            },
-            {
-                code: 'P',
-                path: '/medicines/P',
-                title: 'Противопаразитарные препараты, инсектициды и репелленты'
-            },
-            {
-                code: 'R',
-                path: '/medicines/R',
-                title: 'Дыхательная система'
-            },
-            {
-                code: 'S',
-                path: '/medicines/S',
-                title: 'Органы чувств'
-            },
-            {
-                code: 'V',
-                path: '/medicines/V',
-                title: 'Прочие препараты'
-            }
-        ];
+    function MedicinesComponent(title, medicineService) {
+        this.medicineService = medicineService;
         //	title.setTitle('Поиск лекарств');
     }
+    MedicinesComponent.prototype.ngOnInit = function () {
+        this.getGroups();
+    };
+    MedicinesComponent.prototype.getGroups = function () {
+        var _this = this;
+        this.medicineService.getGroups()
+            .subscribe(function (data) {
+            _this.atcGroups = data;
+        });
+    };
     MedicinesComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
@@ -93,7 +33,7 @@ var MedicinesComponent = (function () {
             templateUrl: 'medicines.component.html',
             styleUrls: ['medicines.css']
         }), 
-        __metadata('design:paramtypes', [platform_browser_1.Title])
+        __metadata('design:paramtypes', [platform_browser_1.Title, medicine_service_1.MedicineService])
     ], MedicinesComponent);
     return MedicinesComponent;
 }());

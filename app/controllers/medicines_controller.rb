@@ -4,9 +4,10 @@ class MedicinesController < ApplicationController
   # GET /medicines
   # GET /medicines.json
   def index
+    @groups = AtcGroup.select(:id, :code, :description)
     respond_to do |format|
       format.html { render 'layouts/application' }
-      format.json { render :json => 'qwert'.to_json() }
+      format.json { render :json => @groups.to_json() }
     end
   end
 

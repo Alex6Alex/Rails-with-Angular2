@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { Observable } from 'rxjs/Observable';
+
 import { HomeService } from '../../services/home.service';
+import { User } from '../../models/user';
 
 @Component({
 	moduleId: module.id,
@@ -11,9 +14,7 @@ import { HomeService } from '../../services/home.service';
 })
 
 export class AccountComponent implements OnInit {
-	name: string;
-	email: string;
-	created_at: string;
+	user = new User(null, null, null, null, null);
 
 	constructor(private router: Router, private homeService: HomeService){}
 	
@@ -22,10 +23,8 @@ export class AccountComponent implements OnInit {
 	}
 
 	getUserInfo(): void{
-		this.homeService.getData(this.router.url).subscribe(data => {
-			this.name = data.name;
-			this.email = data.email;
-			this.created_at = data.created_at;
+		this.homeService.getUserData(this.router.url).subscribe(data => {
+			this.user = data;
 		});
 	}
 }

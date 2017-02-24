@@ -23,9 +23,11 @@ export class PharmaciesComponent implements OnInit {
 
 	showItems: boolean = false;
 	resultsIsShow: boolean = false;
+
+	searchTerm: string = null;
 	
 	pharms = [];
-	myMap; HintLayout;
+	myMap;
 
 	//параметры выбора района
 	area = 0;
@@ -51,6 +53,17 @@ export class PharmaciesComponent implements OnInit {
 	onShowSearchRes(value: boolean){	
 		if (this.resultsIsShow) { return };
 		this.showItems = value;
+	}
+
+	//результат поиска
+	onSubmit(value: string){
+		if (this.searchTerm === value)
+			return;
+		
+		this.searchTerm = value;
+
+		this.getArea(this.searchTerm, this.areaName, 
+					this.sortBy, this.workTime, true);	
 	}
 
 	ngOnInit(){
@@ -82,26 +95,6 @@ export class PharmaciesComponent implements OnInit {
 		        zoom: 11,
 		        controls: ['zoomControl', 'fullscreenControl']
 			});
-
-			this.HintLayout = ymaps.templateLayoutFactory.createClass( "<div class='my-hint'>" +
-		    "<b>{{ properties.title }}</b><br/> {{ properties.address }}" +
-		    "</div>", {
-		            getShape: function () {
-		                var el = this.getElement(),
-		                    result = null;
-		                if (el) {
-		                    var firstChild = el.firstChild;
-		                    result = new ymaps.shape.Rectangle(
-		                        new ymaps.geometry.pixel.Rectangle([
-		                            [0, 0],
-		                            [firstChild.offsetWidth, firstChild.offsetHeight]
-		                        ])
-		                    );
-		                }
-		                return result;
-		            }
-		        }
-		    );
 		});
 
 	}
@@ -113,7 +106,7 @@ export class PharmaciesComponent implements OnInit {
 
 		this.sortBy = sortBy;
 
-		this.getArea(this.areaName, sortBy, this.workTime, false);
+		this.getArea(this.searchTerm, this.areaName, sortBy, this.workTime, false);
 
 		if(this.sortBy === 'name')
 			this.sortTitle = 'по названию';
@@ -129,7 +122,8 @@ export class PharmaciesComponent implements OnInit {
 
 		this.workTime = time;
 
-		this.getArea(this.areaName, this.sortBy, this.workTime, true);
+		this.getArea(this.searchTerm, this.areaName, 
+					this.sortBy, this.workTime, true);
 
 		if(this.workTime === 'all')
 			this.workTitle = 'все';
@@ -147,7 +141,8 @@ export class PharmaciesComponent implements OnInit {
 		this.areaName = area;
 		this.area = num;
 
-		this.getArea(this.areaName, this.sortBy, this.workTime, true);
+		this.getArea(this.searchTerm, this.areaName, 
+					this.sortBy, this.workTime, true);
 
 		switch(num){
 	        case 0:{
@@ -178,8 +173,9 @@ export class PharmaciesComponent implements OnInit {
 	    }
 	}
 	//запрос о районе на сервер
-	getArea(area: string, sortBy: string, workTime: string, refresh: boolean): void{
-		this.pharmacyService.getArea(area, sortBy, workTime)
+	getArea(searchName: string, area: string, sortBy: string, 
+			workTime: string, refresh: boolean): void{
+		this.pharmacyService.getArea(searchName, area, sortBy, workTime)
     		.then(data => {
     			this.pharms = data;
     			if(refresh){
@@ -198,8 +194,14 @@ export class PharmaciesComponent implements OnInit {
 		                title: pharm.name,
 		                address: pharm.address
 		            }, {
-		                hintLayout: this.HintLayout,
-		                preset: 'islands#darkGreenMedicalIcon'
+		                preset: 'islands#darkGreenMedicalIcon',
+		                balloonPanelMaxMapArea: 0,
+            			openEmptyBalloon: true
+		            });
+
+		            myPlacemark.events.add('balloonopen', (e) => {
+		            	let content = `<h4>${pharm.name}</h4>${pharm.address}`;
+		            	myPlacemark.properties.set('balloonContent', content);
 		            });
 		            
 		            this.myMap.geoObjects.add(myPlacemark);

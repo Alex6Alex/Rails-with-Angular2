@@ -1,8 +1,9 @@
 "use strict";
 var User = (function () {
-    function User(name, email, password, password_confirmation) {
+    function User(name, email, phone, password, password_confirmation) {
         this.name = name;
         this.email = email;
+        this.phone = phone;
         this.password = password;
         this.password_confirmation = password_confirmation;
     }

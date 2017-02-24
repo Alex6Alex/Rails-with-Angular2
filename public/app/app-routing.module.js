@@ -14,6 +14,7 @@ var home_component_1 = require('./components/home/home.component');
 var pharmacies_component_1 = require('./components/pharmacies/pharmacies.component');
 var pharmacy_component_1 = require('./components/pharmacy/pharmacy.component');
 var medicines_component_1 = require('./components/medicines/medicines.component');
+var atc_group_component_1 = require('./components/atcGroup/atc.group.component');
 var registration_component_1 = require('./components/registration/registration.component');
 var account_component_1 = require('./components/account/account.component');
 var routes = [
@@ -32,8 +33,16 @@ var routes = [
         data: { preload: true }
     },
     {
-        path: 'medicines',
+        path: 'groups',
         component: medicines_component_1.MedicinesComponent
+    },
+    {
+        path: 'groups/:code',
+        component: atc_group_component_1.AtcGroupComponent
+    },
+    {
+        path: 'medicines/:group/:subgroup',
+        component: atc_group_component_1.AtcGroupComponent
     },
     {
         path: 'signup',
@@ -42,10 +51,6 @@ var routes = [
     {
         path: 'users/:id',
         component: account_component_1.AccountComponent
-    },
-    {
-        path: 'medicines1/:category',
-        component: medicines_component_1.MedicinesComponent
     },
     {
         path: 'pharmacies/:id',

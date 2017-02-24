@@ -20,11 +20,13 @@ export class SessionService{
     	let body = JSON.stringify({
 			name: user.name,
 			email: user.email,
+			phone: user.phone,
 			password: user.password,
 			password_confirmation: user.password_confirmation
     	});
 
-    	return this.http.post('/users.json', body, options).map(res => res.json());
+    	return this.http.post('/users.json', body, options)
+    						.map(res => res.json());
 	}
 
 	//sign in function for registrated user

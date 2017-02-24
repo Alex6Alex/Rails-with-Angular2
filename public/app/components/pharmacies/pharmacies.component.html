@@ -1,7 +1,7 @@
 <div class="pharmacies">
-	<form>
+	<form (submit)="onSubmit(pharmTerm.value); onShowSearchRes(false)">
 		<div class="input-group">
-			<span class="input-group-addon glyphicon glyphicon-search">
+			<span (click)="onSubmit(pharmTerm.value); onShowSearchRes(false)" class="input-group-addon glyphicon glyphicon-search">
 			</span>
 			<input (focus)="onShowSearchRes(true)" (blur)="onShowSearchRes(false)" type="text" #pharmTerm (keyup)="searchPharm(pharmTerm.value)" class="form-control" placeholder="Название аптеки"/>
 		</div>

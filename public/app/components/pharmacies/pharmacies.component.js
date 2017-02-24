@@ -22,6 +22,7 @@ var PharmaciesComponent = (function () {
         this.pharmacyService = pharmacyService;
         this.showItems = false;
         this.resultsIsShow = false;
+        this.searchTerm = null;
         this.pharms = [];
         //параметры выбора района
         this.area = 0;
@@ -48,6 +49,13 @@ var PharmaciesComponent = (function () {
         }
         ;
         this.showItems = value;
+    };
+    //результат поиска
+    PharmaciesComponent.prototype.onSubmit = function (value) {
+        if (this.searchTerm === value)
+            return;
+        this.searchTerm = value;
+        this.getArea(this.searchTerm, this.areaName, this.sortBy, this.workTime, true);
     };
     PharmaciesComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -77,21 +85,6 @@ var PharmaciesComponent = (function () {
                 zoom: 11,
                 controls: ['zoomControl', 'fullscreenControl']
             });
-            _this.HintLayout = ymaps.templateLayoutFactory.createClass("<div class='my-hint'>" +
-                "<b>{{ properties.title }}</b><br/> {{ properties.address }}" +
-                "</div>", {
-                getShape: function () {
-                    var el = this.getElement(), result = null;
-                    if (el) {
-                        var firstChild = el.firstChild;
-                        result = new ymaps.shape.Rectangle(new ymaps.geometry.pixel.Rectangle([
-                            [0, 0],
-                            [firstChild.offsetWidth, firstChild.offsetHeight]
-                        ]));
-                    }
-                    return result;
-                }
-            });
         });
     };
     //сортировка
@@ -99,7 +92,7 @@ var PharmaciesComponent = (function () {
         if (this.sortBy === sortBy)
             return;
         this.sortBy = sortBy;
-        this.getArea(this.areaName, sortBy, this.workTime, false);
+        this.getArea(this.searchTerm, this.areaName, sortBy, this.workTime, false);
         if (this.sortBy === 'name')
             this.sortTitle = 'по названию';
         else
@@ -111,7 +104,7 @@ var PharmaciesComponent = (function () {
         if (this.workTime == time)
             return;
         this.workTime = time;
-        this.getArea(this.areaName, this.sortBy, this.workTime, true);
+        this.getArea(this.searchTerm, this.areaName, this.sortBy, this.workTime, true);
         if (this.workTime === 'all')
             this.workTitle = 'все';
         else if (this.workTime === 'day')
@@ -126,7 +119,7 @@ var PharmaciesComponent = (function () {
             return;
         this.areaName = area;
         this.area = num;
-        this.getArea(this.areaName, this.sortBy, this.workTime, true);
+        this.getArea(this.searchTerm, this.areaName, this.sortBy, this.workTime, true);
         switch (num) {
             case 0: {
                 this.myMap.setCenter([44.578526, 33.532156]);
@@ -156,9 +149,9 @@ var PharmaciesComponent = (function () {
         }
     };
     //запрос о районе на сервер
-    PharmaciesComponent.prototype.getArea = function (area, sortBy, workTime, refresh) {
+    PharmaciesComponent.prototype.getArea = function (searchName, area, sortBy, workTime, refresh) {
         var _this = this;
-        this.pharmacyService.getArea(area, sortBy, workTime)
+        this.pharmacyService.getArea(searchName, area, sortBy, workTime)
             .then(function (data) {
             _this.pharms = data;
             if (refresh) {
@@ -178,8 +171,13 @@ var PharmaciesComponent = (function () {
                         title: pharm.name,
                         address: pharm.address
                     }, {
-                        hintLayout: _this.HintLayout,
-                        preset: 'islands#darkGreenMedicalIcon'
+                        preset: 'islands#darkGreenMedicalIcon',
+                        balloonPanelMaxMapArea: 0,
+                        openEmptyBalloon: true
+                    });
+                    myPlacemark.events.add('balloonopen', function (e) {
+                        var content = "<h4>" + pharm.name + "</h4>" + pharm.address;
+                        myPlacemark.properties.set('balloonContent', content);
                     });
                     _this.myMap.geoObjects.add(myPlacemark);
                 });

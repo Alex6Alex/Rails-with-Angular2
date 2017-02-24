@@ -40,6 +40,10 @@
 	border-left: 5px solid #a94442; /* red */
 }
 
+#phone{
+	border-left: 5px solid #66AFE9;
+}
+
 .alert{
 	margin-top: -20px;
 	border-top-right-radius: 0px;

@@ -20,15 +20,21 @@ class PharmaciesController < ApplicationController
     if area == 'Все'
       if time == 'all'
         @pharmacies = Pharmacy.select(:id, :name, :address, :phone, :worktime)
+          .where('LOWER(name) LIKE LOWER(:param_name)', 
+          { :param_name => "%#{params[:name]}%" })
           .order(order)
       else
         if time == 'day'
           @pharmacies = Pharmacy.select(:id, :name, :address, :phone, :worktime)
+            .where('LOWER(name) LIKE LOWER(:param_name)', 
+            { :param_name => "%#{params[:name]}%" })
             .where.not(worktime: 'круглосуточно')
             .order(order)
         else
           if time == 'allday'
             @pharmacies = Pharmacy.select(:id, :name, :address, :phone, :worktime)
+              .where('LOWER(name) LIKE LOWER(:param_name)', 
+              { :param_name => "%#{params[:name]}%" })
               .where(worktime: 'круглосуточно')
               .order(order)
           end
@@ -37,17 +43,23 @@ class PharmaciesController < ApplicationController
     else
       if time == 'all'
         @pharmacies = Pharmacy.select(:id, :name, :address, :phone, :worktime)
+          .where('LOWER(name) LIKE LOWER(:param_name)', 
+          { :param_name => "%#{params[:name]}%" })
           .where(area: area)
           .order(order)
       else
         if time == 'day'
           @pharmacies = Pharmacy.select(:id, :name, :address, :phone, :worktime)
+            .where('LOWER(name) LIKE LOWER(:param_name)', 
+            { :param_name => "%#{params[:name]}%" })
             .where(area: area)
             .where.not(worktime: 'круглосуточно')
             .order(order)
         else
           if time == 'allday'
             @pharmacies = Pharmacy.select(:id, :name, :address, :phone, :worktime)
+              .where('LOWER(name) LIKE LOWER(:param_name)', 
+              { :param_name => "%#{params[:name]}%" })
               .where(area: area, worktime: 'круглосуточно')
               .order(order)
           end

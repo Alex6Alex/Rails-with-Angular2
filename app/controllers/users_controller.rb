@@ -18,7 +18,8 @@ class UsersController < ApplicationController
     if !@user.nil?
       respond_to do |format|
         format.html { render 'layouts/application' }
-        format.json { render :json => @user.to_json()}
+        format.json { render :json => @user.to_json( :only => [:id, :name, :email, 
+          :phone, :created_at])}
       end
     else
       redirect_to root_url
@@ -45,17 +46,21 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
-    if @user.save
-        sign_in @user
-    respond_to do |format|
-      
-        format.html { render 'layouts/application' } #, notice: 'User was successfully created.' }
-        format.json { render :json => @user.to_json() }
-      #else
-      #  format.json { render json: @user.errors.to_json(), status: :unprocessable_entity }
-      #end
+    regExp = /^[\+][0-9]{1}[\(][0-9]{3}[\)][0-9]{3}[\-][0-9]{2}[\-][0-9]{2}$/
+    if !(regExp === @user.phone)
+      @user.phone = 'не указан'
     end
-  end
+
+    if @user.save
+      sign_in @user
+      respond_to do |format|
+        format.json { render :json => @user.to_json( :only => [:id]) }
+      end
+    `else
+      respond_to do |format|
+        format.json { render :json => '444'.to_json }
+      end`
+    end
   end
 
   # PATCH/PUT /users/1
@@ -90,6 +95,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.permit(:name, :email, :password, :password_confirmation)
+      params.permit(:name, :email, :phone, :password, :password_confirmation)
     end
 end

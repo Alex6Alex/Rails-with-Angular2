@@ -27,10 +27,12 @@ var SessionService = (function () {
         var body = JSON.stringify({
             name: user.name,
             email: user.email,
+            phone: user.phone,
             password: user.password,
             password_confirmation: user.password_confirmation
         });
-        return this.http.post('/users.json', body, options).map(function (res) { return res.json(); });
+        return this.http.post('/users.json', body, options)
+            .map(function (res) { return res.json(); });
     };
     //sign in function for registrated user
     SessionService.prototype.signIn = function (sessionData) {

@@ -11,20 +11,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
 var home_service_1 = require('../../services/home.service');
+var user_1 = require('../../models/user');
 var AccountComponent = (function () {
     function AccountComponent(router, homeService) {
         this.router = router;
         this.homeService = homeService;
+        this.user = new user_1.User(null, null, null, null, null);
     }
     AccountComponent.prototype.ngOnInit = function () {
         this.getUserInfo();
     };
     AccountComponent.prototype.getUserInfo = function () {
         var _this = this;
-        this.homeService.getData(this.router.url).subscribe(function (data) {
-            _this.name = data.name;
-            _this.email = data.email;
-            _this.created_at = data.created_at;
+        this.homeService.getUserData(this.router.url).subscribe(function (data) {
+            _this.user = data;
         });
     };
     AccountComponent = __decorate([

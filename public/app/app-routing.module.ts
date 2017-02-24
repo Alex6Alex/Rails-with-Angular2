@@ -5,6 +5,7 @@ import { HomeComponent } from './components/home/home.component';
 import { PharmaciesComponent } from './components/pharmacies/pharmacies.component';
 import { PharmacyComponent } from './components/pharmacy/pharmacy.component';
 import { MedicinesComponent } from './components/medicines/medicines.component';
+import { AtcGroupComponent } from './components/atcGroup/atc.group.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { AccountComponent} from './components/account/account.component';
 
@@ -24,8 +25,16 @@ const routes: Routes = [
 		data: { preload: true } 
 	},
 	{ 
-		path: 'medicines', 
+		path: 'groups', 
 		component: MedicinesComponent 
+	},
+	{ 
+		path: 'groups/:code', 
+		component: AtcGroupComponent 
+	},
+	{
+		path: 'medicines/:group/:subgroup',
+		component: AtcGroupComponent
 	},
 	{ 
 		path: 'signup', 
@@ -34,10 +43,6 @@ const routes: Routes = [
 	{ 
 		path: 'users/:id', 
 		component: AccountComponent 
-	},
-	{ 
-		path: 'medicines1/:category', 
-		component: MedicinesComponent 
 	},
 	{
 		path: 'pharmacies/:id',

@@ -12,17 +12,17 @@
 	<div class="system first-row">
 		<ul>
 			<li *ngFor="let group of atcGroups | slice:0:7">
-				<a routerLink='{{group.path}}' routerLinkActive="active">
-					<p><strong>{{group.code}}</strong> {{group.title}}</p>
+				<a routerLink='/groups/{{group.code}}' routerLinkActive="active">
+					<p><strong>{{group.code}}</strong> {{group.description}}</p>
 				</a>
 			</li>
 		</ul>
 	</div>
 	<div class="system second-row">
 		<ul>
-			<li *ngFor="let group of atcGroups | slice:7">
-				<a routerLink='{{group.path}}' routerLinkActive="active">
-					<p><strong>{{group.code}}</strong> {{group.title}}</p>
+			<li *ngFor="let group of atcGroups | slice:7:14">
+				<a routerLink='/groups/{{group.code}}' routerLinkActive="active">
+					<p><strong>{{group.code}}</strong> {{group.description}}</p>
 				</a>
 			</li>
 		</ul>

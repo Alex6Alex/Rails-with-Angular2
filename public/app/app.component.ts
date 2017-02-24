@@ -5,6 +5,7 @@ import { Title } from '@angular/platform-browser';
 import { HomeService } from './services/home.service';
 import { SessionService } from './services/session.service';
 import { PharmacyService } from './services/pharmacy.service';
+import { MedicineService } from './services/medicine.service';
 
 @Component({
 	moduleId: module.id,
@@ -12,7 +13,7 @@ import { PharmacyService } from './services/pharmacy.service';
   	encapsulation: ViewEncapsulation.None,
   	templateUrl: 'app.component.html',
   	styleUrls: ['../styles.css'],
-  	providers: [ HomeService, SessionService, PharmacyService ]
+  	providers: [ HomeService, SessionService, PharmacyService, MedicineService ]
 })
 
 export class AppComponent implements AfterViewInit, OnInit {

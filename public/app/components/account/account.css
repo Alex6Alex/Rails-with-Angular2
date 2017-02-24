@@ -6,7 +6,7 @@
 	//margin-right: 20px;
  	display: inline-block;
  	float: left;
- 	max-width: 400px;
+ 	width: 350px;
  	background-color: #F7FBD5;
 
  	padding-left: 25px;
@@ -20,7 +20,7 @@
 
 .user-info>.user-header{
   margin-top: 15px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   height: 40px;
   display: table;
   border-collapse: separate;
@@ -41,15 +41,11 @@
   vertical-align: middle;
 }
 
-.user-info>.info-tags{
-	width: 150px;
-	display: inline-block;
-	float: left;
-}
+.user-info>table{
+  width: 320px;
 
-.user-info>.information{
-	width: 150px;
-	display: inline-block;
+  border-collapse: separate;
+  border-spacing: 5px;
 }
 
 .orders{
