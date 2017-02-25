@@ -59,8 +59,8 @@ var PharmaciesComponent = (function () {
     };
     PharmaciesComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.ymapsInit();
         this.getPharms();
+        this.ymapsInit();
         this.searchStream
             .debounceTime(300)
             .distinctUntilChanged()
@@ -176,7 +176,7 @@ var PharmaciesComponent = (function () {
                         openEmptyBalloon: true
                     });
                     myPlacemark.events.add('balloonopen', function (e) {
-                        var content = "<h4>" + pharm.name + "</h4>" + pharm.address;
+                        var content = "\n\t\t            \t\t<h4>" + pharm.name + "</h4>\n\t\t            \t\t" + pharm.address + "\n\t\t            \t";
                         myPlacemark.properties.set('balloonContent', content);
                     });
                     _this.myMap.geoObjects.add(myPlacemark);

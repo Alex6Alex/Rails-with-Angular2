@@ -6,6 +6,9 @@ Rails.application.routes.draw do
 	  resources :static_pages
 	  resources :groups, param: :code
 	  resources :sessions, only: [:new, :create, :destroy, :sign_state]
+	  scope path: "groups/:atc_group_id" do
+	  	resources :sub_groups, :path => '/', param: :code
+	  end
 		#get '/home' => 'static_pages#home', defaults: {format: :json}
 
 		root 'application#index'
@@ -17,10 +20,6 @@ Rails.application.routes.draw do
 		match '/signstate', to: 'sessions#sign_state', via: 'post'
 		match '/change_area', to: 'pharmacies#change_area', via: 'post'
 		match '/search_pharms', to: 'pharmacies#search', via: 'get'
-
-		get '/groups/:code', to: 'groups#show'
-		#match '/medicines/:code/:code', to: 'medicines#showSubGroup', via: 'get'
-		#match '/medicines/:code/:code/:id', to: 'medicines#show', via: 'get'
 
 	#match '*path' => redirect('/'), via: :get
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

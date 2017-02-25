@@ -67,8 +67,8 @@ export class PharmaciesComponent implements OnInit {
 	}
 
 	ngOnInit(){
-		this.ymapsInit();
 		this.getPharms();
+		this.ymapsInit();
 
 		this.searchStream
 			.debounceTime(300)
@@ -200,7 +200,10 @@ export class PharmaciesComponent implements OnInit {
 		            });
 
 		            myPlacemark.events.add('balloonopen', (e) => {
-		            	let content = `<h4>${pharm.name}</h4>${pharm.address}`;
+		            	let content = `
+		            		<h4>${pharm.name}</h4>
+		            		${pharm.address}
+		            	`;
 		            	myPlacemark.properties.set('balloonContent', content);
 		            });
 		            

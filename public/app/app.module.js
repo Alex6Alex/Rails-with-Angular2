@@ -47,7 +47,8 @@ var AppModule = (function () {
                 registration_component_1.RegistrationComponent,
                 account_component_1.AccountComponent
             ],
-            bootstrap: [app_component_1.AppComponent]
+            bootstrap: [app_component_1.AppComponent],
+            providers: [platform_browser_1.Title]
         }), 
         __metadata('design:paramtypes', [])
     ], AppModule);

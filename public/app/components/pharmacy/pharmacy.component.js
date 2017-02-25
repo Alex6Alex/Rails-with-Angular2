@@ -10,13 +10,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
+var platform_browser_1 = require('@angular/platform-browser');
 var pharmacy_service_1 = require('../../services/pharmacy.service');
 var pharmacy_1 = require('../../models/pharmacy');
 /// <reference path="ymaps.d.ts"/>
 var PharmacyComponent = (function () {
-    function PharmacyComponent(router, pharmacyService) {
+    function PharmacyComponent(router, pharmacyService, title) {
         this.router = router;
         this.pharmacyService = pharmacyService;
+        this.title = title;
         this.pharmacy = new pharmacy_1.Pharmacy(null, null, null, null, null);
     }
     PharmacyComponent.prototype.ngOnInit = function () {
@@ -24,6 +26,7 @@ var PharmacyComponent = (function () {
         this.pharmacyService.getPharmacy(this.router.url)
             .subscribe(function (data) {
             _this.pharmacy = data;
+            //this.title.setTitle(this.pharmacy.name);
             _this.ymapsInit(data.address);
         });
     };
@@ -55,7 +58,7 @@ var PharmacyComponent = (function () {
             templateUrl: 'pharmacy.component.html',
             styleUrls: ['pharmacy.css']
         }), 
-        __metadata('design:paramtypes', [router_1.Router, pharmacy_service_1.PharmacyService])
+        __metadata('design:paramtypes', [router_1.Router, pharmacy_service_1.PharmacyService, platform_browser_1.Title])
     ], PharmacyComponent);
     return PharmacyComponent;
 }());

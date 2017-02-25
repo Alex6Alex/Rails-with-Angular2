@@ -18,10 +18,8 @@ export class AtcGroupComponent implements OnInit {
 	group = new Group(null, null, null);
 	subGroups: SubGroup[];
 
-	constructor(title: Title, private router:Router, 
-				private medicineService: MedicineService){
-	//	title.setTitle('Поиск лекарств');
-	}
+	constructor(private title: Title, private router: Router, 
+				private medicineService: MedicineService){}
 
 	ngOnInit(): void{
 		this.getSubGroups();
@@ -32,6 +30,8 @@ export class AtcGroupComponent implements OnInit {
 							.subscribe(data => {
 								this.group = data.group;
 								this.subGroups = data.subgroups;
+
+								//setTitle(this.group.description);
 							});
 	}
 

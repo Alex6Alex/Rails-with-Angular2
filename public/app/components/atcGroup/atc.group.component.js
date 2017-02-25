@@ -15,10 +15,10 @@ var medicine_service_1 = require('../../services/medicine.service');
 var atcGroups_1 = require('../../models/atcGroups');
 var AtcGroupComponent = (function () {
     function AtcGroupComponent(title, router, medicineService) {
+        this.title = title;
         this.router = router;
         this.medicineService = medicineService;
         this.group = new atcGroups_1.Group(null, null, null);
-        //	title.setTitle('Поиск лекарств');
     }
     AtcGroupComponent.prototype.ngOnInit = function () {
         this.getSubGroups();
@@ -29,6 +29,7 @@ var AtcGroupComponent = (function () {
             .subscribe(function (data) {
             _this.group = data.group;
             _this.subGroups = data.subgroups;
+            //setTitle(this.group.description);
         });
     };
     AtcGroupComponent = __decorate([

@@ -1,5 +1,13 @@
-<h3><b>{{group.code}}</b> {{group.description}}</h3>
+<div class="atc-group">
 
-<div>
-	<a routerLink="" routerLinkActive="active" *ngFor="let subGroup of subGroups">{{subGroup.code}} {{subGroup.description}}</a>
+	<p><b>{{group.code}}</b> {{group.description}}</p>
+
+	<ul>
+		<li *ngFor="let subGroup of subGroups">
+			<a routerLink='/{{router.url}}/{{subGroup.code}}' routerLinkActive="active">
+				<p><strong>{{subGroup.code}}</strong> {{subGroup.description}}</p>
+			</a>
+		</li>
+	</ul>
+
 </div>

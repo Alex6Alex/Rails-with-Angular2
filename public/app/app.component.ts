@@ -27,7 +27,7 @@ export class AppComponent implements AfterViewInit, OnInit {
 		private sessionService: SessionService){}
 
 	//title for pages
-	setTitle(title: string){
+	public setTitle(title: string){
 		this.titleService.setTitle(title);
 	};
 	

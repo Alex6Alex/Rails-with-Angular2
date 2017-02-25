@@ -33,7 +33,7 @@ const routes: Routes = [
 		component: AtcGroupComponent 
 	},
 	{
-		path: 'medicines/:group/:subgroup',
+		path: 'groups/:code/:sub_code',
 		component: AtcGroupComponent
 	},
 	{ 

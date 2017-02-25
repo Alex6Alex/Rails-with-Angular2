@@ -1,0 +1,19 @@
+.atc-group>p{
+	font-size: 1.8em;
+}
+
+.atc-group>ul{
+	padding-left: 0px;
+}
+
+.atc-group>ul>li{
+	list-style-type: none;
+}
+
+.atc-group>ul>li>a{
+	font-size: 1.13em;
+	cursor: pointer;
+	text-decoration: none;
+	color: #1D751A;
+	display: inline-block;
+}

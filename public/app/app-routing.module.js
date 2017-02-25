@@ -41,7 +41,7 @@ var routes = [
         component: atc_group_component_1.AtcGroupComponent
     },
     {
-        path: 'medicines/:group/:subgroup',
+        path: 'groups/:code/:sub_code',
         component: atc_group_component_1.AtcGroupComponent
     },
     {

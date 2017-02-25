@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 import { Observable } from 'rxjs/Observable';
 
@@ -17,12 +18,15 @@ import { Pharmacy } from '../../models/pharmacy';
 export class PharmacyComponent implements OnInit {
 	pharmacy = new Pharmacy(null, null, null, null, null);
 
-	constructor(private router: Router, private pharmacyService: PharmacyService){}
+	constructor(private router: Router, private pharmacyService: PharmacyService,
+				private title: Title){}
 
 	ngOnInit(){
 		this.pharmacyService.getPharmacy(this.router.url)
 							.subscribe(data => {
 								this.pharmacy = data;
+
+								//this.title.setTitle(this.pharmacy.name);
 								this.ymapsInit(data.address);
 							});
 	}
