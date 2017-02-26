@@ -1,3 +1,3 @@
 class Medicine < ApplicationRecord
-	#belongs_to :atcSubGroups
+	belongs_to :atcSubGroups
 end
