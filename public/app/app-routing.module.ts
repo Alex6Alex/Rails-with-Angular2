@@ -4,8 +4,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { PharmaciesComponent } from './components/pharmacies/pharmacies.component';
 import { PharmacyComponent } from './components/pharmacy/pharmacy.component';
-import { MedicinesComponent } from './components/medicines/medicines.component';
+import { GroupsComponent } from './components/groups/groups.component';
 import { AtcGroupComponent } from './components/atcGroup/atc.group.component';
+import { AtcSubGroupComponent } from './components/atcSubGroup/atc.sub.group.component';
+import { MedicineComponent } from './components/medicine/medicine.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { AccountComponent} from './components/account/account.component';
 
@@ -26,7 +28,7 @@ const routes: Routes = [
 	},
 	{ 
 		path: 'groups', 
-		component: MedicinesComponent 
+		component: GroupsComponent 
 	},
 	{ 
 		path: 'groups/:code', 
@@ -34,7 +36,11 @@ const routes: Routes = [
 	},
 	{
 		path: 'groups/:code/:sub_code',
-		component: AtcGroupComponent
+		component: AtcSubGroupComponent
+	},
+	{
+		path: 'groups/:code/:sub_code/:id',
+		component: MedicineComponent
 	},
 	{ 
 		path: 'signup', 

@@ -11,8 +11,8 @@ class SubGroupsController < ApplicationController
   def show
     respond_to do |format|
       format.html { render 'layouts/application' }
-      format.json { render :json => {:group => @sub_group, 
-        :subgroups => nil }.to_json() }
+      format.json { render :json => {:subgroup => @sub_group, 
+        :medicines => @sub_group.medicines }.to_json() }
     end
   end
   

@@ -5,31 +5,31 @@ import { Title } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
 
 import { MedicineService } from '../../services/medicine.service';
-import { Group, SubGroup } from '../../models/atcGroups';
+import { Medicine, SubGroup } from '../../models/atcGroups';
 
 @Component({
 	moduleId: module.id,
-	selector: 'atcgroup',
-	templateUrl: 'atc.group.component.html',
-	styleUrls: ['atc.group.css']
+	selector: 'atc-sub-group',
+	templateUrl: 'atc.sub.group.component.html',
+	styleUrls: ['atc.sub.group.css']
 })
 
-export class AtcGroupComponent implements OnInit {
-	group = new Group(null, null, null);
-	subGroups: SubGroup[];
+export class AtcSubGroupComponent implements OnInit {
+	subGroup = new SubGroup(null, null, null);
+	medicines: Medicine[];
 
 	constructor(private title: Title, private router: Router, 
 				private medicineService: MedicineService){}
 
 	ngOnInit(): void{
-		this.getSubGroups();
+		this.getMedicines();
 	}
 
-	getSubGroups() {
-		this.medicineService.getSubGroups(this.router.url)
+	getMedicines() {
+		this.medicineService.getMedicines(this.router.url)
 							.subscribe(data => {
-								this.group = data.group;
-								this.subGroups = data.subgroups;
+								this.subGroup = data.subgroup;
+								this.medicines = data.medicines;
 
 								//setTitle(this.group.description);
 							});

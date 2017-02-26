@@ -17,4 +17,17 @@ var SubGroup = (function () {
     return SubGroup;
 }());
 exports.SubGroup = SubGroup;
+var Medicine = (function () {
+    function Medicine(id, name, form, 
+        //public package: string,
+        comment, atc_sub_group_id) {
+        this.id = id;
+        this.name = name;
+        this.form = form;
+        this.comment = comment;
+        this.atc_sub_group_id = atc_sub_group_id;
+    }
+    return Medicine;
+}());
+exports.Medicine = Medicine;
 //# sourceMappingURL=atcGroups.js.map

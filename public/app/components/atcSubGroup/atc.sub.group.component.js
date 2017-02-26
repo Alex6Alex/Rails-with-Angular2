@@ -13,35 +13,35 @@ var router_1 = require('@angular/router');
 var platform_browser_1 = require('@angular/platform-browser');
 var medicine_service_1 = require('../../services/medicine.service');
 var atcGroups_1 = require('../../models/atcGroups');
-var AtcGroupComponent = (function () {
-    function AtcGroupComponent(title, router, medicineService) {
+var AtcSubGroupComponent = (function () {
+    function AtcSubGroupComponent(title, router, medicineService) {
         this.title = title;
         this.router = router;
         this.medicineService = medicineService;
-        this.group = new atcGroups_1.Group(null, null, null);
+        this.subGroup = new atcGroups_1.SubGroup(null, null, null);
     }
-    AtcGroupComponent.prototype.ngOnInit = function () {
-        this.getSubGroups();
+    AtcSubGroupComponent.prototype.ngOnInit = function () {
+        this.getMedicines();
     };
-    AtcGroupComponent.prototype.getSubGroups = function () {
+    AtcSubGroupComponent.prototype.getMedicines = function () {
         var _this = this;
-        this.medicineService.getSubGroups(this.router.url)
+        this.medicineService.getMedicines(this.router.url)
             .subscribe(function (data) {
-            _this.group = data.group;
-            _this.subGroups = data.subgroups;
+            _this.subGroup = data.subgroup;
+            _this.medicines = data.medicines;
             //setTitle(this.group.description);
         });
     };
-    AtcGroupComponent = __decorate([
+    AtcSubGroupComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
-            selector: 'atcgroup',
-            templateUrl: 'atc.group.component.html',
-            styleUrls: ['atc.group.css']
+            selector: 'atc-sub-group',
+            templateUrl: 'atc.sub.group.component.html',
+            styleUrls: ['atc.sub.group.css']
         }), 
         __metadata('design:paramtypes', [platform_browser_1.Title, router_1.Router, medicine_service_1.MedicineService])
-    ], AtcGroupComponent);
-    return AtcGroupComponent;
+    ], AtcSubGroupComponent);
+    return AtcSubGroupComponent;
 }());
-exports.AtcGroupComponent = AtcGroupComponent;
-//# sourceMappingURL=atc.group.component.js.map
+exports.AtcSubGroupComponent = AtcSubGroupComponent;
+//# sourceMappingURL=atc.sub.group.component.js.map

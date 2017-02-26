@@ -18,8 +18,10 @@ var app_component_1 = require('./app.component');
 var home_component_1 = require('./components/home/home.component');
 var pharmacies_component_1 = require('./components/pharmacies/pharmacies.component');
 var pharmacy_component_1 = require('./components/pharmacy/pharmacy.component');
-var medicines_component_1 = require('./components/medicines/medicines.component');
+var groups_component_1 = require('./components/groups/groups.component');
 var atc_group_component_1 = require('./components/atcGroup/atc.group.component');
+var atc_sub_group_component_1 = require('./components/atcSubGroup/atc.sub.group.component');
+var medicine_component_1 = require('./components/medicine/medicine.component');
 var registration_component_1 = require('./components/registration/registration.component');
 var account_component_1 = require('./components/account/account.component');
 var app_routing_module_1 = require('./app-routing.module');
@@ -42,8 +44,10 @@ var AppModule = (function () {
                 home_component_1.HomeComponent,
                 pharmacies_component_1.PharmaciesComponent,
                 pharmacy_component_1.PharmacyComponent,
-                medicines_component_1.MedicinesComponent,
+                groups_component_1.GroupsComponent,
                 atc_group_component_1.AtcGroupComponent,
+                atc_sub_group_component_1.AtcSubGroupComponent,
+                medicine_component_1.MedicineComponent,
                 registration_component_1.RegistrationComponent,
                 account_component_1.AccountComponent
             ],

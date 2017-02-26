@@ -9,39 +9,33 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var router_1 = require('@angular/router');
 var platform_browser_1 = require('@angular/platform-browser');
 var medicine_service_1 = require('../../services/medicine.service');
-var atcGroups_1 = require('../../models/atcGroups');
-var AtcGroupComponent = (function () {
-    function AtcGroupComponent(title, router, medicineService) {
-        this.title = title;
-        this.router = router;
+var GroupsComponent = (function () {
+    function GroupsComponent(title, medicineService) {
         this.medicineService = medicineService;
-        this.group = new atcGroups_1.Group(null, null, null);
+        //	title.setTitle('Поиск лекарств');
     }
-    AtcGroupComponent.prototype.ngOnInit = function () {
-        this.getSubGroups();
+    GroupsComponent.prototype.ngOnInit = function () {
+        this.getGroups();
     };
-    AtcGroupComponent.prototype.getSubGroups = function () {
+    GroupsComponent.prototype.getGroups = function () {
         var _this = this;
-        this.medicineService.getSubGroups(this.router.url)
+        this.medicineService.getGroups()
             .subscribe(function (data) {
-            _this.group = data.group;
-            _this.subGroups = data.subgroups;
-            //setTitle(this.group.description);
+            _this.atcGroups = data;
         });
     };
-    AtcGroupComponent = __decorate([
+    GroupsComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
-            selector: 'atcgroup',
-            templateUrl: 'atc.group.component.html',
-            styleUrls: ['atc.group.css']
+            selector: 'groups',
+            templateUrl: 'groups.component.html',
+            styleUrls: ['groups.css']
         }), 
-        __metadata('design:paramtypes', [platform_browser_1.Title, router_1.Router, medicine_service_1.MedicineService])
-    ], AtcGroupComponent);
-    return AtcGroupComponent;
+        __metadata('design:paramtypes', [platform_browser_1.Title, medicine_service_1.MedicineService])
+    ], GroupsComponent);
+    return GroupsComponent;
 }());
-exports.AtcGroupComponent = AtcGroupComponent;
-//# sourceMappingURL=atc.group.component.js.map
+exports.GroupsComponent = GroupsComponent;
+//# sourceMappingURL=groups.component.js.map

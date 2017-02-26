@@ -13,8 +13,10 @@ var router_1 = require('@angular/router');
 var home_component_1 = require('./components/home/home.component');
 var pharmacies_component_1 = require('./components/pharmacies/pharmacies.component');
 var pharmacy_component_1 = require('./components/pharmacy/pharmacy.component');
-var medicines_component_1 = require('./components/medicines/medicines.component');
+var groups_component_1 = require('./components/groups/groups.component');
 var atc_group_component_1 = require('./components/atcGroup/atc.group.component');
+var atc_sub_group_component_1 = require('./components/atcSubGroup/atc.sub.group.component');
+var medicine_component_1 = require('./components/medicine/medicine.component');
 var registration_component_1 = require('./components/registration/registration.component');
 var account_component_1 = require('./components/account/account.component');
 var routes = [
@@ -34,7 +36,7 @@ var routes = [
     },
     {
         path: 'groups',
-        component: medicines_component_1.MedicinesComponent
+        component: groups_component_1.GroupsComponent
     },
     {
         path: 'groups/:code',
@@ -42,7 +44,11 @@ var routes = [
     },
     {
         path: 'groups/:code/:sub_code',
-        component: atc_group_component_1.AtcGroupComponent
+        component: atc_sub_group_component_1.AtcSubGroupComponent
+    },
+    {
+        path: 'groups/:code/:sub_code/:id',
+        component: medicine_component_1.MedicineComponent
     },
     {
         path: 'signup',

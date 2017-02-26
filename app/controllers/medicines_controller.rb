@@ -11,9 +11,14 @@ class MedicinesController < ApplicationController
     end
   end
 
-  # GET /medicines/1
-  # GET /medicines/1.json
+  # GET /groups/A/A11/1
+  # GET /groups/A/A11/1.json
   def show
+    respond_to do |format|
+      format.html { render 'layouts/application' }
+      format.json { render :json => @medicine.to_json(:only => 
+        [:id, :name, :form, :package, :comment, :atc_sub_group_id]) }
+    end
   end
 
   # GET /medicines/new

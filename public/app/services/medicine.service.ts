@@ -20,4 +20,16 @@ export class MedicineService{
 		return this.http.get(`${path}.json`)
 						.map(res => res.json());
 	}
+
+	//лекарства из подгруппы
+	getMedicines(path: string) {
+		return this.http.get(`${path}.json`)
+						.map(res => res.json());
+	}
+
+	//лекарство
+	getMedicine(path: string) {
+		return this.http.get(`${path}.json`)
+						.map(res => res.json());
+	}
 }

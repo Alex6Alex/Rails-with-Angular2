@@ -5,6 +5,8 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+#pharmacies
 Pharmacy.create(name: 'Аптека №1', address: 'Восставших, 1', phone: '54-44-65', worktime: 'круглосуточно', area: 'Ленинский')
 Pharmacy.create(name: 'АВиК', address: 'Нахимова, 10', phone: '65-34-21', worktime: '8.00 - 19.00', area: 'Ленинский')
 Pharmacy.create(name: 'Le+', address: 'Острякова, 5б', phone: '55-41-71', worktime: 'круглосуточно', area: 'Ленинский')
@@ -79,3 +81,22 @@ AtcSubGroup.create(code: 'S02', description: 'Препараты для лече
 
 AtcSubGroup.create(code: 'V01', description: 'Аллергены', atc_group_id: 14);
 AtcSubGroup.create(code: 'V06', description: 'Препараты питания', atc_group_id: 14);
+
+#medicines
+Medicine.create(name: 'Видестим', 
+				form: 'Мазь', 
+				package: 'Туба', 
+				comment: 'Мазь наружного применения, светло-желтого цвета. Витамин А',
+				atc_sub_group_id: 2)
+
+Medicine.create(name: 'Аскорбиновая кислота', 
+				form: 'Таблетки', 
+				package: 'Не указано', 
+				comment: 'Таблетки белого цвета, кислого вкуса', 
+				atc_sub_group_id: 2)
+
+Medicine.create(name: 'Йод', 
+				form: 'Раствор', 
+				package: 'Флакон', 
+				comment: 'Флакон 10мл для наружного применения содержит йода 0,1г, калия йодида 0,3г, спирта поливинилового 0,9г', 
+				atc_sub_group_id: 12)

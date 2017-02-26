@@ -8,12 +8,12 @@ import { Group } from '../../models/atcGroups';
 
 @Component({
 	moduleId: module.id,
-	selector: 'medicines',
-	templateUrl: 'medicines.component.html',
-	styleUrls: ['medicines.css']
+	selector: 'groups',
+	templateUrl: 'groups.component.html',
+	styleUrls: ['groups.css']
 })
 
-export class MedicinesComponent implements OnInit {
+export class GroupsComponent implements OnInit {
 	atcGroups: Group[];
 
 	constructor(title: Title, private medicineService: MedicineService){

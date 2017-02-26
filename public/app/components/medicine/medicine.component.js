@@ -13,35 +13,34 @@ var router_1 = require('@angular/router');
 var platform_browser_1 = require('@angular/platform-browser');
 var medicine_service_1 = require('../../services/medicine.service');
 var atcGroups_1 = require('../../models/atcGroups');
-var AtcGroupComponent = (function () {
-    function AtcGroupComponent(title, router, medicineService) {
+var MedicineComponent = (function () {
+    function MedicineComponent(title, router, medicineService) {
         this.title = title;
         this.router = router;
         this.medicineService = medicineService;
-        this.group = new atcGroups_1.Group(null, null, null);
+        this.medicine = new atcGroups_1.Medicine(null, null, null, null, null);
     }
-    AtcGroupComponent.prototype.ngOnInit = function () {
-        this.getSubGroups();
+    MedicineComponent.prototype.ngOnInit = function () {
+        this.getMedicine();
     };
-    AtcGroupComponent.prototype.getSubGroups = function () {
+    MedicineComponent.prototype.getMedicine = function () {
         var _this = this;
-        this.medicineService.getSubGroups(this.router.url)
+        this.medicineService.getMedicine(this.router.url)
             .subscribe(function (data) {
-            _this.group = data.group;
-            _this.subGroups = data.subgroups;
+            _this.medicine = data;
             //setTitle(this.group.description);
         });
     };
-    AtcGroupComponent = __decorate([
+    MedicineComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
-            selector: 'atcgroup',
-            templateUrl: 'atc.group.component.html',
-            styleUrls: ['atc.group.css']
+            selector: 'medicine',
+            templateUrl: 'medicine.component.html',
+            styleUrls: ['medicine.css']
         }), 
         __metadata('design:paramtypes', [platform_browser_1.Title, router_1.Router, medicine_service_1.MedicineService])
-    ], AtcGroupComponent);
-    return AtcGroupComponent;
+    ], MedicineComponent);
+    return MedicineComponent;
 }());
-exports.AtcGroupComponent = AtcGroupComponent;
-//# sourceMappingURL=atc.group.component.js.map
+exports.MedicineComponent = MedicineComponent;
+//# sourceMappingURL=medicine.component.js.map

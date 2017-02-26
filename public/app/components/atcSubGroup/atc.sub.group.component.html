@@ -1,0 +1,13 @@
+<div class="atc-sub-group">
+
+	<p><b>{{subGroup.code}}</b> {{subGroup.description}}</p>
+
+	<ul>
+		<li *ngFor="let medicine of medicines">
+			<a routerLink='/{{router.url}}/{{medicine.id}}' routerLinkActive="active">
+				<p>{{medicine.name}}</p>
+			</a>
+		</li>
+	</ul>
+
+</div>

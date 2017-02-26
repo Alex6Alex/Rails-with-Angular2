@@ -25,6 +25,16 @@ var MedicineService = (function () {
         return this.http.get(path + ".json")
             .map(function (res) { return res.json(); });
     };
+    //лекарства из подгруппы
+    MedicineService.prototype.getMedicines = function (path) {
+        return this.http.get(path + ".json")
+            .map(function (res) { return res.json(); });
+    };
+    //лекарство
+    MedicineService.prototype.getMedicine = function (path) {
+        return this.http.get(path + ".json")
+            .map(function (res) { return res.json(); });
+    };
     MedicineService = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [http_1.Http, http_1.Jsonp])
