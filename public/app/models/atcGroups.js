@@ -18,12 +18,11 @@ var SubGroup = (function () {
 }());
 exports.SubGroup = SubGroup;
 var Medicine = (function () {
-    function Medicine(id, name, form, 
-        //public package: string,
-        comment, atc_sub_group_id) {
+    function Medicine(id, name, form, pack, comment, atc_sub_group_id) {
         this.id = id;
         this.name = name;
         this.form = form;
+        this.pack = pack;
         this.comment = comment;
         this.atc_sub_group_id = atc_sub_group_id;
     }

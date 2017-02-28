@@ -1,9 +1,19 @@
-<div>
-	{{medicine.name}}
+<div class="medicine-info">
+	<p class="title">{{medicine.name}}</p>
+	<p class="form-title">Лекарственная форма</p>
+	<p class="form">{{medicine.form}}</p>
+	<p class="package-title">Упаковка</p>
+	<p class="package">{{medicine.pack}}</p>
 </div>
-<div>
-	{{medicine.form}}
-</div>
-<div>
-	{{medicine.comment}}	
+
+<div class="availability">
+	<div class="description">
+		<p class="description-title">Описание</p>
+		<p>{{medicine.comment}}</p>
+	</div>
+
+	<div class="available-pharmacies">
+		<p>Наличие в аптеках</p>
+
+	</div>
 </div>

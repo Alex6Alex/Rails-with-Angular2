@@ -16,8 +16,8 @@ class GroupsController < ApplicationController
   def show
   	respond_to do |format|
       format.html { render 'layouts/application' }
-      format.json { render :json => {:group => @group, 
-        :subgroups => @group.atcSubGroups }.to_json() }
+      format.json { render :json => @group.to_json(:only => [:id, :code, :description],
+        :include => [:atcSubGroups]) }
     end
   end
   

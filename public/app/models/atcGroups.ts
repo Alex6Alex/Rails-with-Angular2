@@ -24,7 +24,7 @@ export class Medicine{
 		public id: number,
 		public name: string,
 		public form: string,
-		//public package: string,
+		public pack: string,
 		public comment: string,
 		public atc_sub_group_id: number
 	) { }

@@ -18,7 +18,7 @@ var MedicineComponent = (function () {
         this.title = title;
         this.router = router;
         this.medicineService = medicineService;
-        this.medicine = new atcGroups_1.Medicine(null, null, null, null, null);
+        this.medicine = new atcGroups_1.Medicine(null, null, null, null, null, null);
     }
     MedicineComponent.prototype.ngOnInit = function () {
         this.getMedicine();
@@ -28,6 +28,7 @@ var MedicineComponent = (function () {
         this.medicineService.getMedicine(this.router.url)
             .subscribe(function (data) {
             _this.medicine = data;
+            _this.medicine.pack = data.package;
             //setTitle(this.group.description);
         });
     };

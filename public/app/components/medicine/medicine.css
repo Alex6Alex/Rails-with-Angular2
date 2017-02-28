@@ -1,0 +1,40 @@
+.medicine-info{
+	width: 300px;
+	display: inline-block;
+	float: left;
+}
+
+.medicine-info>.title{
+	font-size: 1.8em;
+	margin-right: 10px;
+	padding-bottom: 15px;
+	color: #1D751A;
+	border-bottom: 1px solid #eaeaea;
+}
+
+.form-title, .package-title{
+	width: auto;
+	font-size: 1.3em;
+	margin-right: 10px;
+}
+
+.form, .package{
+	display: block;
+	font-size: 1.2em;
+	margin-right: 10px;
+}
+
+
+.availability{
+	width: 650px;
+	display: inline-block;
+	float: right;
+}
+
+.availability>.description>.description-title{
+	font-size: 1.8em;
+}
+
+.availability>.available-pharmacies{
+	font-size: 1.8em;
+}

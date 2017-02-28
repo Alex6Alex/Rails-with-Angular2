@@ -15,7 +15,7 @@ import { Medicine } from '../../models/atcGroups';
 })
 
 export class MedicineComponent implements OnInit {
-	medicine = new Medicine(null, null, null, null, null);
+	medicine = new Medicine(null, null, null, null, null, null);
 
 	constructor(private title: Title, private router: Router, 
 				private medicineService: MedicineService){}
@@ -28,7 +28,7 @@ export class MedicineComponent implements OnInit {
 		this.medicineService.getMedicine(this.router.url)
 							.subscribe(data => {
 								this.medicine = data;
-
+								this.medicine.pack = data.package;
 								//setTitle(this.group.description);
 							});
 	}

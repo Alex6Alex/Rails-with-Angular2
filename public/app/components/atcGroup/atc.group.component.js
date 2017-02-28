@@ -27,8 +27,8 @@ var AtcGroupComponent = (function () {
         var _this = this;
         this.medicineService.getSubGroups(this.router.url)
             .subscribe(function (data) {
-            _this.group = data.group;
-            _this.subGroups = data.subgroups;
+            _this.group = data;
+            _this.subGroups = data.atcSubGroups;
             //setTitle(this.group.description);
         });
     };

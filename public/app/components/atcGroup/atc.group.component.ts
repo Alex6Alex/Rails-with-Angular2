@@ -28,8 +28,8 @@ export class AtcGroupComponent implements OnInit {
 	getSubGroups() {
 		this.medicineService.getSubGroups(this.router.url)
 							.subscribe(data => {
-								this.group = data.group;
-								this.subGroups = data.subgroups;
+								this.group = data;
+								this.subGroups = data.atcSubGroups;
 
 								//setTitle(this.group.description);
 							});
