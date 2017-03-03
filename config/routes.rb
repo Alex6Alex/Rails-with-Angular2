@@ -21,6 +21,7 @@ Rails.application.routes.draw do
 	match '/signstate', to: 'sessions#sign_state', via: 'post'
 	match '/change_area', to: 'pharmacies#change_area', via: 'post'
 	match '/search_pharms', to: 'pharmacies#search', via: 'get'
+	match '/ordering', to: 'medicines#order', via: 'post'
 
 	#match '*path' => redirect('/'), via: :get
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

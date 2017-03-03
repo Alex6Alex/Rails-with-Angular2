@@ -100,3 +100,12 @@ Medicine.create(name: 'Йод',
 				package: 'Флакон', 
 				comment: 'Флакон 10мл для наружного применения содержит йода 0,1г, калия йодида 0,3г, спирта поливинилового 0,9г', 
 				atc_sub_group_id: 12)
+
+#prices
+PriceList.create(medicine_id: 2, pharmacy_id: 3, price: 30, count: 100)
+PriceList.create(medicine_id: 2, pharmacy_id: 2, price: 39, count: 100)
+PriceList.create(medicine_id: 2, pharmacy_id: 12, price: 41, count: 100)
+PriceList.create(medicine_id: 2, pharmacy_id: 9, price: 27, count: 100)
+PriceList.create(medicine_id: 2, pharmacy_id: 10, price: 30, count: 100)
+PriceList.create(medicine_id: 2, pharmacy_id: 5, price: 37, count: 100)
+PriceList.create(medicine_id: 2, pharmacy_id: 1, price: 32, count: 100)

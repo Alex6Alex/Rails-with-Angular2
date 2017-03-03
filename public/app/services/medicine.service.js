@@ -35,6 +35,14 @@ var MedicineService = (function () {
         return this.http.get(path + ".json")
             .map(function (res) { return res.json(); });
     };
+    //сортировка
+    MedicineService.prototype.setOrder = function (order, time, id) {
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        var body = JSON.stringify({ order: order, time: time, id: id });
+        return this.http.post('/ordering.json', body, options)
+            .map(function (res) { return res.json(); });
+    };
     MedicineService = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [http_1.Http, http_1.Jsonp])

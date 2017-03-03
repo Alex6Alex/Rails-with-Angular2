@@ -32,4 +32,14 @@ export class MedicineService{
 		return this.http.get(`${path}.json`)
 						.map(res => res.json());
 	}
+
+	//сортировка
+	setOrder(order: string, time: string, id: number){
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({ headers: headers });
+		let body = JSON.stringify({ order: order, time: time, id: id });
+
+		return this.http.post('/ordering.json', body, options)
+						.map(res => res.json());
+	}
 }

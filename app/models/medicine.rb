@@ -1,3 +1,4 @@
 class Medicine < ApplicationRecord
-	belongs_to :atcSubGroups
+	#has_many :priceLists, dependent: :destroy
+	#belongs_to :atcSubGroup
 end

@@ -1,3 +1,4 @@
+/*краткая информация*/
 .medicine-info{
 	width: 300px;
 	display: inline-block;
@@ -5,6 +6,7 @@
 }
 
 .medicine-info>.title{
+	height: 51px;
 	font-size: 1.8em;
 	margin-right: 10px;
 	padding-bottom: 15px;
@@ -22,9 +24,9 @@
 	display: block;
 	font-size: 1.2em;
 	margin-right: 10px;
+	height: 23px;
 }
-
-
+/*описание и наличие в аптеках*/
 .availability{
 	width: 650px;
 	display: inline-block;
@@ -35,6 +37,113 @@
 	font-size: 1.8em;
 }
 
-.availability>.available-pharmacies{
+.availability>.available-pharmacies>p{
 	font-size: 1.8em;
+}
+/*сортировка и вывод аптек*/
+.available-pharmacies>.parameters{
+	position: relative;
+	padding-bottom: 5px;
+	border-bottom: 1px solid #eaeaea;
+}
+
+.available-pharmacies>.parameters>.worktime{
+	width: 250px;
+}
+
+.available-pharmacies>.parameters>div{
+	display: inline-block;
+	width: 200px;
+}
+
+.sortlist{
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 15px;
+	padding-right: 15px;
+	background-color: #FCF7DB;
+	border: 1px solid #C2C798;
+	border-radius: 3px;
+}
+
+.firstList{
+	position: absolute;
+	top: 20px;
+	left: 90px;
+	z-index: 10;
+}
+
+.secondList{
+	position: absolute;
+	top: 20px;
+	left: 303px;
+	z-index: 10;
+}
+
+.sortlist>span{
+	display: block;
+	cursor: pointer;
+}
+
+.sortlist>.select{
+	font-weight: bolder;
+}
+
+.available-pharmacies>.parameters>div>span{
+	color: #696969;
+}
+
+.available-pharmacies>.parameters>div>.order{
+	color: red;
+	cursor: pointer;
+}
+/*аптеки*/
+.available-pharmacies>.pharmacy{
+	border-bottom: 1px solid #eaeaea;
+}
+
+.available-pharmacies>.pharmacy>.left{
+	width: 500px;
+	display: inline-block;
+	float: left;
+}
+
+.available-pharmacies>.pharmacy>.left>div{
+	padding-bottom: 10px;
+}
+
+.available-pharmacies>.pharmacy>.left>div>.name{
+	font-size: 1.3em;
+	color: #333;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.available-pharmacies>.pharmacy>.left>.phone, 
+.available-pharmacies>.pharmacy>.left>.time{
+	display: inline-block;
+	color: #696969;
+	width: 200px;
+}
+
+.available-pharmacies>.pharmacy>.right{
+	width: 150px;
+	display: inline-block;
+}
+
+.available-pharmacies>.pharmacy>.right>p{
+	text-align: right;
+}
+
+.available-pharmacies>.pharmacy>.right>div{
+	float: right;
+}
+
+.available-pharmacies>.pharmacy>.right>div>.price{
+	font-size: 1.4em;
+	display: inline-block;
+}
+
+.available-pharmacies>.pharmacy>.right>div>span{
+	font-size: 1.2em;
 }

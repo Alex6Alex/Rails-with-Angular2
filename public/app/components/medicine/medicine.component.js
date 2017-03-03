@@ -19,6 +19,16 @@ var MedicineComponent = (function () {
         this.router = router;
         this.medicineService = medicineService;
         this.medicine = new atcGroups_1.Medicine(null, null, null, null, null, null);
+        this.price = null;
+        this.count = null;
+        //параметры сортировки
+        this.showSortList = false;
+        this.sortBy = 'name';
+        this.sortTitle = 'по названию';
+        //параметры режима работы
+        this.showWorkTimes = false;
+        this.workTime = 'all';
+        this.workTitle = 'все';
     }
     MedicineComponent.prototype.ngOnInit = function () {
         this.getMedicine();
@@ -27,9 +37,45 @@ var MedicineComponent = (function () {
         var _this = this;
         this.medicineService.getMedicine(this.router.url)
             .subscribe(function (data) {
-            _this.medicine = data;
-            _this.medicine.pack = data.package;
+            _this.medicine = data.medicine;
+            _this.medicine.pack = data.medicine.package;
+            _this.prices = data.prices;
             //setTitle(this.group.description);
+        });
+    };
+    //сортировка
+    MedicineComponent.prototype.onSort = function (sortBy) {
+        if (this.sortBy === sortBy)
+            return;
+        this.sortBy = sortBy;
+        this.setOrder(this.sortBy, this.workTime);
+        if (this.sortBy === 'name')
+            this.sortTitle = 'по названию';
+        else if (this.sortBy === 'address')
+            this.sortTitle = 'по адресу';
+        else
+            this.sortTitle = 'по цене';
+        this.showSortList = false;
+    };
+    //выбор времени работы
+    MedicineComponent.prototype.onWorktimeChange = function (time) {
+        if (this.workTime == time)
+            return;
+        this.workTime = time;
+        this.setOrder(this.sortBy, this.workTime);
+        if (this.workTime === 'all')
+            this.workTitle = 'все';
+        else if (this.workTime === 'day')
+            this.workTitle = 'дневные';
+        else
+            this.workTitle = 'круглосуточные';
+        this.showWorkTimes = false;
+    };
+    MedicineComponent.prototype.setOrder = function (order, time) {
+        var _this = this;
+        this.medicineService.setOrder(order, time, this.medicine.id)
+            .subscribe(function (data) {
+            _this.prices = data;
         });
     };
     MedicineComponent = __decorate([

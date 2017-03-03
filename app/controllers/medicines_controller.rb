@@ -16,8 +16,46 @@ class MedicinesController < ApplicationController
   def show
     respond_to do |format|
       format.html { render 'layouts/application' }
-      format.json { render :json => @medicine.to_json(:only => 
-        [:id, :name, :form, :package, :comment, :atc_sub_group_id]) }
+
+      prices = Pharmacy.joins("INNER JOIN price_lists ON pharmacies.id = price_lists.pharmacy_id")
+        .select("pharmacies.id, pharmacies.name, pharmacies.address, pharmacies.phone,
+        pharmacies.worktime, price_lists.price, price_lists.count, price_lists.updated_at")
+        .where("price_lists.medicine_id = #{@medicine.id}")
+        .order(:name)
+
+      format.json { render :json => { :medicine => @medicine, :prices => prices} }
+    end
+  end
+
+  def order
+    time = params[:time]
+    join_text = "INNER JOIN price_lists ON pharmacies.id = price_lists.pharmacy_id"
+    select_text = "pharmacies.id, pharmacies.name, pharmacies.address, pharmacies.phone,
+        pharmacies.worktime, price_lists.price, price_lists.count, price_lists.updated_at"
+
+    if time == 'all'
+      prices = Pharmacy.joins(join_text)
+        .select(select_text)
+        .where("price_lists.medicine_id = ?", params[:id])
+        .order(params[:order])
+    else
+      if time == 'day'
+        prices = Pharmacy.joins(join_text)
+          .select(select_text)
+          .where("price_lists.medicine_id = ?", params[:id])
+          .where.not("pharmacies.worktime = 'круглосуточно'")
+          .order(params[:order])
+      else
+        prices = Pharmacy.joins(join_text)
+          .select(select_text)
+          .where("price_lists.medicine_id = ? AND pharmacies.worktime = 'круглосуточно'", 
+            params[:id])
+          .order(params[:order])
+      end
+    end
+
+    respond_to do |format|
+      format.json { render :json => prices.to_json }
     end
   end
 
@@ -73,7 +111,7 @@ class MedicinesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_medicine
-      @medicine = Medicine.find(params[:id])
+      @medicine = Medicine.select(:id, :name, :form, :package, :comment).find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

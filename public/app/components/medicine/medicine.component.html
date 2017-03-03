@@ -14,6 +14,48 @@
 
 	<div class="available-pharmacies">
 		<p>Наличие в аптеках</p>
+		<div class="parameters">
+			<div>
+				<span>Сортировать: </span>
+				<span class="order" (click)="showSortList = !showSortList">{{sortTitle}}</span>
 
+				<div class="sortlist firstList" *ngIf="showSortList">
+					<span (click)="onSort('name')" [ngClass]="{'select': sortBy === 'name'}">по названию</span>
+					<span (click)="onSort('address')" [ngClass]="{'select': sortBy === 'address'}">по адресу</span>
+					<span (click)="onSort('price')" [ngClass]="{'select': sortBy === 'price'}">по цене</span>
+				</div>
+
+			</div>
+			<div class="worktime">
+				<span>Режим работы: </span>
+				<span class="order" (click)="showWorkTimes = !showWorkTimes">{{workTitle}}</span>
+
+				<div class="sortlist secondList" *ngIf="showWorkTimes">
+					<span (click)="onWorktimeChange('all')" [ngClass]="{'select': workTime === 'all'}">все</span>
+					<span (click)="onWorktimeChange('day')" [ngClass]="{'select': workTime === 'day'}">дневные</span>
+					<span (click)="onWorktimeChange('allday')" [ngClass]="{'select': workTime === 'allday'}">круглосуточные</span>
+				</div>
+
+			</div>
+		</div>
+		<div *ngFor="let price of prices" class="pharmacy">
+			<div class="left">
+				<div>
+					<a class="name" routerLink="/pharmacies/{{price.id}}">{{price.name}}</a>
+				</div>	
+				<p class="address">{{price.address}}</p>
+				<p class="phone"><span class="glyphicon glyphicon-phone-alt"></span>
+				 {{price.phone}}</p>
+				<p class="time"><span class="glyphicon glyphicon-time"></span> {{price.worktime}}</p>
+			</div>
+			<div class="right">
+				<div>
+					<p class="price">{{price.price | number: '1.2-2'}}</p>
+					<span class="glyphicon glyphicon-rub"></span>	
+				</div>
+				<p class="producer">производитель</p>
+				<p class="date">{{price.updated_at | date: 'dd.MM.yyyy'}}</p>
+			</div>
+		</div>
 	</div>
 </div>
