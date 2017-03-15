@@ -31,17 +31,17 @@
 				</div>
 			</nav>
 			<div class="login">
-				<div *ngIf="sign" class="login-header" dropdown>
-            		<div class="icon"></div>
-            		<p dropdown-open>{{user_name}}</p>
+				<div *ngIf="sign === true" class="login-header" dropdown>
+            		<img class="icon img-circle" src="https://secure.gravatar.com/avatar/{{user.gravatar}}">
+            		<p dropdown-open>{{user.name}}</p>
             		<ul class="dropdown-menu">
-			            <li><a routerLink="/users/{{user_id}}" routerLinkActive="active"><span class="glyphicon glyphicon-home"></span> Профиль</a></li>
+			            <li><a routerLink="/users/{{user.id}}" routerLinkActive="active"><span class="glyphicon glyphicon-home"></span> Профиль</a></li>
 			            <li><a href="#"><span class="glyphicon glyphicon-wrench"></span> Редактировать</a></li>
 			            <li role="separator" class="divider"></li>
 			            <li><a class="logout" (click)="logOut()"><span class="glyphicon glyphicon-log-out"></span> Выйти</a></li>
 			        </ul>
         		</div>
-        		<div *ngIf="!sign" class="login-registr">
+        		<div *ngIf="sign === false" class="login-registr">
         			<span class="glyphicon glyphicon-log-in"></span>
         			<a routerLink="/home" routerLinkActive="active" (click)="setTitle('Справочная система аптек')">Вход</a>
         			<span class="glyphicon glyphicon-user"></span>

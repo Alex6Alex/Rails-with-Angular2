@@ -1,11 +1,17 @@
 <div class="pharmacy">
-	<form>
+	<form (submit)="onSubmit(medicineTerm.value); onShowSearchRes(false)">
 		<div class="input-group">
-			<span class="input-group-addon glyphicon glyphicon-search">
+			<span (click)="onSubmit(medicineTerm.value); onShowSearchRes(false)" class="input-group-addon glyphicon glyphicon-search">
 			</span>
-			<input class="form-control" placeholder="Название лекарства для поиска в аптеке"/>
+			<input (focus)="onShowSearchRes(true)" (blur)="onShowSearchRes(false)" type="text" #medicineTerm (keyup)="searchPharm(medicineTerm.value)" class="form-control" placeholder="Название лекарства для поиска в аптеке"/>
 		</div>
 	</form>
+
+	<ul class="search-result" *ngIf="items?.length>0 && showItems">
+		<li *ngFor="let item of items">
+			<a (mouseover)="(resultsIsShow = true)" (mouseleave)="(resultsIsShow = false)" routerLink="/medicines/{{item.id}}" routerLinkActive="active">{{item.name}} ({{item.form}}) | Цена: {{item.price | number: '1.2-2'}} руб.</a>
+		</li>
+	</ul>
 
 	<div class="pharmacy-info">
 		<h3>{{pharmacy.name}}</h3>

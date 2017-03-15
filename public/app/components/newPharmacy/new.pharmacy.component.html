@@ -1,0 +1,63 @@
+<div class="new-pharmacy">
+
+	<div class="pharmacy-form">
+		<form #newpharmacy="ngForm">
+		<label for="name">Название</label>
+		<input type="text" class="form-control" id="name" required minlength="2" maxlength="25" [(ngModel)]="pharmacy.name" name="name" #name="ngModel"/>
+		<div *ngIf="name.errors && name.touched" class="alert alert-danger">
+            <div [hidden]="!name.errors.required">
+            	Введите название.
+            </div>
+            <div [hidden]="!name.errors.minlength">
+            	Минимальная длина названия: 2 символа.
+            </div>
+        </div>
+
+		<label for="address">Адрес</label>
+		<input type="address" maxlength="40" [focus]="addressFocus" [blur]="addressBlur" class="form-control" id="address" required [(ngModel)]="pharmacy.address" name="address" #address="ngModel"/>
+		<div *ngIf="address.errors && address.touched" class="alert alert-danger">
+			<div [hidden]="!address.errors.required">
+            	Введите адрес.
+            </div>
+		</div>
+
+		<label for="area">Район</label>
+		<select type="area" maxlength="25" class="form-control" id="area" required [(ngModel)]="pharmacy.area" name="area" #area="ngModel">
+			<option value="" disabled selected>Выберите район</option>
+			<option *ngFor="let area of areas" [value]="area">{{area}}</option>
+		</select>
+		<div *ngIf="area.errors && area.touched" class="alert alert-danger">
+			<div [hidden]="!area.errors.required">
+            	Введите район.
+            </div>
+		</div>
+
+        <label for="phone">Контактный телефон</label>
+        <input type="text" class="form-control" id="phone" [(ngModel)]="pharmacy.phone" name="phone" #phone="ngModel" placeholder="22-33-44" pattern="^[0-9]{2}[\-][0-9]{2}[\-][0-9]{2}$" required/>
+        <div *ngIf="phone.errors && phone.touched" class="alert alert-danger">
+            <div [hidden]="!phone.errors.required">
+            	Введите телефон.
+            </div>
+            <div [hidden]="!phone.errors.pattern">
+            	Неверный формат телефона.
+            </div>
+        </div>
+
+		<label for="worktime">Время работы</label>
+		<input type="worktime" class="form-control" maxlength="20" id="worktime" required [(ngModel)]="pharmacy.worktime" name="worktime" #worktime="ngModel" placeholder="8.00 - 19.00 или круглосуточно"/>
+		<div *ngIf="worktime.errors && worktime.touched" class="alert alert-danger">
+			<div [hidden]="!worktime.errors.required">
+            	Введите время.
+            </div>
+        </div>
+
+		<button type="submit" (click)="onSubmit()" class="btn btn-success">Добавить аптеку</button>
+	</form>	
+	</div>
+	<div class="address-map">
+		<h3>Адрес</h3>
+		<p>Для того, чтобы заполнить поле с адесом, достаточно просто выбрать на карте необходимый Вам адрес.</p>
+		<div class="ymap" id="mymap">
+		</div>	
+	</div>
+</div>

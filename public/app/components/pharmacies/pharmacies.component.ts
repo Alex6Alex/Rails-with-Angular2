@@ -9,6 +9,8 @@ import 'rxjs/add/operator/map';
 import { Subject } from 'rxjs/Subject';
 
 import { PharmacyService } from '../../services/pharmacy.service';
+import { SessionService } from '../../services/session.service';
+import { Pharmacy } from '../../models/pharmacy';
 /// <reference path="ymaps.d.ts"/>
 
 @Component({
@@ -26,8 +28,10 @@ export class PharmaciesComponent implements OnInit {
 
 	searchTerm: string = null;
 	
-	pharms = [];
-	myMap;
+	pharms: Pharmacy[];
+	myMap; objectManager;
+
+	canDestroy: boolean;
 
 	//параметры выбора района
 	area = 0;
@@ -41,7 +45,8 @@ export class PharmaciesComponent implements OnInit {
 	workTime = 'all';
 	workTitle = 'все';
 
-	constructor(private pharmacyService: PharmacyService){}
+	constructor(private pharmacyService: PharmacyService, 
+				private sessionService: SessionService){}
 	//поиск аптек
 	private searchStream = new Subject<string>();
 	searchPharm(term: string) {
@@ -63,11 +68,16 @@ export class PharmaciesComponent implements OnInit {
 		this.searchTerm = value;
 
 		this.getArea(this.searchTerm, this.areaName, 
-					this.sortBy, this.workTime, true);	
+					this.sortBy, this.workTime);	
 	}
 
 	ngOnInit(){
 		this.getPharms();
+
+		this.sessionService.isAdmin.subscribe(status => {
+			this.canDestroy = status;
+		});
+
 		this.ymapsInit();
 
 		this.searchStream
@@ -87,6 +97,18 @@ export class PharmaciesComponent implements OnInit {
 		return Promise.resolve(0);
 	}
 
+	//Удаление аптеки админом
+	onDestroy(pharmacy: Pharmacy): void{
+		this.pharmacyService.destroyPharmacy(pharmacy.id).subscribe(() => {
+			this.pharms = this.pharms.filter(p => p !== pharmacy);
+		});
+		ymaps.ready().then(() => {
+			this.objectManager.objects.remove(
+				this.objectManager.objects.getById(pharmacy.id)
+			);
+		});
+	}
+
 	ymapsInit(): void{
 
 		ymaps.ready().then(() => {
@@ -94,9 +116,15 @@ export class PharmaciesComponent implements OnInit {
 				center: [44.578526, 33.532156],
 		        zoom: 11,
 		        controls: ['zoomControl', 'fullscreenControl']
-			});
-		});
+			}), this.objectManager = new ymaps.ObjectManager({
+		            clusterize: true,
+		            gridSize: 32
+		        });
 
+	        //this.objectManager.objects.options.set('preset', 'islands#darkGreenMedicalIcon');
+	    	this.objectManager.clusters.options.set('preset', 'islands#darkGreenClusterIcons');
+	    	this.myMap.geoObjects.add(this.objectManager);
+		});
 	}
 
 	//сортировка
@@ -106,7 +134,7 @@ export class PharmaciesComponent implements OnInit {
 
 		this.sortBy = sortBy;
 
-		this.getArea(this.searchTerm, this.areaName, sortBy, this.workTime, false);
+		this.getArea(this.searchTerm, this.areaName, sortBy, this.workTime);
 
 		if(this.sortBy === 'name')
 			this.sortTitle = 'по названию';
@@ -123,7 +151,7 @@ export class PharmaciesComponent implements OnInit {
 		this.workTime = time;
 
 		this.getArea(this.searchTerm, this.areaName, 
-					this.sortBy, this.workTime, true);
+					this.sortBy, this.workTime);
 
 		if(this.workTime === 'all')
 			this.workTitle = 'все';
@@ -142,7 +170,7 @@ export class PharmaciesComponent implements OnInit {
 		this.area = num;
 
 		this.getArea(this.searchTerm, this.areaName, 
-					this.sortBy, this.workTime, true);
+					this.sortBy, this.workTime);
 
 		switch(num){
 	        case 0:{
@@ -172,42 +200,54 @@ export class PharmaciesComponent implements OnInit {
 	        }
 	    }
 	}
+
+	getPharmaciesBy(ids: number[]){
+		this.objectManager.setFilter((object) => {
+			return ids.indexOf(object.id) !== -1;
+		});
+	}
+
 	//запрос о районе на сервер
 	getArea(searchName: string, area: string, sortBy: string, 
-			workTime: string, refresh: boolean): void{
+			workTime: string): void{
 		this.pharmacyService.getArea(searchName, area, sortBy, workTime)
     		.then(data => {
     			this.pharms = data;
-    			if(refresh){
-    				this.myMap.geoObjects.removeAll();
-					this.pharmsToMap();
-    			}
+    			var ids = new Array();
+    			data.forEach((d) => {
+    				ids.push(d.id);
+    			});
+    			this.getPharmaciesBy(ids);
     		});
 	}
+
 	//отобразить аптеки на карте
 	pharmsToMap(): void{
 		ymaps.ready().then(() => {
 			for (let pharm of this.pharms){
 				let myGeocoder = ymaps.geocode(`Севастополь, ${pharm.address}`);
 			    myGeocoder.then(res => {
-			    	let myPlacemark = new ymaps.Placemark(res.geoObjects.get(0).geometry.getCoordinates(), {
-		                title: pharm.name,
-		                address: pharm.address
-		            }, {
-		                preset: 'islands#darkGreenMedicalIcon',
-		                balloonPanelMaxMapArea: 0,
-            			openEmptyBalloon: true
-		            });
-
-		            myPlacemark.events.add('balloonopen', (e) => {
-		            	let content = `
-		            		<h4>${pharm.name}</h4>
-		            		${pharm.address}
-		            	`;
-		            	myPlacemark.properties.set('balloonContent', content);
-		            });
+	            	let content = `
+	            		<h4>${pharm.name}</h4>
+	            		${pharm.address}
+	            	`;
+			    	let myPlacemark = {
+			    		"type": "Feature",
+			    		"id": pharm.id,
+			    		"geometry": {
+			    			"type": "Point",
+			    			"coordinates": res.geoObjects.get(0).geometry.getCoordinates()
+			    		},
+		    			"properties":{
+		    				"balloonContent": content
+		    			},
+		    			"options": {
+		    				"preset": "islands#darkgreenMedicalIcon",
+		    				"hideIconOnBalloonOpen": true
+		    			}
+			    	};
 		            
-		            this.myMap.geoObjects.add(myPlacemark);
+		            this.objectManager.add(myPlacemark);
 			    });
 			}
 		});

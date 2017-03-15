@@ -18,12 +18,14 @@ var app_component_1 = require('./app.component');
 var home_component_1 = require('./components/home/home.component');
 var pharmacies_component_1 = require('./components/pharmacies/pharmacies.component');
 var pharmacy_component_1 = require('./components/pharmacy/pharmacy.component');
+var new_pharmacy_component_1 = require('./components/newPharmacy/new.pharmacy.component');
 var groups_component_1 = require('./components/groups/groups.component');
 var atc_group_component_1 = require('./components/atcGroup/atc.group.component');
 var atc_sub_group_component_1 = require('./components/atcSubGroup/atc.sub.group.component');
 var medicine_component_1 = require('./components/medicine/medicine.component');
 var registration_component_1 = require('./components/registration/registration.component');
 var account_component_1 = require('./components/account/account.component');
+var users_component_1 = require('./components/users/users.component');
 var app_routing_module_1 = require('./app-routing.module');
 var AppModule = (function () {
     function AppModule() {
@@ -33,6 +35,7 @@ var AppModule = (function () {
             imports: [
                 platform_browser_1.BrowserModule,
                 forms_1.FormsModule,
+                forms_1.ReactiveFormsModule,
                 app_routing_module_1.AppRoutingModule,
                 http_1.HttpModule,
                 http_1.JsonpModule,
@@ -49,7 +52,11 @@ var AppModule = (function () {
                 atc_sub_group_component_1.AtcSubGroupComponent,
                 medicine_component_1.MedicineComponent,
                 registration_component_1.RegistrationComponent,
-                account_component_1.AccountComponent
+                account_component_1.AccountComponent,
+                users_component_1.UsersComponent,
+                new_pharmacy_component_1.NewPharmacyComponent,
+                new_pharmacy_component_1.FocusDirective,
+                new_pharmacy_component_1.BlurDirective
             ],
             bootstrap: [app_component_1.AppComponent],
             providers: [platform_browser_1.Title]

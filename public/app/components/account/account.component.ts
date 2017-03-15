@@ -6,6 +6,8 @@ import { Observable } from 'rxjs/Observable';
 import { HomeService } from '../../services/home.service';
 import { User } from '../../models/user';
 
+import { Md5 } from 'ts-md5/dist/md5';
+
 @Component({
 	moduleId: module.id,
 	selector: 'account',
@@ -14,7 +16,9 @@ import { User } from '../../models/user';
 })
 
 export class AccountComponent implements OnInit {
-	user = new User(null, null, null, null, null);
+	user = new User(null, null, null, null, null, null);
+
+	gravatar;
 
 	constructor(private router: Router, private homeService: HomeService){}
 	
@@ -25,6 +29,7 @@ export class AccountComponent implements OnInit {
 	getUserInfo(): void{
 		this.homeService.getUserData(this.router.url).subscribe(data => {
 			this.user = data;
+			this.gravatar = Md5.hashStr(data.email);
 		});
 	}
 }

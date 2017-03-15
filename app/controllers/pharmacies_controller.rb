@@ -5,7 +5,7 @@ class PharmaciesController < ApplicationController
   # GET /pharmacies.json
   def index
     #Pharmacy.where(area: nil).destroy_all
-    @pharmacies = Pharmacy.select(:id, :name, :address, :phone, :worktime)
+    @pharmacies = Pharmacy.select(:id, :name, :address, :area, :phone, :worktime)
       .order(:name)
     respond_to do |format|
       format.html { render 'layouts/application' }
@@ -96,6 +96,9 @@ class PharmaciesController < ApplicationController
   # GET /pharmacies/new
   def new
     @pharmacy = Pharmacy.new
+    respond_to do |format|
+      format.html { render 'layouts/application' }
+    end
   end
 
   # GET /pharmacies/1/edit
@@ -109,11 +112,11 @@ class PharmaciesController < ApplicationController
 
     respond_to do |format|
       if @pharmacy.save
-        format.html { redirect_to @pharmacy, notice: 'Pharmacy was successfully created.' }
-        format.json { render :show, status: :created, location: @pharmacy }
+        id = @pharmacy.id
+
+        format.json { render :json => { :status => true, :id => id } }
       else
-        format.html { render :new }
-        format.json { render json: @pharmacy.errors, status: :unprocessable_entity }
+        format.json { render :json => { :status => false, :errors => @pharmacy.errors } }
       end
     end
   end
@@ -136,10 +139,10 @@ class PharmaciesController < ApplicationController
   # DELETE /pharmacies/1.json
   def destroy
     @pharmacy.destroy
-    respond_to do |format|
-      format.html { redirect_to pharmacies_url, notice: 'Pharmacy was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    #respond_to do |format|
+    #  format.html { redirect_to pharmacies_url, notice: 'Pharmacy was successfully destroyed.' }
+    #  format.json { head :no_content }
+    #end
   end
 
   private
@@ -150,6 +153,6 @@ class PharmaciesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def pharmacy_params
-      params.require(:pharmacy).permit(:name, :address, :phone, :worktime, :type)
+      params.require(:pharmacy).permit(:name, :address, :area, :phone, :worktime)
     end
 end

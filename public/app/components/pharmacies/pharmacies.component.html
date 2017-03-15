@@ -52,6 +52,7 @@
 		<div *ngFor="let pharm of pharms" class="pharm">
 			<div>
 				<a routerLink="/pharmacies/{{pharm.id}}" routerLinkActive="active" class="name">{{pharm.name}}</a>
+				<span *ngIf="canDestroy === true" class="glyphicon glyphicon-remove" (click)="onDestroy(pharm); $event.stopPropagation()" title="Удалить аптеку"></span>
 			</div>
 			<p class="adress">{{pharm.address}}</p>
 			<p class="phone"><span class="glyphicon glyphicon-phone-alt"></span>  {{pharm.phone}}</p>

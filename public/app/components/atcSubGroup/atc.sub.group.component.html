@@ -4,7 +4,7 @@
 
 	<ul>
 		<li *ngFor="let medicine of medicines">
-			<a routerLink='/{{router.url}}/{{medicine.id}}' routerLinkActive="active">
+			<a routerLink='/medicines/{{medicine.id}}' routerLinkActive="active">
 				<p>{{medicine.name}}</p>
 			</a>
 		</li>

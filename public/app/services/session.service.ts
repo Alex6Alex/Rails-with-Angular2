@@ -10,10 +10,11 @@ import { User } from '../models/user';
 export class SessionService{
 	constructor(private http: Http, private jsonp: Jsonp){}
 
-	//for update header wher user sign in
+	//обновить компоненты, когда пользователь вошел/вышел
 	signInState = new BehaviorSubject(false);
+	isAdmin = new BehaviorSubject(false);
 
-	//registrate new user
+	//регистрация
 	newUser(user: User){
 		let headers = new Headers({ 'Content-Type': 'application/json' });
     	let options = new RequestOptions({ headers: headers });
@@ -29,7 +30,7 @@ export class SessionService{
     						.map(res => res.json());
 	}
 
-	//sign in function for registrated user
+	//Вход
 	signIn(sessionData){
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({headers: headers});
@@ -38,7 +39,7 @@ export class SessionService{
 		return this.http.post('/sessions.json', body, options).map(res => res.json());
 	}
 
-	//exit from service
+	//выход
 	logOut(id: number){
 		return this.http.delete('/sessions/'+ id +'.json').map(res => res.json());
 	}

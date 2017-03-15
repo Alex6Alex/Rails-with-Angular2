@@ -15,24 +15,25 @@ var home_service_1 = require('./services/home.service');
 var session_service_1 = require('./services/session.service');
 var pharmacy_service_1 = require('./services/pharmacy.service');
 var medicine_service_1 = require('./services/medicine.service');
+var md5_1 = require('ts-md5/dist/md5');
 var AppComponent = (function () {
     function AppComponent(router, titleService, sessionService) {
         this.router = router;
         this.titleService = titleService;
         this.sessionService = sessionService;
-        //sign user or not
-        this.sign = false;
+        //атрибуты пользователя
+        this.user = { id: null, name: null, gravatar: null };
     }
-    //title for pages
+    //заголовки
     AppComponent.prototype.setTitle = function (title) {
         this.titleService.setTitle(title);
     };
     ;
-    //we need it if reload page which is not home page
+    //узнать, в сети ли пользователь
     AppComponent.prototype.ngOnInit = function () {
         this.isSignIn();
     };
-    //listen changes from another rendering parts
+    //отслеживает, если пользователь вошел или вышел с домашней страницы
     AppComponent.prototype.ngAfterViewInit = function () {
         this.signState();
     };
@@ -40,32 +41,43 @@ var AppComponent = (function () {
         var _this = this;
         this.sessionService.signInState.subscribe(function (status) {
             _this.sign = status;
-            if (_this.sign)
-                _this.isSignIn();
+        });
+        this.sessionService.isAdmin.subscribe(function (admin) {
+            _this.admin = admin;
         });
     };
-    //function for send bool data to listen between components
+    //связь между компонентами
     AppComponent.prototype.signInState = function (value) {
         this.sessionService.signInState.next(value);
     };
-    //is user in system
+    //проверка на админ
+    AppComponent.prototype.isAdmin = function (value) {
+        this.sessionService.isAdmin.next(value);
+    };
+    //в сети ли пользователь?
     AppComponent.prototype.isSignIn = function () {
         var _this = this;
         this.sessionService.isSignIn().subscribe(function (data) {
             if (data.sign) {
                 //user in system
                 _this.sign = data.sign;
-                _this.user_id = data.user.id;
-                _this.user_name = data.user.name;
+                _this.user.id = data.user.id;
+                _this.user.name = data.user.name;
+                _this.user.gravatar = md5_1.Md5.hashStr(data.user.email);
+                _this.admin = data.user.admin;
+                _this.signInState(true);
+                _this.isAdmin(_this.admin);
             }
         });
     };
-    //user exit from system
+    //выход
     AppComponent.prototype.logOut = function () {
         var _this = this;
-        this.sessionService.logOut(this.user_id).subscribe(function (data) {
+        this.sessionService.logOut(this.user.id).subscribe(function (data) {
             _this.sign = false;
+            _this.admin = false;
             _this.signInState(false);
+            _this.isAdmin(false);
         });
     };
     AppComponent = __decorate([

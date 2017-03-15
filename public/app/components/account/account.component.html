@@ -1,6 +1,6 @@
 <div class="user-info">
 	<div class="user-header">
-		<div class="user-icon"></div>
+		<img class="user-icon img-circle" src="https://secure.gravatar.com/avatar/{{gravatar}}">
 		<h3>{{user.name}}</h3>
 	</div>
 
@@ -24,7 +24,19 @@
 	</table>
 	
 </div>
-<div class="orders">
-	<h3>Заказы</h3>
-	<p>На данный момент заказов нет.</p>
+
+<div class="user-content">
+	<div *ngIf="user.admin === false" class="orders">
+		<h3>Заказы</h3>
+		<p>На данный момент заказов нет.</p>
+	</div>
+
+	<div *ngIf="user.admin === true" class="controls">
+		<h3>Управление данными</h3>
+		<ul>
+			<li><a routerLink="/users" routerLinkActive="active">Все пользователи</a></li>
+			<li><a routerLink="/pharmacies/new" routerLinkActive="active">Добавить аптеку</a></li>
+			<li><a routerLink="" routerLinkActive="active">Добавить лекарство</a></li>
+		</ul>
+	</div>
 </div>

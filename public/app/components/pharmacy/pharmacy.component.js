@@ -11,6 +11,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
 var platform_browser_1 = require('@angular/platform-browser');
+require('rxjs/add/operator/debounceTime');
+require('rxjs/add/operator/distinctUntilChanged');
+require('rxjs/add/operator/switchMap');
+require('rxjs/add/operator/map');
+var Subject_1 = require('rxjs/Subject');
 var pharmacy_service_1 = require('../../services/pharmacy.service');
 var pharmacy_1 = require('../../models/pharmacy');
 /// <reference path="ymaps.d.ts"/>
@@ -19,8 +24,32 @@ var PharmacyComponent = (function () {
         this.router = router;
         this.pharmacyService = pharmacyService;
         this.title = title;
-        this.pharmacy = new pharmacy_1.Pharmacy(null, null, null, null, null);
+        this.showItems = false;
+        this.resultsIsShow = false;
+        this.searchTerm = null;
+        this.pharmacy = new pharmacy_1.Pharmacy(null, null, null, null, null, null);
+        //поиск аптек
+        this.searchStream = new Subject_1.Subject();
     }
+    PharmacyComponent.prototype.searchPharm = function (term) {
+        this.searchStream.next(term);
+    };
+    //скрывать результаты поиска, если кликнули на др. объект
+    PharmacyComponent.prototype.onShowSearchRes = function (value) {
+        if (this.resultsIsShow) {
+            return;
+        }
+        ;
+        this.showItems = value;
+    };
+    //результат поиска
+    PharmacyComponent.prototype.onSubmit = function (value) {
+        if (this.searchTerm === value)
+            return;
+        this.searchTerm = value;
+        //this.getArea(this.searchTerm, this.areaName, 
+        //			this.sortBy, this.workTime, true);	
+    };
     PharmacyComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.pharmacyService.getPharmacy(this.router.url)
@@ -29,6 +58,13 @@ var PharmacyComponent = (function () {
             //this.title.setTitle(this.pharmacy.name);
             _this.ymapsInit(data.address);
         });
+        this.searchStream
+            .debounceTime(300)
+            .distinctUntilChanged()
+            .switchMap(function (term) {
+            return _this.pharmacyService.searchByPharmacy(term, _this.pharmacy.id);
+        })
+            .subscribe(function (res) { _this.items = res; });
     };
     PharmacyComponent.prototype.ymapsInit = function (address) {
         var _this = this;

@@ -10,64 +10,64 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170302172439) do
+ActiveRecord::Schema.define(version: 20170308074613) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "atc_groups", force: :cascade do |t|
     t.string   "code",        limit: 1, null: false
-    t.text     "description"
+    t.text     "description",           null: false
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
   end
 
   create_table "atc_sub_groups", force: :cascade do |t|
     t.string   "code",         limit: 3, null: false
-    t.text     "description"
+    t.text     "description",            null: false
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.integer  "atc_group_id"
   end
 
   create_table "medicines", force: :cascade do |t|
-    t.string   "name"
-    t.string   "form"
+    t.string   "name",             limit: 25, null: false
+    t.string   "form",             limit: 20, null: false
     t.string   "package"
     t.text     "comment"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.integer  "atc_sub_group_id"
   end
 
   create_table "pharmacies", force: :cascade do |t|
-    t.string   "name"
-    t.string   "address"
-    t.string   "phone"
-    t.string   "worktime"
-    t.string   "type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string   "area"
+    t.string   "name",       limit: 25, null: false
+    t.string   "address",    limit: 40, null: false
+    t.string   "phone",      limit: 20, null: false
+    t.string   "worktime",   limit: 20, null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.string   "area",       limit: 25, null: false
   end
 
   create_table "price_lists", force: :cascade do |t|
     t.integer  "medicine_id"
     t.integer  "pharmacy_id"
-    t.integer  "price"
-    t.integer  "count"
+    t.integer  "price",       null: false
+    t.integer  "count",       null: false
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "name"
-    t.string   "email"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.string   "name",            limit: 25,                 null: false
+    t.string   "email",           limit: 25,                 null: false
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
     t.string   "password_digest"
     t.string   "remember_token"
-    t.string   "phone"
+    t.string   "phone",           limit: 15,                 null: false
+    t.boolean  "admin",                      default: false
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["remember_token"], name: "index_users_on_remember_token", using: :btree
   end

@@ -1,11 +1,12 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :admin_user, only: [:index, :destroy]
   exclude_xsrf_token_cookie
 
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    @users = User.select(:id, :name, :email, :phone, :admin).order(:name) 
     respond_to do |format|
       format.html { render 'layouts/application' }
       format.json { render :json => @users.to_json()}
@@ -19,7 +20,7 @@ class UsersController < ApplicationController
       respond_to do |format|
         format.html { render 'layouts/application' }
         format.json { render :json => @user.to_json( :only => [:id, :name, :email, 
-          :phone, :created_at])}
+          :phone, :created_at, :admin] )}
       end
     else
       redirect_to root_url
@@ -51,15 +52,20 @@ class UsersController < ApplicationController
       @user.phone = 'не указан'
     end
 
-    if @user.save
-      sign_in @user
-      respond_to do |format|
-        format.json { render :json => @user.to_json( :only => [:id]) }
+    respond_to do |format|
+      if @user.save
+
+        if User.count == 1
+          @user.toggle!(:admin)
+        end
+
+        sign_in @user
+
+        id = @user.id
+        format.json { render :json => { :status => true, :id => id } }
+      else
+        format.json { render :json => { :status => false, :errors => @user.errors } }
       end
-    `else
-      respond_to do |format|
-        format.json { render :json => '444'.to_json }
-      end`
     end
   end
 
@@ -96,5 +102,10 @@ class UsersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
       params.permit(:name, :email, :phone, :password, :password_confirmation)
+    end
+
+    #only admin destroy
+    def admin_user
+      redirect_to(root_url) unless current_user.admin?
     end
 end

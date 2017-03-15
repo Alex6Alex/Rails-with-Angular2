@@ -15,6 +15,11 @@ export class HomeService{
 			.map(res => res.json());
 	}	
 
+	getUsers(): Observable<User[]>{
+		return this.http.get('users.json')
+			.map(res => res.json());	
+	}
+
 	getUserData(path: string): Observable<User>{
 		return this.http.get(`${path}.json`)
 			.map(res => res.json());

@@ -7,6 +7,8 @@ import { SessionService } from './services/session.service';
 import { PharmacyService } from './services/pharmacy.service';
 import { MedicineService } from './services/medicine.service';
 
+import { Md5 } from 'ts-md5/dist/md5';
+
 @Component({
 	moduleId: module.id,
   	selector: 'my-app',
@@ -17,26 +19,26 @@ import { MedicineService } from './services/medicine.service';
 })
 
 export class AppComponent implements AfterViewInit, OnInit {
-	//sign user or not
-	sign = false;
-	//user attributes
-	user_id: number;
-	user_name: string;
+	//вошел пользователь или нет
+	sign: boolean;
+	admin: boolean;
+	//атрибуты пользователя
+	user = { id: null, name: null, gravatar: null };
 
 	constructor(private router: Router, private titleService: Title,
 		private sessionService: SessionService){}
 
-	//title for pages
+	//заголовки
 	public setTitle(title: string){
 		this.titleService.setTitle(title);
 	};
 	
-	//we need it if reload page which is not home page
+	//узнать, в сети ли пользователь
 	ngOnInit(){
 		this.isSignIn();
 	}
 
-	//listen changes from another rendering parts
+	//отслеживает, если пользователь вошел или вышел с домашней страницы
 	ngAfterViewInit(){
 		this.signState();
 	}
@@ -44,32 +46,48 @@ export class AppComponent implements AfterViewInit, OnInit {
 	signState(){
 		this.sessionService.signInState.subscribe(status => {
 			this.sign = status;
-			if(this.sign) this.isSignIn();
+		});
+		this.sessionService.isAdmin.subscribe(admin => {
+			this.admin = admin;
 		});
 	}
 
-	//function for send bool data to listen between components
+	//связь между компонентами
 	signInState(value: boolean){
 		this.sessionService.signInState.next(value);
 	}
 
-	//is user in system
+	//проверка на админ
+	isAdmin(value: boolean){
+		this.sessionService.isAdmin.next(value);
+	}
+
+	//в сети ли пользователь?
 	isSignIn(): void{
 		this.sessionService.isSignIn().subscribe(data => {
 			if(data.sign){
 				//user in system
 				this.sign = data.sign;
-				this.user_id = data.user.id;
-				this.user_name = data.user.name;
+				this.user.id = data.user.id;
+				this.user.name = data.user.name;
+				this.user.gravatar = Md5.hashStr(data.user.email);
+
+				this.admin = data.user.admin;
+
+				this.signInState(true);
+				this.isAdmin(this.admin);
 			}
 		});
 	}
 
-	//user exit from system
+	//выход
 	logOut(): void{
-		this.sessionService.logOut(this.user_id).subscribe(data => {
+		this.sessionService.logOut(this.user.id).subscribe(data => {
 			this.sign = false;
+			this.admin = false;
+
 			this.signInState(false);
+			this.isAdmin(false);
 		});
 	}
 }

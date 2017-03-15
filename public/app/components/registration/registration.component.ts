@@ -14,20 +14,18 @@ import { SessionService } from '../../services/session.service';
 export class RegistrationComponent { 
 	constructor(private sessionService: SessionService, private router: Router){}
 
-	model = new User(null, null, null, null, null);
+	model = new User(null, null, null, null, null, null);
 
 	pattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$";
 
 	newUser(): void{
 		this.sessionService.newUser(this.model).subscribe(data => {
-            let id = null;
-
-            if (data.id)
-            	id = data.id;
-            
-            this.sessionService.signInState.next(true);
-            if (id){
-        		this.router.navigateByUrl(`/users/${id}`); 
+            if (data.status){
+            	this.sessionService.signInState.next(true);
+        		this.router.navigateByUrl(`/users/${data.id}`); 
+            }
+            else{
+            	console.log(data.errors);
             }
         }, 
         error => {

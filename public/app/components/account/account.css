@@ -1,4 +1,4 @@
-.user-info, .orders{
+.user-info, .user-content{
 	display: inline-block;
 }
 
@@ -48,7 +48,22 @@
   border-spacing: 5px;
 }
 
-.orders{
+.user-content{
 	width: 600px;
 	float: right;
+}
+
+.controls>ul{
+  padding: 0;
+}
+
+.controls>ul>li{
+  list-style-type: none;
+  margin-bottom: 10px;
+}
+
+.controls>ul>li>a{
+  text-decoration: none;
+  font-size: 1.2em;
+  color: #1D751A;
 }

@@ -5,7 +5,8 @@ export class User {
     public email: string,
     public phone: string,
     public password: string,
-    public password_confirmation: string
+    public password_confirmation: string,
+    public admin: boolean
   ) {  }
 
 }

@@ -5,11 +5,12 @@ Rails.application.routes.draw do
 	resources :static_pages
 	resources :groups, param: :code
 	resources :sessions, only: [:new, :create, :destroy, :sign_state]
+	resources :medicines
   scope path: "groups/:atc_group_id" do
   	resources :sub_groups, :path => '/', param: :code
-  	scope path: '/:atc_sub_group_id' do
-  		resources :medicines, :path => '/'
-  	end
+  	#scope path: '/:atc_sub_group_id' do
+  	#	resources :medicines, :path => '/'
+  	#end
   end
   
 	root 'application#index'
@@ -22,6 +23,8 @@ Rails.application.routes.draw do
 	match '/change_area', to: 'pharmacies#change_area', via: 'post'
 	match '/search_pharms', to: 'pharmacies#search', via: 'get'
 	match '/ordering', to: 'medicines#order', via: 'post'
+	match '/search_medicines', to: 'groups#search', via: 'get'
+	match '/medicine_in_pharmacy', to: 'medicines#search', via: 'get'
 
 	#match '*path' => redirect('/'), via: :get
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

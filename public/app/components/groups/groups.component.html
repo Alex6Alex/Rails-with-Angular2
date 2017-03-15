@@ -1,11 +1,18 @@
 <div class="medicines">
-	<form>
+	<form (submit)="onSubmit(medicineTerm.value); onShowSearchRes(false)">
 		<div class="input-group">
-			<span class="input-group-addon glyphicon glyphicon-search">
+			<span (click)="onSubmit(medicineTerm.value); onShowSearchRes(false)" class="input-group-addon glyphicon glyphicon-search">
 			</span>
-			<input type="text" class="form-control" placeholder="Название лекарства"/>
+			<input (focus)="onShowSearchRes(true)" (blur)="onShowSearchRes(false)" type="text" #medicineTerm (keyup)="searchPharm(medicineTerm.value)" class="form-control" placeholder="Название лекарства"/>
 		</div>
 	</form>
+
+	<ul class="search-result" *ngIf="items?.length>0 && showItems">
+		<li *ngFor="let item of items">
+			<a (mouseover)="(resultsIsShow = true)" (mouseleave)="(resultsIsShow = false)" routerLink="/medicines/{{item.id}}" routerLinkActive="active">{{item.name}} ({{item.form}})</a>
+		</li>
+	</ul>
+
 	<h2>Классификация АТХ</h2>
 	<p>Анатомо-терапевтическо-химическая классификация (АТХ) - международная система классификации лекарственных средств. Рекомендована Всемирной организацией здравоохранения.</p>
 	<p>По классификации все лекартства делятся на группы по их основному терапевтическому применению.</p>

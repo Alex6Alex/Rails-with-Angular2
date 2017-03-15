@@ -6,15 +6,15 @@
         <p>Лекартсва размещены с использованием классификации АТХ, что позволяет упростить и ускорить поиск.</p>
         <p>Мы старались сделать сайт удобным поисковым ресурсом и надеемся, что он Вам понравится.</p>
     </div>
-    <div *ngIf="m === 2" class="auth-user">
+    <div *ngIf="sign === true" class="auth-user">
         <div class="user-header">
-            <div class="user-icon"></div>
-            <h3>{{user_name}}</h3>
+            <img class="user-icon img-circle" src="https://secure.gravatar.com/avatar/{{user.gravatar}}">
+            <h3>{{user.name}}</h3>
         </div>
         <div>
             <div class="user-item">
                 <span class="glyphicon glyphicon-home"></span>
-                <a class="user-link" routerLink="/users/{{user_id}}" routerLinkActive="active">Профиль</a> 
+                <a class="user-link" routerLink="/users/{{user.id}}" routerLinkActive="active">Профиль</a> 
             </div>
             <div class="user-item">
                 <span class="glyphicon glyphicon-wrench"></span>
@@ -25,7 +25,7 @@
             <span class="glyphicon glyphicon-log-out"></span> Выйти</button>    
         </div>
     </div>
-    <div *ngIf="m === 1" class="auth-fast">
+    <div *ngIf="sign === false" class="auth-fast">
         <h3>Войти на сайт</h3>
         <form>
             <label>Email</label>

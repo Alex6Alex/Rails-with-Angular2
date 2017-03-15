@@ -41,6 +41,45 @@ export class PharmacyService{
             .map(res => res.json());
 	}
 
+	//поиск лекарств в определенной аптеке
+	searchByPharmacy(term: string, id: number){
+		let url = '/medicine_in_pharmacy.json';
+
+		let params = new URLSearchParams();
+    	params.set('search', term); // the user's search value
+    	params.set('id', id.toString());//pharmacy id
+    	params.set('callback', 'JSONP_CALLBACK');
+    	// TODO: Add error handling
+    	return this.jsonp
+            .get(url, { search: params })
+            .map(res => res.json());
+	}
+
+	//новая аптека
+	newPharmacy(pharmacy: Pharmacy){
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+    	let options = new RequestOptions({ headers: headers });
+    	let body = JSON.stringify({
+			name: pharmacy.name,
+			address: pharmacy.address,
+			area: pharmacy.area,
+			phone: pharmacy.phone,
+			worktime: pharmacy.worktime
+    	});
+
+    	return this.http.post('/pharmacies.json', body, options)
+    						.map(res => res.json());
+	}
+
+	//удаление
+	destroyPharmacy(id: number){
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+    	let options = new RequestOptions({ headers: headers });
+
+    	return this.http.delete(`/pharmacies/${id}.json`, options)
+    						.map(() => null);
+	}
+
 	//для отдельной аптеки
 	getPharmacy(path: string): Observable<Pharmacy>{
 		return this.http.get(`${path}.json`)

@@ -10,83 +10,82 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var session_service_1 = require('../../services/session.service');
+var md5_1 = require('ts-md5/dist/md5');
 var HomeComponent = (function () {
     function HomeComponent(sessionService) {
         this.sessionService = sessionService;
-        //session model
-        this.session = { email: "", password: "" };
-        //sign user or not
-        this.sign = false;
-        this.m = 0;
-        this.user_name = "";
-        //pattern for mail
+        //модель для входа
+        this.session = { email: null, password: null };
+        //атрибуты пользователя
+        this.user = { id: null, name: null, gravatar: null };
+        //эл. почта
         this.pattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$";
-        //error if login data invalid
+        //указать ошибки, если они есть
         this.errorLog = false;
     }
     HomeComponent.prototype.ngOnInit = function () {
         var _this = this;
-        //get data from server
         this.sessionService.isSignIn().subscribe(function (data) {
             if (data.sign) {
-                //get current user information
                 _this.sign = data.sign;
-                _this.user_id = data.user.id;
-                _this.user_name = data.user.name;
-                //function for send bool data to header
+                _this.user.id = data.user.id;
+                _this.user.name = data.user.name;
+                _this.user.gravatar = md5_1.Md5.hashStr(data.user.email);
+                _this.admin = data.user.admin;
                 _this.signInState(true);
-                _this.m = 2;
+                _this.isAdmin(_this.admin);
                 _this.signState();
             }
             else {
-                _this.m = 1;
                 _this.signState();
             }
         });
     };
-    //functon for sign in button
     HomeComponent.prototype.onSubmit = function () {
         this.signIn();
     };
-    //function for send bool data to header
     HomeComponent.prototype.signInState = function (value) {
         this.sessionService.signInState.next(value);
     };
-    //if log out via header
+    //определение админа
+    HomeComponent.prototype.isAdmin = function (value) {
+        this.sessionService.isAdmin.next(value);
+    };
+    //если вышел
     HomeComponent.prototype.signState = function () {
         var _this = this;
         this.sessionService.signInState.subscribe(function (status) {
             _this.sign = status;
-            if (!_this.sign)
-                _this.m = 1;
+        });
+        this.sessionService.isAdmin.subscribe(function (admin) {
+            _this.admin = admin;
         });
     };
-    //sign registered user in 
+    //вход
     HomeComponent.prototype.signIn = function () {
         var _this = this;
         this.sessionService.signIn(this.session).subscribe(function (data) {
             _this.sign = true;
-            //don't show error message
+            console.log(data);
             _this.errorLog = false;
-            //get current user information
-            _this.user_id = data.id;
-            _this.user_name = data.name;
+            _this.user.id = data.id;
+            _this.user.name = data.name;
+            _this.user.gravatar = md5_1.Md5.hashStr(data.email);
+            _this.admin = data.admin;
             _this.signInState(true);
-            _this.m = 2;
+            _this.isAdmin(_this.admin);
         }, function (error) {
-            //show error message
             _this.errorLog = true;
         });
     };
-    //exit form system
+    //выход
     HomeComponent.prototype.logOut = function () {
         var _this = this;
-        this.sessionService.logOut(this.user_id).subscribe(function (data) {
+        this.sessionService.logOut(this.user.id).subscribe(function (data) {
             _this.sign = false;
-            _this.m = 1;
-            //send to header
+            _this.admin = false;
             _this.signInState(false);
-            //console.log(data);
+            _this.isAdmin(false);
         });
     };
     HomeComponent = __decorate([

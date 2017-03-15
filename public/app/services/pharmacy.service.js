@@ -40,6 +40,39 @@ var PharmacyService = (function () {
             .get(url, { search: params })
             .map(function (res) { return res.json(); });
     };
+    //поиск лекарств в определенной аптеке
+    PharmacyService.prototype.searchByPharmacy = function (term, id) {
+        var url = '/medicine_in_pharmacy.json';
+        var params = new http_1.URLSearchParams();
+        params.set('search', term); // the user's search value
+        params.set('id', id.toString()); //pharmacy id
+        params.set('callback', 'JSONP_CALLBACK');
+        // TODO: Add error handling
+        return this.jsonp
+            .get(url, { search: params })
+            .map(function (res) { return res.json(); });
+    };
+    //новая аптека
+    PharmacyService.prototype.newPharmacy = function (pharmacy) {
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        var body = JSON.stringify({
+            name: pharmacy.name,
+            address: pharmacy.address,
+            area: pharmacy.area,
+            phone: pharmacy.phone,
+            worktime: pharmacy.worktime
+        });
+        return this.http.post('/pharmacies.json', body, options)
+            .map(function (res) { return res.json(); });
+    };
+    //удаление
+    PharmacyService.prototype.destroyPharmacy = function (id) {
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this.http.delete("/pharmacies/" + id + ".json", options)
+            .map(function () { return null; });
+    };
     //для отдельной аптеки
     PharmacyService.prototype.getPharmacy = function (path) {
         return this.http.get(path + ".json")

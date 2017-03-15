@@ -1,0 +1,19 @@
+<div class="users">
+	<p>Пользователи ресурса</p>
+	<div *ngFor="let user of users" class="user">
+		<div>
+			<div class="head">
+				<img class="user-icon img-circle" src="https://secure.gravatar.com/avatar/{{gravatars[user.name]}}">
+				<a routerLink="/users/{{user.id}}" routerLinkActive="active" class="name">{{user.name}}</a>
+			</div>
+			<span *ngIf="user.admin === false" class="glyphicon glyphicon-remove" (click)="onDestroy(user); $event.stopPropagation()" title="Удалить пользователя"></span>
+		</div>
+		<p class="email"><span class="glyphicon glyphicon-envelope"></span> {{user.email}}</p>
+		<p class="phone"><span class="glyphicon glyphicon-phone-alt"></span>  {{user.phone}}</p>
+	</div>
+</div>
+<div class="about">
+	<p class="title">О списке</p>
+	<p>На странице показаны все зарегестрированные пользователи на текущи момент.</p>
+	<p>Как администратор справочной системы, Вы можете посетить странице каждого из пользователей, и, при необходимости, удалить его страницу.</p>
+</div>

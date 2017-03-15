@@ -13,12 +13,14 @@ var router_1 = require('@angular/router');
 var home_component_1 = require('./components/home/home.component');
 var pharmacies_component_1 = require('./components/pharmacies/pharmacies.component');
 var pharmacy_component_1 = require('./components/pharmacy/pharmacy.component');
+var new_pharmacy_component_1 = require('./components/newPharmacy/new.pharmacy.component');
 var groups_component_1 = require('./components/groups/groups.component');
 var atc_group_component_1 = require('./components/atcGroup/atc.group.component');
 var atc_sub_group_component_1 = require('./components/atcSubGroup/atc.sub.group.component');
 var medicine_component_1 = require('./components/medicine/medicine.component');
 var registration_component_1 = require('./components/registration/registration.component');
 var account_component_1 = require('./components/account/account.component');
+var users_component_1 = require('./components/users/users.component');
 var routes = [
     {
         path: '',
@@ -35,6 +37,10 @@ var routes = [
         data: { preload: true }
     },
     {
+        path: 'pharmacies/new',
+        component: new_pharmacy_component_1.NewPharmacyComponent
+    },
+    {
         path: 'groups',
         component: groups_component_1.GroupsComponent
     },
@@ -47,12 +53,16 @@ var routes = [
         component: atc_sub_group_component_1.AtcSubGroupComponent
     },
     {
-        path: 'groups/:code/:sub_code/:id',
+        path: 'medicines/:id',
         component: medicine_component_1.MedicineComponent
     },
     {
         path: 'signup',
         component: registration_component_1.RegistrationComponent
+    },
+    {
+        path: 'users',
+        component: users_component_1.UsersComponent
     },
     {
         path: 'users/:id',

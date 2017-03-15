@@ -20,6 +20,20 @@ class GroupsController < ApplicationController
         :include => [:atcSubGroups]) }
     end
   end
+
+  def search
+    respond_to do |format|
+      if !params[:search].blank?
+        @searchedMedicines = Medicine.select(:id, :name, :form)
+          .where('LOWER(name) LIKE LOWER(?)', "%#{params[:search]}%")
+      else
+        @searchedMedicines = nil
+      end
+        
+      format.json { render :json => @searchedMedicines.to_json(), 
+        :callback => params[:callback] }
+    end
+  end
   
   def update
   end

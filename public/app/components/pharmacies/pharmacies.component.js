@@ -16,14 +16,15 @@ require('rxjs/add/operator/switchMap');
 require('rxjs/add/operator/map');
 var Subject_1 = require('rxjs/Subject');
 var pharmacy_service_1 = require('../../services/pharmacy.service');
+var session_service_1 = require('../../services/session.service');
 /// <reference path="ymaps.d.ts"/>
 var PharmaciesComponent = (function () {
-    function PharmaciesComponent(pharmacyService) {
+    function PharmaciesComponent(pharmacyService, sessionService) {
         this.pharmacyService = pharmacyService;
+        this.sessionService = sessionService;
         this.showItems = false;
         this.resultsIsShow = false;
         this.searchTerm = null;
-        this.pharms = [];
         //параметры выбора района
         this.area = 0;
         this.areaName = 'Все';
@@ -55,11 +56,14 @@ var PharmaciesComponent = (function () {
         if (this.searchTerm === value)
             return;
         this.searchTerm = value;
-        this.getArea(this.searchTerm, this.areaName, this.sortBy, this.workTime, true);
+        this.getArea(this.searchTerm, this.areaName, this.sortBy, this.workTime);
     };
     PharmaciesComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.getPharms();
+        this.sessionService.isAdmin.subscribe(function (status) {
+            _this.canDestroy = status;
+        });
         this.ymapsInit();
         this.searchStream
             .debounceTime(300)
@@ -77,6 +81,16 @@ var PharmaciesComponent = (function () {
         });
         return Promise.resolve(0);
     };
+    //Удаление аптеки админом
+    PharmaciesComponent.prototype.onDestroy = function (pharmacy) {
+        var _this = this;
+        this.pharmacyService.destroyPharmacy(pharmacy.id).subscribe(function () {
+            _this.pharms = _this.pharms.filter(function (p) { return p !== pharmacy; });
+        });
+        ymaps.ready().then(function () {
+            _this.objectManager.objects.remove(_this.objectManager.objects.getById(pharmacy.id));
+        });
+    };
     PharmaciesComponent.prototype.ymapsInit = function () {
         var _this = this;
         ymaps.ready().then(function () {
@@ -84,7 +98,13 @@ var PharmaciesComponent = (function () {
                 center: [44.578526, 33.532156],
                 zoom: 11,
                 controls: ['zoomControl', 'fullscreenControl']
+            }), _this.objectManager = new ymaps.ObjectManager({
+                clusterize: true,
+                gridSize: 32
             });
+            //this.objectManager.objects.options.set('preset', 'islands#darkGreenMedicalIcon');
+            _this.objectManager.clusters.options.set('preset', 'islands#darkGreenClusterIcons');
+            _this.myMap.geoObjects.add(_this.objectManager);
         });
     };
     //сортировка
@@ -92,7 +112,7 @@ var PharmaciesComponent = (function () {
         if (this.sortBy === sortBy)
             return;
         this.sortBy = sortBy;
-        this.getArea(this.searchTerm, this.areaName, sortBy, this.workTime, false);
+        this.getArea(this.searchTerm, this.areaName, sortBy, this.workTime);
         if (this.sortBy === 'name')
             this.sortTitle = 'по названию';
         else
@@ -104,7 +124,7 @@ var PharmaciesComponent = (function () {
         if (this.workTime == time)
             return;
         this.workTime = time;
-        this.getArea(this.searchTerm, this.areaName, this.sortBy, this.workTime, true);
+        this.getArea(this.searchTerm, this.areaName, this.sortBy, this.workTime);
         if (this.workTime === 'all')
             this.workTitle = 'все';
         else if (this.workTime === 'day')
@@ -119,7 +139,7 @@ var PharmaciesComponent = (function () {
             return;
         this.areaName = area;
         this.area = num;
-        this.getArea(this.searchTerm, this.areaName, this.sortBy, this.workTime, true);
+        this.getArea(this.searchTerm, this.areaName, this.sortBy, this.workTime);
         switch (num) {
             case 0: {
                 this.myMap.setCenter([44.578526, 33.532156]);
@@ -148,16 +168,22 @@ var PharmaciesComponent = (function () {
             }
         }
     };
+    PharmaciesComponent.prototype.getPharmaciesBy = function (ids) {
+        this.objectManager.setFilter(function (object) {
+            return ids.indexOf(object.id) !== -1;
+        });
+    };
     //запрос о районе на сервер
-    PharmaciesComponent.prototype.getArea = function (searchName, area, sortBy, workTime, refresh) {
+    PharmaciesComponent.prototype.getArea = function (searchName, area, sortBy, workTime) {
         var _this = this;
         this.pharmacyService.getArea(searchName, area, sortBy, workTime)
             .then(function (data) {
             _this.pharms = data;
-            if (refresh) {
-                _this.myMap.geoObjects.removeAll();
-                _this.pharmsToMap();
-            }
+            var ids = new Array();
+            data.forEach(function (d) {
+                ids.push(d.id);
+            });
+            _this.getPharmaciesBy(ids);
         });
     };
     //отобразить аптеки на карте
@@ -167,19 +193,23 @@ var PharmaciesComponent = (function () {
             var _loop_1 = function(pharm) {
                 var myGeocoder = ymaps.geocode("\u0421\u0435\u0432\u0430\u0441\u0442\u043E\u043F\u043E\u043B\u044C, " + pharm.address);
                 myGeocoder.then(function (res) {
-                    var myPlacemark = new ymaps.Placemark(res.geoObjects.get(0).geometry.getCoordinates(), {
-                        title: pharm.name,
-                        address: pharm.address
-                    }, {
-                        preset: 'islands#darkGreenMedicalIcon',
-                        balloonPanelMaxMapArea: 0,
-                        openEmptyBalloon: true
-                    });
-                    myPlacemark.events.add('balloonopen', function (e) {
-                        var content = "\n\t\t            \t\t<h4>" + pharm.name + "</h4>\n\t\t            \t\t" + pharm.address + "\n\t\t            \t";
-                        myPlacemark.properties.set('balloonContent', content);
-                    });
-                    _this.myMap.geoObjects.add(myPlacemark);
+                    var content = "\n\t            \t\t<h4>" + pharm.name + "</h4>\n\t            \t\t" + pharm.address + "\n\t            \t";
+                    var myPlacemark = {
+                        "type": "Feature",
+                        "id": pharm.id,
+                        "geometry": {
+                            "type": "Point",
+                            "coordinates": res.geoObjects.get(0).geometry.getCoordinates()
+                        },
+                        "properties": {
+                            "balloonContent": content
+                        },
+                        "options": {
+                            "preset": "islands#darkgreenMedicalIcon",
+                            "hideIconOnBalloonOpen": true
+                        }
+                    };
+                    _this.objectManager.add(myPlacemark);
                 });
             };
             for (var _i = 0, _a = _this.pharms; _i < _a.length; _i++) {
@@ -195,7 +225,7 @@ var PharmaciesComponent = (function () {
             templateUrl: 'pharmacies.component.html',
             styleUrls: ['pharmacies.css']
         }), 
-        __metadata('design:paramtypes', [pharmacy_service_1.PharmacyService])
+        __metadata('design:paramtypes', [pharmacy_service_1.PharmacyService, session_service_1.SessionService])
     ], PharmaciesComponent);
     return PharmaciesComponent;
 }());

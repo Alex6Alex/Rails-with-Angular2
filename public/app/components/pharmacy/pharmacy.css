@@ -11,6 +11,43 @@
 	background-color: #fff;
 	border-right: none;
 }
+
+/*выпадающее меню поиска*/
+.search-result{
+	position: absolute;
+	//left: 39px;
+	width: 1000px;
+	background: #fff;
+	z-index: 20;
+
+	border: 1px solid #333;
+	border-top: none;
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+
+	padding: 5px;
+}
+
+.search-result>li{
+	width: 100%;
+	list-style-type: none;
+	font-size: 1.2em;
+	//margin-bottom: 5px;
+}
+
+.search-result>li>a{
+	display: block;
+	text-indent: 10px;
+	text-decoration: none;
+	color: #696969;
+}
+
+.search-result>li>a:hover{
+	background: #14960F;
+	border-radius: 3px;
+	color: #fff;
+}
+
 /*информация*/
 .pharmacy-info{
 	margin-top: 15px;

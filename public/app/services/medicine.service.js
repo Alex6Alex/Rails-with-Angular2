@@ -43,6 +43,17 @@ var MedicineService = (function () {
         return this.http.post('/ordering.json', body, options)
             .map(function (res) { return res.json(); });
     };
+    //поиск лекарств
+    MedicineService.prototype.search = function (term) {
+        var url = '/search_medicines.json';
+        var params = new http_1.URLSearchParams();
+        params.set('search', term); // the user's search value
+        params.set('callback', 'JSONP_CALLBACK');
+        // TODO: Add error handling
+        return this.jsonp
+            .get(url, { search: params })
+            .map(function (res) { return res.json(); });
+    };
     MedicineService = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [http_1.Http, http_1.Jsonp])

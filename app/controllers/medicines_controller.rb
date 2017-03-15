@@ -27,6 +27,26 @@ class MedicinesController < ApplicationController
     end
   end
 
+  def search
+    respond_to do |format|
+      if !params[:search].blank?
+        join_text = "INNER JOIN price_lists ON price_lists.pharmacy_id = #{params[:id]} 
+          AND price_lists.medicine_id = medicines.id"
+        select_text = "medicines.id, medicines.name, medicines.form, price_lists.price"
+
+        @searchedMedicines = Medicine
+          .select(select_text)
+          .joins(join_text)
+          .where('LOWER(medicines.name) LIKE LOWER(?)', "%#{params[:search]}%")
+      else
+        @searchedMedicines = nil
+      end
+        
+      format.json { render :json => @searchedMedicines.to_json(), 
+        :callback => params[:callback] }
+    end
+  end
+
   def order
     time = params[:time]
     join_text = "INNER JOIN price_lists ON pharmacies.id = price_lists.pharmacy_id"

@@ -5,6 +5,7 @@
 .new_user{
 	//margin-top: 20px;
 	//margin-bottom: 20px;
+	position: relative;
 	width: 400px;
 	padding-left: 30px;
 	padding-right: 30px;
@@ -22,6 +23,7 @@
 
 .registr{
 	width: 600px;
+	height: 125px;
 	//margin-top: 20px;
 	//margin-bottom: 20px;
 	float: right;

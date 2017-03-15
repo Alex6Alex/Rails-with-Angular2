@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { SessionService } from '../../services/session.service';
 
+import { Md5 } from 'ts-md5/dist/md5';
+
 @Component({
 	moduleId: module.id,
 	selector: 'home',
@@ -10,86 +12,95 @@ import { SessionService } from '../../services/session.service';
 })
 
 export class HomeComponent implements OnInit { 
-	//session model
-	session = {email: "", password: ""};
-	//sign user or not
-	sign = false;
-	m = 0;
-	//user attributes
-	user_id: number;
-	user_name: string = "";
-	//pattern for mail
+	//модель для входа
+	session = {email: null, password: null};
+	//проверка входа и админа
+	sign: boolean;
+	admin: boolean;
+	//атрибуты пользователя
+	user = { id: null, name: null, gravatar: null }
+	//эл. почта
 	pattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$";
-	//error if login data invalid
+	//указать ошибки, если они есть
 	errorLog = false;
 
 	constructor(private sessionService: SessionService){}
 
 	ngOnInit(): void{
-		
-		//get data from server
 		this.sessionService.isSignIn().subscribe(data => {
 			if(data.sign){
-				//get current user information
+				
 				this.sign = data.sign;
-				this.user_id = data.user.id;
-				this.user_name = data.user.name;
-				//function for send bool data to header
-				this.signInState(true);
+				this.user.id = data.user.id;
+				this.user.name = data.user.name;
+				this.user.gravatar = Md5.hashStr(data.user.email);
 
-				this.m = 2;
+				this.admin = data.user.admin;
+				
+				this.signInState(true);
+				this.isAdmin(this.admin);
+
 				this.signState();
 			}
 			else{
-				this.m = 1
 				this.signState();
 			}
 		});
 	}
-	//functon for sign in button
+	
 	onSubmit(): void{
 		this.signIn();
 	}
 
-	//function for send bool data to header
 	signInState(value: boolean){
 		this.sessionService.signInState.next(value);
 	}
 
-	//if log out via header
+	//определение админа
+	isAdmin(value: boolean){
+		this.sessionService.isAdmin.next(value);
+	}
+
+	//если вышел
 	signState(){
 		this.sessionService.signInState.subscribe(status => {
 			this.sign = status;
-			if(!this.sign) this.m = 1;
+		});
+		this.sessionService.isAdmin.subscribe(admin => {
+			this.admin = admin;
 		});
 	}
 
-	//sign registered user in 
+	//вход
 	signIn(): void{
 		this.sessionService.signIn(this.session).subscribe(data => {
 			this.sign = true;
-			//don't show error message
+			console.log(data);
+			
 			this.errorLog = false;
-			//get current user information
-			this.user_id = data.id;
-			this.user_name = data.name;
+			
+			this.user.id = data.id;
+			this.user.name = data.name;
+			this.user.gravatar = Md5.hashStr(data.email);
+
+			this.admin = data.admin;
+
 			this.signInState(true);
-			this.m = 2; 
+			this.isAdmin(this.admin);
 		}, 
 		error => {
-			//show error message
 			this.errorLog = true;
 		});
 	}
 
-	//exit form system
+	//выход
 	logOut(): void{
-		this.sessionService.logOut(this.user_id).subscribe(data => {
+		this.sessionService.logOut(this.user.id).subscribe(data => {
 			this.sign = false;
-			this.m = 1;
-			//send to header
+			this.admin = false;
+			
 			this.signInState(false);
-			//console.log(data);
+			this.isAdmin(false);
 		});
 	}
 }

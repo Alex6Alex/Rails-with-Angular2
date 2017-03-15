@@ -42,4 +42,17 @@ export class MedicineService{
 		return this.http.post('/ordering.json', body, options)
 						.map(res => res.json());
 	}
+
+	//поиск лекарств
+	search(term: string){
+		let url = '/search_medicines.json';
+
+		let params = new URLSearchParams();
+    	params.set('search', term); // the user's search value
+    	params.set('callback', 'JSONP_CALLBACK');
+    	// TODO: Add error handling
+    	return this.jsonp
+            .get(url, { search: params })
+            .map(res => res.json());
+	}
 }
