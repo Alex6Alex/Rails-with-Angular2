@@ -30,9 +30,7 @@ class SessionsController < ApplicationController
 
 	def sign_state
 		respond_to do |format|
-			user = { 'id': current_user.id, 'name': current_user.name, 
-					'email': current_user.email, 'admin': current_user.admin}
-			json_data = { 'sign' => signed_in?, 'user' => user }
+			json_data = { 'sign' => signed_in?, 'user' => current_user }
 			format.html { render 'layouts/application' }
 			format.json { render json: json_data.to_json() }
 		end
