@@ -5,6 +5,8 @@ import { Title } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
 
 import { MedicineService } from '../../services/medicine.service';
+import { SessionService } from '../../services/session.service';
+
 import { Medicine } from '../../models/atcGroups';
 import { Pharmacy } from '../../models/pharmacy';
 
@@ -21,6 +23,8 @@ export class MedicineComponent implements OnInit {
 	price: number = null;
 	count = null;
 
+	canChange: boolean;
+
 	//параметры сортировки
 	showSortList = false;
 	sortBy = 'name';
@@ -31,10 +35,15 @@ export class MedicineComponent implements OnInit {
 	workTitle = 'все';
 
 	constructor(private title: Title, private router: Router, 
-				private medicineService: MedicineService){}
+				private medicineService: MedicineService,
+				private sessionService: SessionService){}
 
 	ngOnInit(): void{
 		this.getMedicine();
+
+		this.sessionService.isAdmin.subscribe(status => {
+			this.canChange = status;
+		});
 	}
 
 	getMedicine() {

@@ -138,7 +138,7 @@ class PharmaciesController < ApplicationController
   # DELETE /pharmacies/1
   # DELETE /pharmacies/1.json
   def destroy
-    @pharmacy.destroy
+    @pharmacy.destroy if current_user.admin?
     #respond_to do |format|
     #  format.html { redirect_to pharmacies_url, notice: 'Pharmacy was successfully destroyed.' }
     #  format.json { head :no_content }

@@ -9,9 +9,12 @@ import { GroupsComponent } from './components/groups/groups.component';
 import { AtcGroupComponent } from './components/atcGroup/atc.group.component';
 import { AtcSubGroupComponent } from './components/atcSubGroup/atc.sub.group.component';
 import { MedicineComponent } from './components/medicine/medicine.component';
+import { NewMedicineComponent } from './components/newMedicine/new.medicine.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { AccountComponent} from './components/account/account.component';
 import { UsersComponent} from './components/users/users.component';
+
+import { CanActivateGuard } from './services/can.activate.guard';
 
 const routes: Routes = [
 	{ 
@@ -43,6 +46,11 @@ const routes: Routes = [
 	{
 		path: 'groups/:code/:sub_code',
 		component: AtcSubGroupComponent
+	},
+	{
+		path: 'medicines/new',
+		component: NewMedicineComponent//,
+		//canActivate: [CanActivateGuard]
 	},
 	{
 		path: 'medicines/:id',

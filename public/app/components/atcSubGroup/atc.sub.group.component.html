@@ -7,6 +7,7 @@
 			<a routerLink='/medicines/{{medicine.id}}' routerLinkActive="active">
 				<p>{{medicine.name}}</p>
 			</a>
+			<span *ngIf="canChange == true" class="glyphicon glyphicon-remove" title="Удалить препарат" (click)="onDestroy(medicine); $event.stopPropagation()"></span>
 		</li>
 	</ul>
 

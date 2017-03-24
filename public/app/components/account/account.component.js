@@ -17,7 +17,7 @@ var AccountComponent = (function () {
     function AccountComponent(router, homeService) {
         this.router = router;
         this.homeService = homeService;
-        this.user = new user_1.User(null, null, null, null, null, null);
+        this.user = new user_1.User(null, null, null, null, null, null, null);
     }
     AccountComponent.prototype.ngOnInit = function () {
         this.getUserInfo();

@@ -16,7 +16,7 @@ var RegistrationComponent = (function () {
     function RegistrationComponent(sessionService, router) {
         this.sessionService = sessionService;
         this.router = router;
-        this.model = new user_1.User(null, null, null, null, null, null);
+        this.model = new user_1.User(null, null, null, null, null, null, null);
         this.pattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$";
     }
     RegistrationComponent.prototype.newUser = function () {

@@ -7,7 +7,6 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 #pharmacies
-Pharmacy.create(name: 'Аптека №1', address: 'Восставших, 1', phone: '54-44-65', worktime: 'круглосуточно', area: 'Ленинский')
 Pharmacy.create(name: 'АВиК', address: 'Нахимова, 10', phone: '65-34-21', worktime: '8.00 - 19.00', area: 'Ленинский')
 Pharmacy.create(name: 'Le+', address: 'Острякова, 5б', phone: '55-41-71', worktime: 'круглосуточно', area: 'Ленинский')
 Pharmacy.create(name: 'Аптека №22', address: 'Острякова, 155а', phone: '65-37-10', worktime: '8.00 - 22.00', area: 'Ленинский')
@@ -40,7 +39,7 @@ AtcGroup.create(code: 'S', description: 'Органы чувств')
 AtcGroup.create(code: 'W', description: 'Прочие препараты')
 
 #sub groups
-AtcSubGroup.create(code: 'A10', description: 'Препараты для лечения сахарного диабета', atc_group_id: 1);
+`AtcSubGroup.create(code: 'A10', description: 'Препараты для лечения сахарного диабета', atc_group_id: 1);
 AtcSubGroup.create(code: 'A11', description: 'Витамины', atc_group_id: 1);
 
 AtcSubGroup.create(code: 'B02', description: 'Гемостатические препараты', atc_group_id: 2);
@@ -108,4 +107,4 @@ PriceList.create(medicine_id: 2, pharmacy_id: 12, price: 41, count: 100)
 PriceList.create(medicine_id: 2, pharmacy_id: 9, price: 27, count: 100)
 PriceList.create(medicine_id: 2, pharmacy_id: 10, price: 30, count: 100)
 PriceList.create(medicine_id: 2, pharmacy_id: 5, price: 37, count: 100)
-PriceList.create(medicine_id: 2, pharmacy_id: 1, price: 32, count: 100)
+PriceList.create(medicine_id: 2, pharmacy_id: 1, price: 32, count: 100)`

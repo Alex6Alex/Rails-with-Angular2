@@ -30,6 +30,12 @@ var HomeService = (function () {
     HomeService.prototype.getDates = function () {
         return this.http.get('/dates.json').map(function (res) { return res.json(); });
     };
+    HomeService.prototype.destroyUser = function (id) {
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this.http.delete("/users/" + id + ".json", options)
+            .map(function () { return null; });
+    };
     HomeService = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [http_1.Http])

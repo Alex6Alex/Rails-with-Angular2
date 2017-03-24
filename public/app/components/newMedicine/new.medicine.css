@@ -1,0 +1,53 @@
+.medicine-form{
+	position: relative;
+	width: 350px;
+	padding-left: 30px;
+	padding-right: 30px;
+	float: left;
+}
+
+.medicine-form>form>.form-control{
+	margin-bottom: 20px;
+}
+
+.medicine-form>form>#pack{
+	border-left: 5px solid #66AFE9;
+}
+
+.medicine-form>form>#group{
+	border-left: 5px solid #FF8000;
+}
+
+.medicine-form>form>textarea{
+	max-width: 290px;
+	border-left: 5px solid #66AFE9;
+}
+
+.medicine-form>form>.btn{
+	width: 100%;
+	border-radius: 0px;
+}
+
+.ng-valid[required], .ng-valid.required  {
+	border-left: 5px solid #42A948; /* green */
+}
+
+.ng-invalid:not(form)  {
+	border-left: 5px solid #a94442; /* red */
+}
+
+.alert{
+	margin-top: -20px;
+	border-top-right-radius: 0px;
+	border-top-left-radius: 0px;
+}
+
+.add-med{
+	width: 650px;
+	float: right;
+	display: inline-block;
+}
+
+.add-med>p{
+	color: #616161;
+}

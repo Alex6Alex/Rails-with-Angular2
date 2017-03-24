@@ -14,7 +14,7 @@ import { SessionService } from '../../services/session.service';
 export class RegistrationComponent { 
 	constructor(private sessionService: SessionService, private router: Router){}
 
-	model = new User(null, null, null, null, null, null);
+	model = new User(null, null, null, null, null, null, null);
 
 	pattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$";
 

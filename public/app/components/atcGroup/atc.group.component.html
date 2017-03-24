@@ -1,13 +1,45 @@
 <div class="atc-group">
 
-	<p><b>{{group.code}}</b> {{group.description}}</p>
+	<p><b>{{group.code}}</b> {{group.description}} <span *ngIf="canChange == true" class="glyphicon glyphicon-plus" title="Добавить подгруппу" (click)="createDialog = true"></span></p>
 
 	<ul>
 		<li *ngFor="let subGroup of subGroups">
 			<a routerLink='/{{router.url}}/{{subGroup.code}}' routerLinkActive="active">
 				<p><strong>{{subGroup.code}}</strong> {{subGroup.description}}</p>
 			</a>
+			<span *ngIf="canChange == true" class="glyphicon glyphicon-remove" title="Удалить подгруппу" (click)="onDestroy(subGroup); $event.stopPropagation()"></span>
 		</li>
 	</ul>
+
+	<div *ngIf="createDialog == true" class="background" (click)="createDialog = false"></div>
+	<div *ngIf="createDialog == true" class="createDialog">
+		<span class="glyphicon glyphicon-remove" (click)="createDialog = false" title="Закрыть"></span>
+		<p class="title">Добавление новой категории</p>
+		<form #newsubgroup="ngForm">
+			<label for="code">Код категории</label>
+			<input type="text" class="form-control" id="code" required minlength="3" maxlength="3" [(ngModel)]="newSubGroup.code" name="code" #code="ngModel"/>
+			<div *ngIf="code.errors && code.touched" class="alert alert-danger">
+            	<div [hidden]="!code.errors.required">
+	            	Введите код.
+	            </div>
+	            <div [hidden]="!code.errors.minlength">
+	            	Длина кода: 3 символа.
+	            </div>
+        	</div>
+
+			<label for="description">Название категории</label>
+        	<input type="text" class="form-control" id="description" required minlength="5" [(ngModel)]="newSubGroup.description" name="description" #description="ngModel"/>
+			<div *ngIf="description.errors && description.touched" class="alert alert-danger">
+	            <div [hidden]="!description.errors.required">
+	            	Введите название категории.
+	            </div>
+	            <div [hidden]="!description.errors.minlength">
+	            	Минимальная длина названия: 5 символов.
+	            </div>
+	        </div>	
+
+	        <button type="submit" (click)="onSubmit()" class="btn btn-success">Добавить категорию</button>
+		</form>
+	</div>
 
 </div>

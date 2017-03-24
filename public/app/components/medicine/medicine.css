@@ -97,6 +97,52 @@
 	color: red;
 	cursor: pointer;
 }
+
+/*добавление прайс листа*/
+.available-pharmacies>.new-price{
+	border-bottom: 1px solid #eaeaea;
+}
+
+.available-pharmacies>.new-price>form{
+	width: 500px;
+	margin: 0 auto;
+	padding-top: 10px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.available-pharmacies>.new-price>form>.form-control{
+	margin-bottom: 10px;
+}
+
+.available-pharmacies>.new-price>form>#pharmacy_name{
+	width: 450px;
+}
+
+.available-pharmacies>.new-price>form>div{
+	width: 200px;
+	display: inline-block;
+	margin-bottom: 10px; 
+}
+
+.available-pharmacies>.new-price>form>.cost-div{
+	margin-right: 46px; 
+}
+
+.available-pharmacies>.new-price>form>.submition>span{
+	font-size: 1.4em;
+	cursor: pointer;
+	margin-right: 20px;
+}
+
+.available-pharmacies>.new-price>form>.submition>.glyphicon-ok:hover{
+	color: green;
+}
+
+.available-pharmacies>.new-price>form>.submition>.glyphicon-remove:hover{
+	color: red;
+}
+
 /*аптеки*/
 .available-pharmacies>.pharmacy{
 	border-bottom: 1px solid #eaeaea;

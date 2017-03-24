@@ -1,8 +1,10 @@
 import { Headers, RequestOptions, Response, Http, Jsonp } from '@angular/http';
 import { Injectable } from '@angular/core';
+
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { User } from '../models/user';
 
@@ -13,6 +15,8 @@ export class SessionService{
 	//обновить компоненты, когда пользователь вошел/вышел
 	signInState = new BehaviorSubject(false);
 	isAdmin = new BehaviorSubject(false);
+
+	public _isAdmin: Promise<boolean> = this.isAdmin.toPromise();
 
 	//регистрация
 	newUser(user: User){

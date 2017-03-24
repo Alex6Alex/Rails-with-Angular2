@@ -1,0 +1,55 @@
+<div class="new-medicine">
+
+	<div class="medicine-form">
+		<form #newmedicine="ngForm">
+		<label for="name">Название</label>
+		<input type="text" class="form-control" id="name" required minlength="2" maxlength="25" [(ngModel)]="medicine.name" name="name" #name="ngModel"/>
+		<div *ngIf="name.errors && name.touched" class="alert alert-danger">
+            <div [hidden]="!name.errors.required">
+            	Введите название.
+            </div>
+            <div [hidden]="!name.errors.minlength">
+            	Минимальная длина названия: 2 символа.
+            </div>
+        </div>
+
+        <label for="group">АТХ группа</label>
+		<select class="form-control" id="group" required name="group" #group (click)="getSubGroups(group.value)">
+			<option value="" disabled selected>Выберите лекарственную группу</option>
+			<option *ngFor="let group of groups" [value]="group.code">{{group.description}}</option>
+		</select>
+
+		<label for="atc_sub_group_id">Подгруппа</label>
+		<select class="form-control" required [(ngModel)]="medicine.atc_sub_group_id" name="atc_sub_group_id" #subGroup="ngModel">
+			<option value="" disabled selected>Выберите подгруппу</option>
+			<option *ngFor="let subGroup of subGroups" [value]="subGroup.id">{{subGroup.description}}</option>
+		</select>
+		<div *ngIf="subGroup.errors && subGroup.touched" class="alert alert-danger">
+			<div [hidden]="!subGroup.errors.required">
+            	Введите подгруппу.
+            </div>
+		</div>
+
+		<label for="form">Лекарственная форма</label>
+        <input type="text" class="form-control" id="form" [(ngModel)]="medicine.form" name="form" #form="ngModel" required/>
+        <div *ngIf="form.errors && form.touched" class="alert alert-danger">
+            <div [hidden]="!form.errors.required">
+            	Введите лекарственную форму.
+            </div>
+        </div>
+
+        <label for="pack">Упаковка</label>
+        <input type="text" class="form-control" id="pack" [(ngModel)]="medicine.pack" name="pack" #pack="ngModel"/>
+
+		<label for="comment">Описание</label>
+		<textarea class="form-control" rows="3" id="comment" [(ngModel)]="medicine.comment" name="comment" #comment="ngModel"></textarea>
+
+		<button type="submit" (click)="onSubmit()" class="btn btn-success">Добавить лекартво</button>
+	</form>	
+	</div>
+	<div class="add-med">
+		<h3>Добавление нового лекарства</h3>
+		<p>Для определения лекартва по классификации АТХ выберите основную группу классификации, а затем подгруппу из существующих на текущий момент.</p>
+		<p>Информация об упаковке и описание не обязательные для заполнения.</p>
+	</div>
+</div>

@@ -43,6 +43,26 @@ var MedicineService = (function () {
         return this.http.post('/ordering.json', body, options)
             .map(function (res) { return res.json(); });
     };
+    //новая подгруппа
+    MedicineService.prototype.newSubGroup = function (subGroup, url) {
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        var body = JSON.stringify({
+            subGroup: subGroup
+        });
+        return this.http.post(url + ".json", body, options)
+            .map(function (res) { return res.json(); });
+    };
+    //новое лекарство
+    MedicineService.prototype.newMedicine = function (medicine) {
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        var body = JSON.stringify({
+            medicine: medicine
+        });
+        return this.http.post('/medicines.json', body, options)
+            .map(function (res) { return res.json(); });
+    };
     //поиск лекарств
     MedicineService.prototype.search = function (term) {
         var url = '/search_medicines.json';
@@ -53,6 +73,20 @@ var MedicineService = (function () {
         return this.jsonp
             .get(url, { search: params })
             .map(function (res) { return res.json(); });
+    };
+    //Удаление препарата
+    MedicineService.prototype.destroyMedicine = function (id) {
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this.http.delete("medicines/" + id + ".json", options)
+            .map(function () { return null; });
+    };
+    //Удаление подгруппы
+    MedicineService.prototype.destroySubGroup = function (code, url) {
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this.http.delete(url + "/" + code + ".json", options)
+            .map(function () { return null; });
     };
     MedicineService = __decorate([
         core_1.Injectable(), 

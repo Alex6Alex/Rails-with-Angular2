@@ -1,6 +1,7 @@
 "use strict";
 var User = (function () {
-    function User(name, email, phone, password, password_confirmation, admin) {
+    function User(id, name, email, phone, password, password_confirmation, admin) {
+        this.id = id;
         this.name = name;
         this.email = email;
         this.phone = phone;

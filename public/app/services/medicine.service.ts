@@ -4,7 +4,7 @@ import { Headers, RequestOptions, Response, Http, Jsonp,
 
 import { Observable } from 'rxjs/Observable';
 
-import { Group } from '../models/atcGroups';
+import { Group, SubGroup, Medicine } from '../models/atcGroups';
 
 @Injectable()
 export class MedicineService{
@@ -43,6 +43,30 @@ export class MedicineService{
 						.map(res => res.json());
 	}
 
+	//новая подгруппа
+	newSubGroup(subGroup: SubGroup, url: string){
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+    	let options = new RequestOptions({ headers: headers });
+    	let body = JSON.stringify({
+			subGroup
+    	});
+
+    	return this.http.post(`${url}.json`, body, options)
+    						.map(res => res.json());
+	}
+
+	//новое лекарство
+	newMedicine(medicine: Medicine){
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+    	let options = new RequestOptions({ headers: headers });
+    	let body = JSON.stringify({
+			medicine
+    	});
+
+    	return this.http.post('/medicines.json', body, options)
+    						.map(res => res.json());
+	}
+
 	//поиск лекарств
 	search(term: string){
 		let url = '/search_medicines.json';
@@ -54,5 +78,23 @@ export class MedicineService{
     	return this.jsonp
             .get(url, { search: params })
             .map(res => res.json());
+	}
+
+	//Удаление препарата
+	destroyMedicine(id: number){
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+    	let options = new RequestOptions({ headers: headers });
+
+    	return this.http.delete(`medicines/${id}.json`, options)
+    						.map(() => null);
+	}
+
+	//Удаление подгруппы
+	destroySubGroup(code: string, url: string){
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+    	let options = new RequestOptions({ headers: headers });
+
+    	return this.http.delete(`${url}/${code}.json`, options)
+    						.map(() => null);
 	}
 }

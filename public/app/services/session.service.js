@@ -10,9 +10,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var http_1 = require('@angular/http');
 var core_1 = require('@angular/core');
+var BehaviorSubject_1 = require('rxjs/BehaviorSubject');
 require('rxjs/add/operator/map');
 require('rxjs/add/operator/toPromise');
-var BehaviorSubject_1 = require('rxjs/BehaviorSubject');
 var SessionService = (function () {
     function SessionService(http, jsonp) {
         this.http = http;
@@ -20,6 +20,7 @@ var SessionService = (function () {
         //обновить компоненты, когда пользователь вошел/вышел
         this.signInState = new BehaviorSubject_1.BehaviorSubject(false);
         this.isAdmin = new BehaviorSubject_1.BehaviorSubject(false);
+        this._isAdmin = this.isAdmin.toPromise();
     }
     //регистрация
     SessionService.prototype.newUser = function (user) {

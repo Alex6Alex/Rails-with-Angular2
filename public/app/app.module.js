@@ -23,9 +23,12 @@ var groups_component_1 = require('./components/groups/groups.component');
 var atc_group_component_1 = require('./components/atcGroup/atc.group.component');
 var atc_sub_group_component_1 = require('./components/atcSubGroup/atc.sub.group.component');
 var medicine_component_1 = require('./components/medicine/medicine.component');
+var new_medicine_component_1 = require('./components/newMedicine/new.medicine.component');
 var registration_component_1 = require('./components/registration/registration.component');
 var account_component_1 = require('./components/account/account.component');
 var users_component_1 = require('./components/users/users.component');
+var can_activate_guard_1 = require('./services/can.activate.guard');
+var session_service_1 = require('./services/session.service');
 var app_routing_module_1 = require('./app-routing.module');
 var AppModule = (function () {
     function AppModule() {
@@ -51,6 +54,7 @@ var AppModule = (function () {
                 atc_group_component_1.AtcGroupComponent,
                 atc_sub_group_component_1.AtcSubGroupComponent,
                 medicine_component_1.MedicineComponent,
+                new_medicine_component_1.NewMedicineComponent,
                 registration_component_1.RegistrationComponent,
                 account_component_1.AccountComponent,
                 users_component_1.UsersComponent,
@@ -59,7 +63,11 @@ var AppModule = (function () {
                 new_pharmacy_component_1.BlurDirective
             ],
             bootstrap: [app_component_1.AppComponent],
-            providers: [platform_browser_1.Title]
+            providers: [
+                platform_browser_1.Title,
+                can_activate_guard_1.CanActivateGuard,
+                session_service_1.SessionService
+            ]
         }), 
         __metadata('design:paramtypes', [])
     ], AppModule);

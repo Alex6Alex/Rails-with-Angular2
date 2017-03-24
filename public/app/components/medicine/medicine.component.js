@@ -12,12 +12,14 @@ var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
 var platform_browser_1 = require('@angular/platform-browser');
 var medicine_service_1 = require('../../services/medicine.service');
+var session_service_1 = require('../../services/session.service');
 var atcGroups_1 = require('../../models/atcGroups');
 var MedicineComponent = (function () {
-    function MedicineComponent(title, router, medicineService) {
+    function MedicineComponent(title, router, medicineService, sessionService) {
         this.title = title;
         this.router = router;
         this.medicineService = medicineService;
+        this.sessionService = sessionService;
         this.medicine = new atcGroups_1.Medicine(null, null, null, null, null, null);
         this.price = null;
         this.count = null;
@@ -31,7 +33,11 @@ var MedicineComponent = (function () {
         this.workTitle = 'все';
     }
     MedicineComponent.prototype.ngOnInit = function () {
+        var _this = this;
         this.getMedicine();
+        this.sessionService.isAdmin.subscribe(function (status) {
+            _this.canChange = status;
+        });
     };
     MedicineComponent.prototype.getMedicine = function () {
         var _this = this;
@@ -85,7 +91,7 @@ var MedicineComponent = (function () {
             templateUrl: 'medicine.component.html',
             styleUrls: ['medicine.css']
         }), 
-        __metadata('design:paramtypes', [platform_browser_1.Title, router_1.Router, medicine_service_1.MedicineService])
+        __metadata('design:paramtypes', [platform_browser_1.Title, router_1.Router, medicine_service_1.MedicineService, session_service_1.SessionService])
     ], MedicineComponent);
     return MedicineComponent;
 }());

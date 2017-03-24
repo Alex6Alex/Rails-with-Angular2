@@ -18,6 +18,7 @@ var groups_component_1 = require('./components/groups/groups.component');
 var atc_group_component_1 = require('./components/atcGroup/atc.group.component');
 var atc_sub_group_component_1 = require('./components/atcSubGroup/atc.sub.group.component');
 var medicine_component_1 = require('./components/medicine/medicine.component');
+var new_medicine_component_1 = require('./components/newMedicine/new.medicine.component');
 var registration_component_1 = require('./components/registration/registration.component');
 var account_component_1 = require('./components/account/account.component');
 var users_component_1 = require('./components/users/users.component');
@@ -51,6 +52,10 @@ var routes = [
     {
         path: 'groups/:code/:sub_code',
         component: atc_sub_group_component_1.AtcSubGroupComponent
+    },
+    {
+        path: 'medicines/new',
+        component: new_medicine_component_1.NewMedicineComponent //,
     },
     {
         path: 'medicines/:id',

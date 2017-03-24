@@ -31,6 +31,13 @@ var UsersComponent = (function () {
             console.log(_this.gravatars);
         });
     };
+    //Удаление пользователя админом
+    UsersComponent.prototype.onDestroy = function (user) {
+        var _this = this;
+        this.homeService.destroyUser(user.id).subscribe(function () {
+            _this.users = _this.users.filter(function (u) { return u !== user; });
+        });
+    };
     UsersComponent = __decorate([
         core_1.Component({
             moduleId: module.id,

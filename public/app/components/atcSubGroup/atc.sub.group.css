@@ -17,3 +17,7 @@
 	color: #1D751A;
 	display: inline-block;
 }
+
+.glyphicon{
+	cursor: pointer;
+}

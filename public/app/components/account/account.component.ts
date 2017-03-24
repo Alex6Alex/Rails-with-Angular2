@@ -16,7 +16,7 @@ import { Md5 } from 'ts-md5/dist/md5';
 })
 
 export class AccountComponent implements OnInit {
-	user = new User(null, null, null, null, null, null);
+	user = new User(null, null, null, null, null, null, null);
 
 	gravatar;
 

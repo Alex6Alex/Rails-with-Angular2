@@ -35,4 +35,11 @@ export class UsersComponent implements OnInit {
 			console.log(this.gravatars);
 		});
 	}
+
+	//Удаление пользователя админом
+	onDestroy(user: User): void{
+		this.homeService.destroyUser(user.id).subscribe(() => {
+			this.users = this.users.filter(u => u !== user);
+		});
+	}
 }

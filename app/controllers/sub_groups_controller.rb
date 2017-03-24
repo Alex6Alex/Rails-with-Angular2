@@ -15,11 +15,35 @@ class SubGroupsController < ApplicationController
         :medicines => @sub_group.medicines }.to_json() }
     end
   end
+
+  def create
+    @group = AtcGroup.find_by(code: params[:atc_group_id])
+    
+    if @group
+      @sub_group = @group.atcSubGroups.build(sub_group_params)
+    else 
+      respond_to do |format| 
+        format.json { render :json => { :status => false } }
+      end
+      return
+    end
+
+    respond_to do |format|
+      if @sub_group.save
+        id = @sub_group.id
+
+        format.json { render :json => { :status => true, :id => id } }
+      else
+        format.json { render :json => { :status => false, :errors => @sub_group.errors } }
+      end
+    end
+  end
   
   def update
   end
 
   def destroy
+    @sub_group.destroy if current_user.admin?
  	end
 
  	private
@@ -27,5 +51,10 @@ class SubGroupsController < ApplicationController
     def set_sub_group
       @sub_group = AtcSubGroup.find_by!(code: params[:code])
     end	
+
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def sub_group_params
+      params.require(:subGroup).permit(:code, :description)
+    end
 
 end

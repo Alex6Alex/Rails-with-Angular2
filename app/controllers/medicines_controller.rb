@@ -1,5 +1,6 @@
 class MedicinesController < ApplicationController
   before_action :set_medicine, only: [:show, :edit, :update, :destroy]
+  #before_action :set_sub_group, only: [:create]
 
   # GET /medicines
   # GET /medicines.json
@@ -81,7 +82,14 @@ class MedicinesController < ApplicationController
 
   # GET /medicines/new
   def new
-    @medicine = Medicine.new
+    if current_user.admin?
+      @medicine = Medicine.new
+      respond_to do |format|
+        format.html { render 'layouts/application' }
+      end
+    else
+      redirect_to current_user
+    end
   end
 
   # GET /medicines/1/edit
@@ -91,15 +99,32 @@ class MedicinesController < ApplicationController
   # POST /medicines
   # POST /medicines.json
   def create
-    @medicine = Medicine.new(medicine_params)
+    @sub_group = AtcSubGroup.find_by(id: params[:medicine][:atc_sub_group_id])
+    
+    if @sub_group
+      @medicine = @sub_group.medicines.build(medicine_params)
+    else 
+      respond_to do |format| 
+        format.json { render :json => { :status => false } }
+      end
+      return
+    end
+
+    if(@medicine.package == nil)
+      @medicine.package = 'не указана'
+    end
+
+    if(@medicine.comment == nil)
+      @medicine.comment = 'Описание отсутствует'
+    end
 
     respond_to do |format|
       if @medicine.save
-        format.html { redirect_to @medicine, notice: 'Medicine was successfully created.' }
-        format.json { render :show, status: :created, location: @medicine }
+        id = @medicine.id
+
+        format.json { render :json => { :status => true, :id => id } }
       else
-        format.html { render :new }
-        format.json { render json: @medicine.errors, status: :unprocessable_entity }
+        format.json { render :json => { :status => false, :errors => @medicine.errors } }
       end
     end
   end
@@ -121,11 +146,7 @@ class MedicinesController < ApplicationController
   # DELETE /medicines/1
   # DELETE /medicines/1.json
   def destroy
-    @medicine.destroy
-    respond_to do |format|
-      format.html { redirect_to medicines_url, notice: 'Medicine was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @medicine.destroy if current_user.admin?
   end
 
   private
@@ -134,8 +155,12 @@ class MedicinesController < ApplicationController
       @medicine = Medicine.select(:id, :name, :form, :package, :comment).find(params[:id])
     end
 
+    def set_sub_group
+      params.require(:atcSubGroup).permit(:id)
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def medicine_params
-      params.require(:medicine).permit(:name, :classification, :form, :package, :comment)
+      params.require(:medicine).permit(:name, :atc_sub_group_id, :form, :pack, :comment)
     end
 end

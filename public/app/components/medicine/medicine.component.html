@@ -38,6 +38,32 @@
 
 			</div>
 		</div>
+
+		<div *ngIf="canChange == true" class="new-price">
+			<form>
+				<label for="pharmacy_name">Название аптеки</label>
+				<select class="form-control" id="pharmacy_name" required name="pharmacy_name">
+					<option value="" disabled selected>Выберите аптеку</option>
+				</select>
+				
+				<div class="cost-div">
+					<label for="cost">Цена</label>
+					<input type="text" class="form-control" id="cost" required  name="cost" placeholder="Цена"/>
+				</div>
+
+				<div>
+					<label for="count">Количество</label>
+					<input type="text" class="form-control" id="count" required name="count" placeholder="Количество"/>	
+				</div>
+				
+				<div class="submition">
+					<span class="glyphicon glyphicon-ok" title="Добавить"></span>
+					<span class="glyphicon glyphicon-remove" title="Отмена"></span>
+				</div>
+				
+			</form>
+		</div>
+
 		<div *ngFor="let price of prices" class="pharmacy">
 			<div class="left">
 				<div>
