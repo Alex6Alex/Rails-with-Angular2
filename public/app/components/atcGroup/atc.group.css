@@ -10,6 +10,20 @@
 	list-style-type: none;
 }
 
+.atc-group>ul>li>.controls{
+	display: inline-block;
+	margin-right: 5px;
+	border: 1px solid #eaeaea;
+	border-radius: 3px;
+	width: 60px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.atc-group>ul>li>.controls>.glyphicon-pencil{
+	margin-right: 5px;
+}
+
 .atc-group>ul>li>a{
 	font-size: 1.13em;
 	cursor: pointer;
@@ -25,6 +39,7 @@
 .glyphicon-plus{
 	font-size: 0.6em;
 	color: red;
+	margin-right: 5px;
 }
 
 /*окно создания подгруппы*/
@@ -40,7 +55,7 @@
 	left: 0;
 }
 
-.createDialog{
+.createDialog, .updateDialog{
 	width: 400px;
 	height: 400px;
 	border-radius: 2px;
@@ -58,7 +73,7 @@
   	//overflow-y: auto;
 }
 
-.createDialog>.glyphicon-remove{
+.createDialog>.glyphicon-remove, .updateDialog>.glyphicon-remove{
 	position: absolute;
 	top: 15px;
 	left: 360px;
@@ -66,26 +81,26 @@
 	font-size: 1.2em;
 }
 
-.createDialog>.glyphicon-remove:hover{
+.createDialog>.glyphicon-remove:hover, .updateDialog>.glyphicon-remove:hover{
 	color: red;
 }
 
-.createDialog>p{
+.createDialog>p, .updateDialog>p{
 	font-size: 1.3em;
 	margin: 10px 10px 10px 10px;
 	border-bottom: 1px solid #696969;
 }
 
-.createDialog>form{
+.createDialog>form, .updateDialog>form{
 	width: 300px;
 	margin: 0 auto;
 }
 
-.createDialog>form>.form-control{
+.createDialog>form>.form-control, .updateDialog>form>.form-control{
 	margin-bottom: 20px;
 }
 
-.createDialog>form>.btn{
+.createDialog>form>.btn, .updateDialog>form>.btn{
 	width: 100%;
 	border-radius: 0px;
 }
@@ -103,4 +118,6 @@
 .ng-invalid:not(form)  {
 	border-left: 5px solid #a94442; /* red */
 }
+
+/*окно редактирования*/
 

@@ -55,6 +55,18 @@ export class MedicineService{
     						.map(res => res.json());
 	}
 
+	//обновление подгруппы
+	updateSubGroup(subGroup: SubGroup, url: string){
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+    	let options = new RequestOptions({ headers: headers });
+    	let body = JSON.stringify({
+			subGroup
+    	});
+
+    	return this.http.put(`${url}/${subGroup.code}.json`, body, options)
+    						.map(res => res.json());
+	}
+
 	//новое лекарство
 	newMedicine(medicine: Medicine){
 		let headers = new Headers({ 'Content-Type': 'application/json' });

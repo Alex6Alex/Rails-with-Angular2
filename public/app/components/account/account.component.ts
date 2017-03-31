@@ -6,6 +6,8 @@ import { Observable } from 'rxjs/Observable';
 import { HomeService } from '../../services/home.service';
 import { User } from '../../models/user';
 
+import { AppComponent } from '../../app.component';
+
 import { Md5 } from 'ts-md5/dist/md5';
 
 @Component({
@@ -20,7 +22,9 @@ export class AccountComponent implements OnInit {
 
 	gravatar;
 
-	constructor(private router: Router, private homeService: HomeService){}
+	constructor(private router: Router, 
+				private homeService: HomeService, 
+				private appComponent: AppComponent){}
 	
 	ngOnInit(): void{
 		this.getUserInfo();
@@ -30,6 +34,10 @@ export class AccountComponent implements OnInit {
 		this.homeService.getUserData(this.router.url).subscribe(data => {
 			this.user = data;
 			this.gravatar = Md5.hashStr(data.email);
+
+			this.appComponent.user.id = this.user.id;
+			this.appComponent.user.name = this.user.name;
+			this.appComponent.user.gravatar = this.gravatar;
 		});
 	}
 }

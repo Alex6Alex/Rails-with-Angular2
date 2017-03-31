@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, OnInit, AfterViewInit } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
@@ -6,6 +6,7 @@ import { HomeService } from './services/home.service';
 import { SessionService } from './services/session.service';
 import { PharmacyService } from './services/pharmacy.service';
 import { MedicineService } from './services/medicine.service';
+import { PriceService } from './services/price.service';
 
 import { Md5 } from 'ts-md5/dist/md5';
 
@@ -15,15 +16,15 @@ import { Md5 } from 'ts-md5/dist/md5';
   	encapsulation: ViewEncapsulation.None,
   	templateUrl: 'app.component.html',
   	styleUrls: ['../styles.css'],
-  	providers: [ HomeService, SessionService, PharmacyService, MedicineService ]
+  	providers: [ HomeService, SessionService, PharmacyService, MedicineService, PriceService ]
 })
 
-export class AppComponent implements AfterViewInit, OnInit {
+export class AppComponent implements OnInit {
 	//вошел пользователь или нет
 	sign: boolean;
 	admin: boolean;
 	//атрибуты пользователя
-	user = { id: null, name: null, gravatar: null };
+	public user = { id: null, name: null, gravatar: null };
 
 	constructor(private router: Router, private titleService: Title,
 		private sessionService: SessionService){}
@@ -36,10 +37,6 @@ export class AppComponent implements AfterViewInit, OnInit {
 	//узнать, в сети ли пользователь
 	ngOnInit(){
 		this.isSignIn();
-	}
-
-	//отслеживает, если пользователь вошел или вышел с домашней страницы
-	ngAfterViewInit(){
 		this.signState();
 	}
 

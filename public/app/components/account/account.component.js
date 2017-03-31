@@ -12,11 +12,13 @@ var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
 var home_service_1 = require('../../services/home.service');
 var user_1 = require('../../models/user');
+var app_component_1 = require('../../app.component');
 var md5_1 = require('ts-md5/dist/md5');
 var AccountComponent = (function () {
-    function AccountComponent(router, homeService) {
+    function AccountComponent(router, homeService, appComponent) {
         this.router = router;
         this.homeService = homeService;
+        this.appComponent = appComponent;
         this.user = new user_1.User(null, null, null, null, null, null, null);
     }
     AccountComponent.prototype.ngOnInit = function () {
@@ -27,6 +29,9 @@ var AccountComponent = (function () {
         this.homeService.getUserData(this.router.url).subscribe(function (data) {
             _this.user = data;
             _this.gravatar = md5_1.Md5.hashStr(data.email);
+            _this.appComponent.user.id = _this.user.id;
+            _this.appComponent.user.name = _this.user.name;
+            _this.appComponent.user.gravatar = _this.gravatar;
         });
     };
     AccountComponent = __decorate([
@@ -36,7 +41,7 @@ var AccountComponent = (function () {
             templateUrl: 'account.component.html',
             styleUrls: ['account.css']
         }), 
-        __metadata('design:paramtypes', [router_1.Router, home_service_1.HomeService])
+        __metadata('design:paramtypes', [router_1.Router, home_service_1.HomeService, app_component_1.AppComponent])
     ], AccountComponent);
     return AccountComponent;
 }());

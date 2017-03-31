@@ -115,7 +115,7 @@
 	margin-bottom: 10px;
 }
 
-.available-pharmacies>.new-price>form>#pharmacy_name{
+.available-pharmacies>.new-price>form>#pharmacy_id{
 	width: 450px;
 }
 
@@ -143,9 +143,25 @@
 	color: red;
 }
 
+.ng-valid[required], .ng-valid.required  {
+	border-left: 5px solid #42A948; /* green */
+}
+
+.ng-invalid:not(form)  {
+	border-left: 5px solid #a94442; /* red */
+}
+
 /*аптеки*/
 .available-pharmacies>.pharmacy{
 	border-bottom: 1px solid #eaeaea;
+	position: relative;
+}
+
+.available-pharmacies>.pharmacy>.glyphicon-remove{
+	position: absolute;
+	cursor: pointer;
+	top: 5px;
+	left: 670px;
 }
 
 .available-pharmacies>.pharmacy>.left{
@@ -179,10 +195,14 @@
 
 .available-pharmacies>.pharmacy>.right>p{
 	text-align: right;
+	width: 150px;
+	display: block;
 }
 
 .available-pharmacies>.pharmacy>.right>div{
 	float: right;
+	width: 150px;
+	text-align: right;
 }
 
 .available-pharmacies>.pharmacy>.right>div>.price{

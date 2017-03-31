@@ -1,5 +1,5 @@
 class SubGroupsController < ApplicationController
-	before_action :set_sub_group, only: [:show, :edit, :update, :destroy]
+	before_action :set_sub_group, only: [:show, :destroy]
 
 	# GET /groups/A
   # GET /groups/A.json
@@ -40,6 +40,16 @@ class SubGroupsController < ApplicationController
   end
   
   def update
+    if current_user.admin?
+      @sub_group = AtcSubGroup.find(params[:subGroup][:id])
+      respond_to do |format|
+        if @sub_group.update(sub_group_params)
+          format.json { render :json => { :status => true } }
+        else
+          format.json { render :json => { :status => false, :errors => @sub_group.errors } }
+        end
+      end
+    end
   end
 
   def destroy

@@ -53,6 +53,16 @@ var MedicineService = (function () {
         return this.http.post(url + ".json", body, options)
             .map(function (res) { return res.json(); });
     };
+    //обновление подгруппы
+    MedicineService.prototype.updateSubGroup = function (subGroup, url) {
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        var body = JSON.stringify({
+            subGroup: subGroup
+        });
+        return this.http.put(url + "/" + subGroup.code + ".json", body, options)
+            .map(function (res) { return res.json(); });
+    };
     //новое лекарство
     MedicineService.prototype.newMedicine = function (medicine) {
         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });

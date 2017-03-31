@@ -6,9 +6,12 @@ import { Observable } from 'rxjs/Observable';
 
 import { MedicineService } from '../../services/medicine.service';
 import { SessionService } from '../../services/session.service';
+import { PharmacyService } from '../../services/pharmacy.service';
+import { PriceService } from '../../services/price.service';
 
 import { Medicine } from '../../models/atcGroups';
 import { Pharmacy } from '../../models/pharmacy';
+import { Price } from '../../models/price';
 
 @Component({
 	moduleId: module.id,
@@ -19,11 +22,13 @@ import { Pharmacy } from '../../models/pharmacy';
 
 export class MedicineComponent implements OnInit {
 	medicine = new Medicine(null, null, null, null, null, null);
-	prices: Object;
+	prices = [];
 	price: number = null;
 	count = null;
 
 	canChange: boolean;
+	pharmacies: Pharmacy[];
+	newPrice = new Price(null, null, null, null, null);
 
 	//параметры сортировки
 	showSortList = false;
@@ -36,14 +41,54 @@ export class MedicineComponent implements OnInit {
 
 	constructor(private title: Title, private router: Router, 
 				private medicineService: MedicineService,
-				private sessionService: SessionService){}
+				private sessionService: SessionService,
+				private pharmacyService: PharmacyService,
+				private priceService: PriceService){}
 
 	ngOnInit(): void{
 		this.getMedicine();
 
 		this.sessionService.isAdmin.subscribe(status => {
 			this.canChange = status;
+
+			if (this.canChange == true){
+				this.pharmacyService.getPharms().then(data => {
+					this.pharmacies = data;
+				});
+			}
 		});
+	}
+
+	createPrice(): void{
+		this.newPrice.medicine_id = this.medicine.id;
+		this.priceService.newPrice(this.newPrice).subscribe(data => {
+			if(data.status){
+				//this.router.navigateByUrl(`/medicines/${data.id}`);
+				this.getMedicine();
+				this.onRefresh();
+			}
+			else{
+            	console.log(data.errors);
+            }
+        }, 
+        error => {
+           	console.log(JSON.stringify(error.json()));
+       	});
+	}
+
+	onSubmit(){
+		this.createPrice();
+	}
+
+	//Удаление
+	onDestroy(price: any): void{
+		this.priceService.destroyPrice(price.id).subscribe(() => {
+			this.prices = this.prices.filter(p => p !== price);
+		});
+	}
+
+	onRefresh(){
+		this.newPrice = new Price(null, null, null, null, null);
 	}
 
 	getMedicine() {

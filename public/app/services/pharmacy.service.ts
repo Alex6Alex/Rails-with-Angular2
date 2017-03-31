@@ -71,6 +71,18 @@ export class PharmacyService{
     						.map(res => res.json());
 	}
 
+	//редактированная аптека
+	editPharmacy(pharmacy: Pharmacy){
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+    	let options = new RequestOptions({ headers: headers });
+    	let body = JSON.stringify({
+			pharmacy
+    	});
+
+    	return this.http.put(`/pharmacies/${pharmacy.id}.json`, body, options)
+    						.map(res => res.json());
+	}
+
 	//удаление
 	destroyPharmacy(id: number){
 		let headers = new Headers({ 'Content-Type': 'application/json' });

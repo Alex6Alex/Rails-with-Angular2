@@ -23,6 +23,7 @@ export class AtcGroupComponent implements OnInit {
 	canChange: boolean;
 
 	createDialog: boolean;
+	updateDialog: boolean;
 
 	constructor(private title: Title, private router: Router, 
 				private medicineService: MedicineService,
@@ -46,12 +47,34 @@ export class AtcGroupComponent implements OnInit {
 							});
 	}
 
+	onRefresh(){
+		this.newSubGroup = new SubGroup(null, null, null);
+	}
+
 	//Добавление подгруппы
 	onSubmit(){
 		this.medicineService.newSubGroup(this.newSubGroup, this.router.url)
 							.subscribe(data => {
 			if(data.status){
 				this.createDialog = false;
+				this.getSubGroups();
+				this.newSubGroup = new SubGroup(null, null, null);
+			}
+			else{
+            	console.log(data.errors);
+            }
+        }, 
+        error => {
+           	console.log(JSON.stringify(error.json()));
+       	});
+	}
+
+	//обновление подгруппы
+	onUpdate(){
+		this.medicineService.updateSubGroup(this.newSubGroup, this.router.url)
+							.subscribe(data => {
+			if(data.status){
+				this.updateDialog = false;
 				this.getSubGroups();
 				this.newSubGroup = new SubGroup(null, null, null);
 			}

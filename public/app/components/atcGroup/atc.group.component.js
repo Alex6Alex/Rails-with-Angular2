@@ -39,6 +39,9 @@ var AtcGroupComponent = (function () {
             //setTitle(this.group.description);
         });
     };
+    AtcGroupComponent.prototype.onRefresh = function () {
+        this.newSubGroup = new atcGroups_1.SubGroup(null, null, null);
+    };
     //Добавление подгруппы
     AtcGroupComponent.prototype.onSubmit = function () {
         var _this = this;
@@ -46,6 +49,23 @@ var AtcGroupComponent = (function () {
             .subscribe(function (data) {
             if (data.status) {
                 _this.createDialog = false;
+                _this.getSubGroups();
+                _this.newSubGroup = new atcGroups_1.SubGroup(null, null, null);
+            }
+            else {
+                console.log(data.errors);
+            }
+        }, function (error) {
+            console.log(JSON.stringify(error.json()));
+        });
+    };
+    //обновление подгруппы
+    AtcGroupComponent.prototype.onUpdate = function () {
+        var _this = this;
+        this.medicineService.updateSubGroup(this.newSubGroup, this.router.url)
+            .subscribe(function (data) {
+            if (data.status) {
+                _this.updateDialog = false;
                 _this.getSubGroups();
                 _this.newSubGroup = new atcGroups_1.SubGroup(null, null, null);
             }

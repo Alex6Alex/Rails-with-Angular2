@@ -15,6 +15,7 @@ var home_service_1 = require('./services/home.service');
 var session_service_1 = require('./services/session.service');
 var pharmacy_service_1 = require('./services/pharmacy.service');
 var medicine_service_1 = require('./services/medicine.service');
+var price_service_1 = require('./services/price.service');
 var md5_1 = require('ts-md5/dist/md5');
 var AppComponent = (function () {
     function AppComponent(router, titleService, sessionService) {
@@ -32,9 +33,6 @@ var AppComponent = (function () {
     //узнать, в сети ли пользователь
     AppComponent.prototype.ngOnInit = function () {
         this.isSignIn();
-    };
-    //отслеживает, если пользователь вошел или вышел с домашней страницы
-    AppComponent.prototype.ngAfterViewInit = function () {
         this.signState();
     };
     AppComponent.prototype.signState = function () {
@@ -87,7 +85,7 @@ var AppComponent = (function () {
             encapsulation: core_1.ViewEncapsulation.None,
             templateUrl: 'app.component.html',
             styleUrls: ['../styles.css'],
-            providers: [home_service_1.HomeService, session_service_1.SessionService, pharmacy_service_1.PharmacyService, medicine_service_1.MedicineService]
+            providers: [home_service_1.HomeService, session_service_1.SessionService, pharmacy_service_1.PharmacyService, medicine_service_1.MedicineService, price_service_1.PriceService]
         }), 
         __metadata('design:paramtypes', [router_1.Router, platform_browser_1.Title, session_service_1.SessionService])
     ], AppComponent);

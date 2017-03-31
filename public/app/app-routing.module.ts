@@ -5,6 +5,7 @@ import { HomeComponent } from './components/home/home.component';
 import { PharmaciesComponent } from './components/pharmacies/pharmacies.component';
 import { PharmacyComponent } from './components/pharmacy/pharmacy.component';
 import { NewPharmacyComponent } from './components/newPharmacy/new.pharmacy.component';
+import { EditPharmacyComponent } from './components/editPharmacy/edit.pharmacy.component';
 import { GroupsComponent } from './components/groups/groups.component';
 import { AtcGroupComponent } from './components/atcGroup/atc.group.component';
 import { AtcSubGroupComponent } from './components/atcSubGroup/atc.sub.group.component';
@@ -71,6 +72,10 @@ const routes: Routes = [
 	{
 		path: 'pharmacies/:id',
 		component: PharmacyComponent
+	},
+	{
+		path: 'pharmacies/:id/edit',
+		component: EditPharmacyComponent
 	}
 ];
 

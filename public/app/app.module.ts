@@ -11,6 +11,7 @@ import { PharmaciesComponent } from './components/pharmacies/pharmacies.componen
 import { PharmacyComponent } from './components/pharmacy/pharmacy.component';
 import { NewPharmacyComponent, FocusDirective,
         BlurDirective } from './components/newPharmacy/new.pharmacy.component';
+import { EditPharmacyComponent } from './components/editPharmacy/edit.pharmacy.component';
 import { GroupsComponent } from './components/groups/groups.component';
 import { AtcGroupComponent } from './components/atcGroup/atc.group.component';
 import { AtcSubGroupComponent } from './components/atcSubGroup/atc.sub.group.component';
@@ -50,6 +51,7 @@ import { AppRoutingModule } from './app-routing.module';
     AccountComponent,
     UsersComponent,
     NewPharmacyComponent,
+    EditPharmacyComponent,
     FocusDirective,
     BlurDirective
   ],

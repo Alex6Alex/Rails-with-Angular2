@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 	resources :groups, param: :code
 	resources :sessions, only: [:new, :create, :destroy, :sign_state]
 	resources :medicines
+	resources :price_lists
   scope path: "groups/:atc_group_id" do
   	resources :sub_groups, :path => '/', param: :code
   	#scope path: '/:atc_sub_group_id' do

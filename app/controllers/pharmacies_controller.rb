@@ -103,6 +103,13 @@ class PharmaciesController < ApplicationController
 
   # GET /pharmacies/1/edit
   def edit
+    if !@pharmacy.nil?
+      respond_to do |format|
+        format.html { render 'layouts/application' }
+        format.json { render :json => @pharmacy.to_json( 
+          :only => [:id, :name, :address, :area, :phone, :worktime]) }
+      end
+    end
   end
 
   # POST /pharmacies
@@ -124,13 +131,15 @@ class PharmaciesController < ApplicationController
   # PATCH/PUT /pharmacies/1
   # PATCH/PUT /pharmacies/1.json
   def update
-    respond_to do |format|
-      if @pharmacy.update(pharmacy_params)
-        format.html { redirect_to @pharmacy, notice: 'Pharmacy was successfully updated.' }
-        format.json { render :show, status: :ok, location: @pharmacy }
-      else
-        format.html { render :edit }
-        format.json { render json: @pharmacy.errors, status: :unprocessable_entity }
+    if current_user.admin?
+      respond_to do |format|
+        if @pharmacy.update(pharmacy_params)
+          id = @pharmacy.id
+
+          format.json { render :json => { :status => true, :id => id } }
+        else
+          format.json { render :json => { :status => false, :errors => @pharmacy.errors } }
+        end
       end
     end
   end

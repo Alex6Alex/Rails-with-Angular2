@@ -13,16 +13,23 @@ var router_1 = require('@angular/router');
 var platform_browser_1 = require('@angular/platform-browser');
 var medicine_service_1 = require('../../services/medicine.service');
 var session_service_1 = require('../../services/session.service');
+var pharmacy_service_1 = require('../../services/pharmacy.service');
+var price_service_1 = require('../../services/price.service');
 var atcGroups_1 = require('../../models/atcGroups');
+var price_1 = require('../../models/price');
 var MedicineComponent = (function () {
-    function MedicineComponent(title, router, medicineService, sessionService) {
+    function MedicineComponent(title, router, medicineService, sessionService, pharmacyService, priceService) {
         this.title = title;
         this.router = router;
         this.medicineService = medicineService;
         this.sessionService = sessionService;
+        this.pharmacyService = pharmacyService;
+        this.priceService = priceService;
         this.medicine = new atcGroups_1.Medicine(null, null, null, null, null, null);
+        this.prices = [];
         this.price = null;
         this.count = null;
+        this.newPrice = new price_1.Price(null, null, null, null, null);
         //параметры сортировки
         this.showSortList = false;
         this.sortBy = 'name';
@@ -37,7 +44,41 @@ var MedicineComponent = (function () {
         this.getMedicine();
         this.sessionService.isAdmin.subscribe(function (status) {
             _this.canChange = status;
+            if (_this.canChange == true) {
+                _this.pharmacyService.getPharms().then(function (data) {
+                    _this.pharmacies = data;
+                });
+            }
         });
+    };
+    MedicineComponent.prototype.createPrice = function () {
+        var _this = this;
+        this.newPrice.medicine_id = this.medicine.id;
+        this.priceService.newPrice(this.newPrice).subscribe(function (data) {
+            if (data.status) {
+                //this.router.navigateByUrl(`/medicines/${data.id}`);
+                _this.getMedicine();
+                _this.onRefresh();
+            }
+            else {
+                console.log(data.errors);
+            }
+        }, function (error) {
+            console.log(JSON.stringify(error.json()));
+        });
+    };
+    MedicineComponent.prototype.onSubmit = function () {
+        this.createPrice();
+    };
+    //Удаление
+    MedicineComponent.prototype.onDestroy = function (price) {
+        var _this = this;
+        this.priceService.destroyPrice(price.id).subscribe(function () {
+            _this.prices = _this.prices.filter(function (p) { return p !== price; });
+        });
+    };
+    MedicineComponent.prototype.onRefresh = function () {
+        this.newPrice = new price_1.Price(null, null, null, null, null);
     };
     MedicineComponent.prototype.getMedicine = function () {
         var _this = this;
@@ -91,7 +132,7 @@ var MedicineComponent = (function () {
             templateUrl: 'medicine.component.html',
             styleUrls: ['medicine.css']
         }), 
-        __metadata('design:paramtypes', [platform_browser_1.Title, router_1.Router, medicine_service_1.MedicineService, session_service_1.SessionService])
+        __metadata('design:paramtypes', [platform_browser_1.Title, router_1.Router, medicine_service_1.MedicineService, session_service_1.SessionService, pharmacy_service_1.PharmacyService, price_service_1.PriceService])
     ], MedicineComponent);
     return MedicineComponent;
 }());

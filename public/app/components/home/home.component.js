@@ -10,10 +10,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var session_service_1 = require('../../services/session.service');
+var app_component_1 = require('../../app.component');
 var md5_1 = require('ts-md5/dist/md5');
 var HomeComponent = (function () {
-    function HomeComponent(sessionService) {
+    function HomeComponent(sessionService, appComponent) {
         this.sessionService = sessionService;
+        this.appComponent = appComponent;
         //модель для входа
         this.session = { email: null, password: null };
         //атрибуты пользователя
@@ -71,6 +73,7 @@ var HomeComponent = (function () {
             _this.user.id = data.id;
             _this.user.name = data.name;
             _this.user.gravatar = md5_1.Md5.hashStr(data.email);
+            _this.appComponent.user = _this.user;
             _this.admin = data.admin;
             _this.signInState(true);
             _this.isAdmin(_this.admin);
@@ -95,7 +98,7 @@ var HomeComponent = (function () {
             templateUrl: 'home.component.html',
             styleUrls: ['home.css']
         }), 
-        __metadata('design:paramtypes', [session_service_1.SessionService])
+        __metadata('design:paramtypes', [session_service_1.SessionService, app_component_1.AppComponent])
     ], HomeComponent);
     return HomeComponent;
 }());

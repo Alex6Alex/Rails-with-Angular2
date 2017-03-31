@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { SessionService } from '../../services/session.service';
+import { AppComponent } from '../../app.component';
 
 import { Md5 } from 'ts-md5/dist/md5';
 
@@ -24,7 +25,8 @@ export class HomeComponent implements OnInit {
 	//указать ошибки, если они есть
 	errorLog = false;
 
-	constructor(private sessionService: SessionService){}
+	constructor(private sessionService: SessionService, 
+				private appComponent: AppComponent){}
 
 	ngOnInit(): void{
 		this.sessionService.isSignIn().subscribe(data => {
@@ -82,6 +84,8 @@ export class HomeComponent implements OnInit {
 			this.user.id = data.id;
 			this.user.name = data.name;
 			this.user.gravatar = Md5.hashStr(data.email);
+
+			this.appComponent.user = this.user;
 
 			this.admin = data.admin;
 

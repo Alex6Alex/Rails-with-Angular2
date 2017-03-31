@@ -20,7 +20,7 @@ class MedicinesController < ApplicationController
 
       prices = Pharmacy.joins("INNER JOIN price_lists ON pharmacies.id = price_lists.pharmacy_id")
         .select("pharmacies.id, pharmacies.name, pharmacies.address, pharmacies.phone,
-        pharmacies.worktime, price_lists.price, price_lists.count, price_lists.updated_at")
+        pharmacies.worktime, price_lists.id, price_lists.price, price_lists.count, price_lists.updated_at")
         .where("price_lists.medicine_id = #{@medicine.id}")
         .order(:name)
 

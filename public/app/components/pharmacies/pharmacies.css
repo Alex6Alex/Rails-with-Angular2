@@ -177,6 +177,7 @@
 .pharm>div>span{
 	float: right;
 	cursor: pointer;
+	margin-right: 10px;
 }
 
 .pharm>.phone, .pharm>.time{

@@ -66,6 +66,16 @@ var PharmacyService = (function () {
         return this.http.post('/pharmacies.json', body, options)
             .map(function (res) { return res.json(); });
     };
+    //редактированная аптека
+    PharmacyService.prototype.editPharmacy = function (pharmacy) {
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        var body = JSON.stringify({
+            pharmacy: pharmacy
+        });
+        return this.http.put("/pharmacies/" + pharmacy.id + ".json", body, options)
+            .map(function (res) { return res.json(); });
+    };
     //удаление
     PharmacyService.prototype.destroyPharmacy = function (id) {
         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });

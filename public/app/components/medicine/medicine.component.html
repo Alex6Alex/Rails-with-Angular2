@@ -40,25 +40,26 @@
 		</div>
 
 		<div *ngIf="canChange == true" class="new-price">
-			<form>
-				<label for="pharmacy_name">Название аптеки</label>
-				<select class="form-control" id="pharmacy_name" required name="pharmacy_name">
+			<form #newprice="ngForm">
+				<label for="pharmacy_id">Название аптеки</label>
+				<select class="form-control" id="pharmacy_id" required name="pharmacy_id" [(ngModel)]="newPrice.pharmacy_id" #pharmacy_id="ngModel">
 					<option value="" disabled selected>Выберите аптеку</option>
+					<option *ngFor="let pharmacy of pharmacies" [value]="pharmacy.id">{{pharmacy.name}} ({{pharmacy.address}})</option>
 				</select>
 				
 				<div class="cost-div">
-					<label for="cost">Цена</label>
-					<input type="text" class="form-control" id="cost" required  name="cost" placeholder="Цена"/>
+					<label for="price">Цена (руб.)</label>
+					<input type="text" class="form-control" id="price" required [(ngModel)]="newPrice.price" name="price" #price="ngModel" placeholder="Формат: 0.00" pattern="^\d+[.]{1}\d{2}$"/>
 				</div>
 
 				<div>
-					<label for="count">Количество</label>
-					<input type="text" class="form-control" id="count" required name="count" placeholder="Количество"/>	
+					<label for="count">Количество (шт.)</label>
+					<input type="text" class="form-control" id="count" required name="count" [(ngModel)]="newPrice.count" #count="ngModel" placeholder="Количество" pattern="^[0-9]+$"/>	
 				</div>
 				
 				<div class="submition">
-					<span class="glyphicon glyphicon-ok" title="Добавить"></span>
-					<span class="glyphicon glyphicon-remove" title="Отмена"></span>
+					<span class="glyphicon glyphicon-ok" title="Добавить" (click)="onSubmit()"></span>
+					<span class="glyphicon glyphicon-remove" title="Отмена" (click)="onRefresh()"></span>
 				</div>
 				
 			</form>
@@ -77,11 +78,13 @@
 			<div class="right">
 				<div>
 					<p class="price">{{price.price | number: '1.2-2'}}</p>
-					<span class="glyphicon glyphicon-rub"></span>	
+					<span class="glyphicon glyphicon-rub"></span>
 				</div>
-				<p class="producer">производитель</p>
+				<p class="count">количество: {{price.count}}</p>
 				<p class="date">{{price.updated_at | date: 'dd.MM.yyyy'}}</p>
 			</div>
+
+			<span *ngIf="canChange==true" class="glyphicon glyphicon-remove" title="Удалить товар из аптеки" (click)="onDestroy(price); $event.stopPropagation()"></span>
 		</div>
 	</div>
 </div>
