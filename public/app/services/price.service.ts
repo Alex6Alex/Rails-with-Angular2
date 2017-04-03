@@ -11,7 +11,7 @@ import { Price } from '../models/price';
 export class PriceService{
 	constructor(private http: Http, private jsonp: Jsonp){}
 	
-	//новое лекарство
+	//новая цена в аптеке
 	newPrice(price: Price){
 		let headers = new Headers({ 'Content-Type': 'application/json' });
     	let options = new RequestOptions({ headers: headers });
@@ -21,6 +21,33 @@ export class PriceService{
 
     	return this.http.post('/price_lists.json', body, options)
     						.map(res => res.json());
+	}
+
+	//заказ
+	reservePrice(user_id: number, price_list_id: number){
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+    	let options = new RequestOptions({ headers: headers });
+    	let body = JSON.stringify({
+			reservation: {
+				user_id, 
+				price_list_id
+			}
+    	});
+
+    	return this.http.post('/reservations.json', body, options)
+    						.map(res => res.json());
+	}
+
+	//все заказы пользователя
+	getReservations(id: number){
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+    	let options = new RequestOptions({ headers: headers });
+    	let body = JSON.stringify({
+			id: id
+    	});
+
+    	return this.http.post('/user_reservations.json', body, options)
+    						.map(res => res.json());;
 	}
 
 	//удаление

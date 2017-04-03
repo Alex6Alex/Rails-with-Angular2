@@ -41,6 +41,15 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+    if !@user.nil?
+      respond_to do |format|
+        format.html { render 'layouts/application' }
+        format.json { render :json => @user.to_json( :only => [:id, :name, :email, 
+          :phone] )}
+      end
+    else
+      redirect_to root_url
+    end
   end
 
   # POST /users
@@ -73,12 +82,16 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1.json
   def update
     respond_to do |format|
+      regExp = /^[\+][0-9]{1}[\(][0-9]{3}[\)][0-9]{3}[\-][0-9]{2}[\-][0-9]{2}$/
+      if !(regExp === params[:phone])
+        params[:phone] = 'не указан'
+      end
+
       if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
-        format.json { render :show, status: :ok, location: @user }
+        id = @user.id
+        format.json { render :json => { :status => true, :id => id } }
       else
-        format.html { render :edit }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        format.json { render :json => { :status => false, :errors => @user.errors } }
       end
     end
   end

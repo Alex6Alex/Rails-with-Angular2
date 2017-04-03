@@ -10,10 +10,12 @@ import { GroupsComponent } from './components/groups/groups.component';
 import { AtcGroupComponent } from './components/atcGroup/atc.group.component';
 import { AtcSubGroupComponent } from './components/atcSubGroup/atc.sub.group.component';
 import { MedicineComponent } from './components/medicine/medicine.component';
+import { EditMedicineComponent } from './components/editMedicine/edit.medicine.component';
 import { NewMedicineComponent } from './components/newMedicine/new.medicine.component';
 import { RegistrationComponent } from './components/registration/registration.component';
-import { AccountComponent} from './components/account/account.component';
-import { UsersComponent} from './components/users/users.component';
+import { AccountComponent } from './components/account/account.component';
+import { EditAccountComponent } from './components/editAccount/edit.account.component';
+import { UsersComponent } from './components/users/users.component';
 
 import { CanActivateGuard } from './services/can.activate.guard';
 
@@ -57,6 +59,10 @@ const routes: Routes = [
 		path: 'medicines/:id',
 		component: MedicineComponent
 	},
+	{
+		path: 'medicines/:id/edit',
+		component: EditMedicineComponent
+	},
 	{ 
 		path: 'signup', 
 		component: RegistrationComponent 
@@ -68,6 +74,10 @@ const routes: Routes = [
 	{ 
 		path: 'users/:id', 
 		component: AccountComponent 
+	},
+	{ 
+		path: 'users/:id/edit', 
+		component: EditAccountComponent 
 	},
 	{
 		path: 'pharmacies/:id',

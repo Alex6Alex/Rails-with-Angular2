@@ -36,7 +36,7 @@
             		<p dropdown-open>{{user.name}}</p>
             		<ul class="dropdown-menu">
 			            <li><a routerLink="/users/{{user.id}}" routerLinkActive="active"><span class="glyphicon glyphicon-home"></span> Профиль</a></li>
-			            <li><a href="#"><span class="glyphicon glyphicon-wrench"></span> Редактировать</a></li>
+			            <li><a routerLink="/users/{{user.id}}/edit" routerLinkActive="active"><span class="glyphicon glyphicon-wrench"></span> Редактировать</a></li>
 			            <li role="separator" class="divider"></li>
 			            <li><a class="logout" (click)="logOut()"><span class="glyphicon glyphicon-log-out"></span> Выйти</a></li>
 			        </ul>

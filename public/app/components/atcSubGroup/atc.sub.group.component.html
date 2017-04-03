@@ -4,7 +4,10 @@
 
 	<ul>
 		<li *ngFor="let medicine of medicines">
-			<span *ngIf="canChange == true" class="glyphicon glyphicon-remove" title="Удалить препарат" (click)="onDestroy(medicine); $event.stopPropagation()"></span>
+			<div class="controls" *ngIf="canChange == true">
+				<span class="glyphicon glyphicon-pencil" title="Редактировать" routerLink='/medicines/{{medicine.id}}/edit' routerLinkActive="active"></span>
+				<span class="glyphicon glyphicon-remove" title="Удалить подгруппу" (click)="onDestroy(subGroup); $event.stopPropagation()"></span>
+			</div>
 		
 			<a routerLink='/medicines/{{medicine.id}}' routerLinkActive="active">
 				<p>{{medicine.name}}</p>

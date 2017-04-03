@@ -42,6 +42,9 @@ var MedicineComponent = (function () {
     MedicineComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.getMedicine();
+        this.sessionService.signInState.subscribe(function (status) {
+            _this.canBuy = status;
+        });
         this.sessionService.isAdmin.subscribe(function (status) {
             _this.canChange = status;
             if (_this.canChange == true) {
@@ -70,6 +73,18 @@ var MedicineComponent = (function () {
     MedicineComponent.prototype.onSubmit = function () {
         this.createPrice();
     };
+    MedicineComponent.prototype.onReserve = function (price) {
+        var _this = this;
+        this.priceService.reservePrice(this.user_id, price.id).subscribe(function () {
+            for (var _i = 0, _a = _this.prices; _i < _a.length; _i++) {
+                var _price = _a[_i];
+                if (_price === price) {
+                    _price.count--;
+                    break;
+                }
+            }
+        });
+    };
     //Удаление
     MedicineComponent.prototype.onDestroy = function (price) {
         var _this = this;
@@ -87,6 +102,7 @@ var MedicineComponent = (function () {
             _this.medicine = data.medicine;
             _this.medicine.pack = data.medicine.package;
             _this.prices = data.prices;
+            _this.user_id = data.id;
             //setTitle(this.group.description);
         });
     };

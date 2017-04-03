@@ -15,7 +15,7 @@ var PriceService = (function () {
         this.http = http;
         this.jsonp = jsonp;
     }
-    //новое лекарство
+    //новая цена в аптеке
     PriceService.prototype.newPrice = function (price) {
         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         var options = new http_1.RequestOptions({ headers: headers });
@@ -24,6 +24,30 @@ var PriceService = (function () {
         });
         return this.http.post('/price_lists.json', body, options)
             .map(function (res) { return res.json(); });
+    };
+    //заказ
+    PriceService.prototype.reservePrice = function (user_id, price_list_id) {
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        var body = JSON.stringify({
+            reservation: {
+                user_id: user_id,
+                price_list_id: price_list_id
+            }
+        });
+        return this.http.post('/reservations.json', body, options)
+            .map(function (res) { return res.json(); });
+    };
+    //все заказы пользователя
+    PriceService.prototype.getReservations = function (id) {
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        var body = JSON.stringify({
+            id: id
+        });
+        return this.http.post('/user_reservations.json', body, options)
+            .map(function (res) { return res.json(); });
+        ;
     };
     //удаление
     PriceService.prototype.destroyPrice = function (id) {

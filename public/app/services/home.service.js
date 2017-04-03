@@ -30,6 +30,19 @@ var HomeService = (function () {
     HomeService.prototype.getDates = function () {
         return this.http.get('/dates.json').map(function (res) { return res.json(); });
     };
+    HomeService.prototype.updateUser = function (user) {
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        var body = JSON.stringify({
+            name: user.name,
+            email: user.email,
+            phone: user.phone,
+            password: user.password,
+            password_confirmation: user.password_confirmation
+        });
+        return this.http.put("/users/" + user.id + ".json", body, options)
+            .map(function (res) { return res.json(); });
+    };
     HomeService.prototype.destroyUser = function (id) {
         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         var options = new http_1.RequestOptions({ headers: headers });

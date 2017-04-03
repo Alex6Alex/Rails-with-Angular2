@@ -83,8 +83,17 @@
 				<p class="count">количество: {{price.count}}</p>
 				<p class="date">{{price.updated_at | date: 'dd.MM.yyyy'}}</p>
 			</div>
+			<span *ngIf="canBuy === true && canChange === false && price.count > 0" class="glyphicon glyphicon-shopping-cart" title="Забронировать товар" (click)="onReserve(price); showDialog=true; $event.stopPropagation()"></span>
 
 			<span *ngIf="canChange==true" class="glyphicon glyphicon-remove" title="Удалить товар из аптеки" (click)="onDestroy(price); $event.stopPropagation()"></span>
 		</div>
+	</div>
+
+	<div *ngIf="showDialog == true" class="background" (click)="showDialog = false"></div>
+	<div *ngIf="showDialog == true" class="showDialog">
+		<span class="glyphicon glyphicon-remove" (click)="showDialog = false" title="Закрыть"></span>
+		<p class="title">Препарат заказан</p>
+		<p>Благодарим Вас за то, что пользуетесь нашим сервисом для заказа лекарств.</p>
+		<p>Все заказы можно посмотреть на странице с <a routerLink="/users/{{user_id}}" routerLinkActive="active">Вашим профилем</a>.</p>
 	</div>
 </div>

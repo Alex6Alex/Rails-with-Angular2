@@ -11,15 +11,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
 var home_service_1 = require('../../services/home.service');
+var price_service_1 = require('../../services/price.service');
 var user_1 = require('../../models/user');
 var app_component_1 = require('../../app.component');
 var md5_1 = require('ts-md5/dist/md5');
 var AccountComponent = (function () {
-    function AccountComponent(router, homeService, appComponent) {
+    function AccountComponent(router, homeService, priceService, appComponent) {
         this.router = router;
         this.homeService = homeService;
+        this.priceService = priceService;
         this.appComponent = appComponent;
         this.user = new user_1.User(null, null, null, null, null, null, null);
+        this.reservations = [];
     }
     AccountComponent.prototype.ngOnInit = function () {
         this.getUserInfo();
@@ -32,6 +35,14 @@ var AccountComponent = (function () {
             _this.appComponent.user.id = _this.user.id;
             _this.appComponent.user.name = _this.user.name;
             _this.appComponent.user.gravatar = _this.gravatar;
+            _this.getReservations();
+        });
+    };
+    AccountComponent.prototype.getReservations = function () {
+        var _this = this;
+        this.priceService.getReservations(this.user.id).subscribe(function (data) {
+            _this.reservations = data;
+            console.log(data);
         });
     };
     AccountComponent = __decorate([
@@ -41,7 +52,7 @@ var AccountComponent = (function () {
             templateUrl: 'account.component.html',
             styleUrls: ['account.css']
         }), 
-        __metadata('design:paramtypes', [router_1.Router, home_service_1.HomeService, app_component_1.AppComponent])
+        __metadata('design:paramtypes', [router_1.Router, home_service_1.HomeService, price_service_1.PriceService, app_component_1.AppComponent])
     ], AccountComponent);
     return AccountComponent;
 }());

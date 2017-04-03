@@ -53,6 +53,10 @@
 	float: right;
 }
 
+.user-content>.orders>.title{
+  font-size: 1.7em;
+}
+
 .controls>ul{
   padding: 0;
 }
@@ -66,4 +70,19 @@
   text-decoration: none;
   font-size: 1.2em;
   color: #1D751A;
+}
+
+/*заказ*/
+.reservation{
+  border-bottom: 1px solid #eaeaea;
+}
+
+.reservation>p{
+  font-size: 1.1em;
+  color: #616161;
+}
+
+.reservation>p>a{
+  color: #42A948;
+  text-decoration: none;
 }

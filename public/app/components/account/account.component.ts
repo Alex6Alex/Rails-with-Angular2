@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
 import { HomeService } from '../../services/home.service';
+import { PriceService } from '../../services/price.service';
 import { User } from '../../models/user';
 
 import { AppComponent } from '../../app.component';
@@ -22,8 +23,11 @@ export class AccountComponent implements OnInit {
 
 	gravatar;
 
+	reservations = [];
+
 	constructor(private router: Router, 
 				private homeService: HomeService, 
+				private priceService: PriceService,
 				private appComponent: AppComponent){}
 	
 	ngOnInit(): void{
@@ -38,6 +42,15 @@ export class AccountComponent implements OnInit {
 			this.appComponent.user.id = this.user.id;
 			this.appComponent.user.name = this.user.name;
 			this.appComponent.user.gravatar = this.gravatar;
+
+			this.getReservations();
 		});
+	}
+
+	getReservations(): void{
+		this.priceService.getReservations(this.user.id).subscribe(data => {
+			this.reservations = data;
+			console.log(data);
+		})
 	}
 }

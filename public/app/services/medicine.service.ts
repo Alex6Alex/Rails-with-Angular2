@@ -72,10 +72,23 @@ export class MedicineService{
 		let headers = new Headers({ 'Content-Type': 'application/json' });
     	let options = new RequestOptions({ headers: headers });
     	let body = JSON.stringify({
-			medicine
+			medicine,
+			pack: medicine.pack
     	});
 
     	return this.http.post('/medicines.json', body, options)
+    						.map(res => res.json());
+	}
+
+	//измененное лекарство
+	updateMedicine(medicine: Medicine){
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+    	let options = new RequestOptions({ headers: headers });
+    	let body = JSON.stringify({
+			medicine
+    	});
+
+    	return this.http.put(`/medicines/${medicine.id}.json`, body, options)
     						.map(res => res.json());
 	}
 

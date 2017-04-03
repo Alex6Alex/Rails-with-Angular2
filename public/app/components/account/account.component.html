@@ -15,7 +15,7 @@
 		</tr>
 		<tr>
 			<td>Количество заказов</td>
-			<td>0</td>
+			<td>{{reservations.length}}</td>
 		</tr>
 		<tr>
 			<td>Дата регистрации</td>
@@ -27,8 +27,16 @@
 
 <div class="user-content">
 	<div *ngIf="user.admin === false" class="orders">
-		<h3>Заказы</h3>
-		<p>На данный момент заказов нет.</p>
+		<p class="title">Заказы</p>
+		<p *ngIf="reservations.length === 0">На данный момент заказов нет.</p>
+
+		<div *ngIf="reservations.length>0">
+			<div *ngFor="let reservation of reservations" class="reservation">
+				<p>Благодарим Вас за заказ препарата под названием <a routerLink="/medicines/{{reservation.med_id}}" routerLinkActive="active">{{reservation.medicine}}</a> стоимостью <b>{{reservation.price}}</b> руб.</p>
+				<p>Забрать лекарство можно в аптеке <a routerLink="/pharmacies/{{reservation.pharm_id}}" routerLinkActive="active">{{reservation.pharmacy}}</a> по адресу <b>{{reservation.address}}</b>.</p>
+				<p>Заказ оформлен <b>{{reservation.created_at | date: 'dd.MM.yyyy'}}</b> и действителен в течении пяти дней.</p>
+			</div>
+		</div>
 	</div>
 
 	<div *ngIf="user.admin === true" class="controls">

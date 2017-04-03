@@ -24,7 +24,9 @@ class MedicinesController < ApplicationController
         .where("price_lists.medicine_id = #{@medicine.id}")
         .order(:name)
 
-      format.json { render :json => { :medicine => @medicine, :prices => prices} }
+      id ||= current_user.id if !current_user.nil?
+
+      format.json { render :json => { :medicine => @medicine, :prices => prices, :id => id } }
     end
   end
 
@@ -94,6 +96,10 @@ class MedicinesController < ApplicationController
 
   # GET /medicines/1/edit
   def edit
+    respond_to do |format|
+      format.html { render 'layouts/application' }
+      format.json { render :json => @medicine.to_json(:include => [:atcSubGroup]) }
+    end
   end
 
   # POST /medicines
@@ -132,13 +138,22 @@ class MedicinesController < ApplicationController
   # PATCH/PUT /medicines/1
   # PATCH/PUT /medicines/1.json
   def update
-    respond_to do |format|
-      if @medicine.update(medicine_params)
-        format.html { redirect_to @medicine, notice: 'Medicine was successfully updated.' }
-        format.json { render :show, status: :ok, location: @medicine }
-      else
-        format.html { render :edit }
-        format.json { render json: @medicine.errors, status: :unprocessable_entity }
+    if current_user.admin?
+      if(params[:medicine][:pack].nil? || params[:medicine][:pack].empty?)
+        params[:medicine][:pack] = 'не указана'
+      end
+
+      if(params[:medicine][:comment].nil? || params[:medicine][:comment].empty?)
+        params[:medicine][:comment] = 'Описание отсутствует'
+      end
+
+      respond_to do |format|
+        if @medicine.update(medicine_params)
+          id = @medicine.id
+          format.json { render :json => { :status => true, :id => id } }
+        else
+          format.json { render :json => { :status => false, :errors => @medicine.errors } }
+        end
       end
     end
   end
@@ -152,7 +167,7 @@ class MedicinesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_medicine
-      @medicine = Medicine.select(:id, :name, :form, :package, :comment).find(params[:id])
+      @medicine = Medicine.select(:id, :name, :form, :package, :comment, :atc_sub_group_id).find(params[:id])
     end
 
     def set_sub_group

@@ -18,7 +18,7 @@
             </div>
             <div class="user-item">
                 <span class="glyphicon glyphicon-wrench"></span>
-                <a class="user-link" routerLink="/home" routerLinkActive="active">Редактировать</a>  
+                <a class="user-link" routerLink="/users/{{user.id}}/edit" routerLinkActive="active">Редактировать</a>  
             </div>
             
             <button class="btn btn-danger" (click)="logOut()">

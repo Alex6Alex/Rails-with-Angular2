@@ -68,9 +68,20 @@ var MedicineService = (function () {
         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         var options = new http_1.RequestOptions({ headers: headers });
         var body = JSON.stringify({
-            medicine: medicine
+            medicine: medicine,
+            pack: medicine.pack
         });
         return this.http.post('/medicines.json', body, options)
+            .map(function (res) { return res.json(); });
+    };
+    //измененное лекарство
+    MedicineService.prototype.updateMedicine = function (medicine) {
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        var body = JSON.stringify({
+            medicine: medicine
+        });
+        return this.http.put("/medicines/" + medicine.id + ".json", body, options)
             .map(function (res) { return res.json(); });
     };
     //поиск лекарств

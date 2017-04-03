@@ -10,6 +10,20 @@
 	list-style-type: none;
 }
 
+.atc-sub-group>ul>li>.controls{
+	display: inline-block;
+	margin-right: 5px;
+	border: 1px solid #eaeaea;
+	border-radius: 3px;
+	width: 60px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.atc-sub-group>ul>li>.controls>.glyphicon-pencil{
+	margin-right: 5px;
+}
+
 .atc-sub-group>ul>li>a{
 	font-size: 1.13em;
 	cursor: pointer;
@@ -20,5 +34,4 @@
 
 .glyphicon{
 	cursor: pointer;
-	margin-right: 5px;
 }

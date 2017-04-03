@@ -29,6 +29,21 @@ export class HomeService{
 		return this.http.get('/dates.json').map(res => res.json());
 	}
 
+	updateUser(user: User){
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+    	let options = new RequestOptions({ headers: headers });
+    	let body = JSON.stringify({
+			name: user.name,
+			email: user.email,
+			phone: user.phone,
+			password: user.password,
+			password_confirmation: user.password_confirmation
+    	});
+
+    	return this.http.put(`/users/${user.id}.json`, body, options)
+    						.map(res => res.json());
+	}
+
 	destroyUser(id: number){
 		let headers = new Headers({ 'Content-Type': 'application/json' });
     	let options = new RequestOptions({ headers: headers });

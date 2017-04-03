@@ -7,6 +7,8 @@ class PriceList < ApplicationRecord
 	validates :price, presence: true, numericality: { greater_than: 0 }
 	validates :count, presence: true, numericality: { only_integer: true, greater_than: 0 }
 
+	has_many :reservations, dependent: :destroy
+
 	belongs_to :medicine, class_name: 'Medicine', foreign_key: :medicine_id
 	belongs_to :pharmacy, class_name: 'Pharmacy', foreign_key: :pharmacy_id
 end

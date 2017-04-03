@@ -1,6 +1,9 @@
 class User < ApplicationRecord
 	before_save {self.email = email.downcase}
 	before_create :create_remember_token
+
+	has_many :reservations, dependent: :destroy
+
 	validates :name, presence: true, length: { maximum: 30 }, 
 			uniqueness: { case_sensitive: false }
 	VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+\.[a-z]+\z/i

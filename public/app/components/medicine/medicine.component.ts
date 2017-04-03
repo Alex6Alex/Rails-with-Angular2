@@ -26,7 +26,12 @@ export class MedicineComponent implements OnInit {
 	price: number = null;
 	count = null;
 
+	user_id: number;
+	canBuy: boolean;
 	canChange: boolean;
+
+	showDialog: boolean;
+
 	pharmacies: Pharmacy[];
 	newPrice = new Price(null, null, null, null, null);
 
@@ -39,7 +44,7 @@ export class MedicineComponent implements OnInit {
 	workTime = 'all';
 	workTitle = 'все';
 
-	constructor(private title: Title, private router: Router, 
+	constructor(private title: Title, private router: Router,
 				private medicineService: MedicineService,
 				private sessionService: SessionService,
 				private pharmacyService: PharmacyService,
@@ -47,6 +52,10 @@ export class MedicineComponent implements OnInit {
 
 	ngOnInit(): void{
 		this.getMedicine();
+
+		this.sessionService.signInState.subscribe(status => {
+			this.canBuy = status;
+		});
 
 		this.sessionService.isAdmin.subscribe(status => {
 			this.canChange = status;
@@ -80,6 +89,17 @@ export class MedicineComponent implements OnInit {
 		this.createPrice();
 	}
 
+	onReserve(price: Price){
+		this.priceService.reservePrice(this.user_id, price.id).subscribe(() => {
+			for (let _price of this.prices){
+				if (_price === price){
+					_price.count--;
+					break;
+				}
+			}
+		});
+	}
+
 	//Удаление
 	onDestroy(price: any): void{
 		this.priceService.destroyPrice(price.id).subscribe(() => {
@@ -98,6 +118,8 @@ export class MedicineComponent implements OnInit {
 								this.medicine.pack = data.medicine.package;
 
 								this.prices = data.prices;
+
+								this.user_id = data.id;
 								//setTitle(this.group.description);
 							});
 	}

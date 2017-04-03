@@ -19,9 +19,11 @@ var groups_component_1 = require('./components/groups/groups.component');
 var atc_group_component_1 = require('./components/atcGroup/atc.group.component');
 var atc_sub_group_component_1 = require('./components/atcSubGroup/atc.sub.group.component');
 var medicine_component_1 = require('./components/medicine/medicine.component');
+var edit_medicine_component_1 = require('./components/editMedicine/edit.medicine.component');
 var new_medicine_component_1 = require('./components/newMedicine/new.medicine.component');
 var registration_component_1 = require('./components/registration/registration.component');
 var account_component_1 = require('./components/account/account.component');
+var edit_account_component_1 = require('./components/editAccount/edit.account.component');
 var users_component_1 = require('./components/users/users.component');
 var routes = [
     {
@@ -63,6 +65,10 @@ var routes = [
         component: medicine_component_1.MedicineComponent
     },
     {
+        path: 'medicines/:id/edit',
+        component: edit_medicine_component_1.EditMedicineComponent
+    },
+    {
         path: 'signup',
         component: registration_component_1.RegistrationComponent
     },
@@ -73,6 +79,10 @@ var routes = [
     {
         path: 'users/:id',
         component: account_component_1.AccountComponent
+    },
+    {
+        path: 'users/:id/edit',
+        component: edit_account_component_1.EditAccountComponent
     },
     {
         path: 'pharmacies/:id',
