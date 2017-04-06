@@ -6,7 +6,8 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.select(:id, :name, :email, :phone, :admin).order(:name) 
+    @users = User.select(:id, :name, :email, :phone, :admin).order(:name)
+    #SELECT id, name, email, phone, admin FROM users ORDER BY name
     respond_to do |format|
       format.html { render 'layouts/application' }
       format.json { render :json => @users.to_json()}

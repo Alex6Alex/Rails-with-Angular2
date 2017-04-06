@@ -4,9 +4,10 @@ class PharmaciesController < ApplicationController
   # GET /pharmacies
   # GET /pharmacies.json
   def index
-    #Pharmacy.where(area: nil).destroy_all
     @pharmacies = Pharmacy.select(:id, :name, :address, :area, :phone, :worktime)
       .order(:name)
+    #SELECT id, name, address, area, phone, worktime FROM pharmacies
+    #ORDER BY name
     respond_to do |format|
       format.html { render 'layouts/application' }
       format.json { render :json => @pharmacies.to_json() }
@@ -22,18 +23,26 @@ class PharmaciesController < ApplicationController
         @pharmacies = Pharmacy.select(:id, :name, :address, :phone, :worktime)
           .where('LOWER(name) LIKE LOWER(?)', "%#{params[:name]}%")
           .order(order)
+        #SELECT id, name, address, phone, worktime FROM pharmacies
+        #WHERE LOWER(name) LIKE LOWER(name_param) ORDER BY order_param
       else
         if time == 'day'
           @pharmacies = Pharmacy.select(:id, :name, :address, :phone, :worktime)
             .where('LOWER(name) LIKE LOWER(?)', "%#{params[:name]}%")
             .where.not(worktime: 'круглосуточно')
             .order(order)
+          #SELECT id, name, address, phone, worktime FROM pharmacies
+          #WHERE LOWER(name) LIKE LOWER(name_param) AND NOT worktime = 'круглосуточно'
+          #ORDER BY order_param
         else
           if time == 'allday'
             @pharmacies = Pharmacy.select(:id, :name, :address, :phone, :worktime)
               .where('LOWER(name) LIKE LOWER(?)', "%#{params[:name]}%")
               .where(worktime: 'круглосуточно')
               .order(order)
+            #SELECT id, name, address, phone, worktime FROM pharmacies
+            #WHERE LOWER(name) LIKE LOWER(name_param) AND worktime = 'круглосуточно'
+            #ORDER BY order_param
           end
         end
       end
@@ -43,6 +52,9 @@ class PharmaciesController < ApplicationController
           .where('LOWER(name) LIKE LOWER(?)', "%#{params[:name]}%")
           .where(area: area)
           .order(order)
+        #SELECT id, name, address, phone, worktime FROM pharmacies
+        #WHERE LOWER(name) LIKE LOWER(name_param) AND area = area_param 
+        #ORDER BY order_param
       else
         if time == 'day'
           @pharmacies = Pharmacy.select(:id, :name, :address, :phone, :worktime)
@@ -50,12 +62,18 @@ class PharmaciesController < ApplicationController
             .where(area: area)
             .where.not(worktime: 'круглосуточно')
             .order(order)
+          #SELECT id, name, address, phone, worktime FROM pharmacies
+          #WHERE LOWER(name) LIKE LOWER(name_param) AND area = area_param 
+          #AND NOT worktime = 'круглосуточно' ORDER BY order_param
         else
           if time == 'allday'
             @pharmacies = Pharmacy.select(:id, :name, :address, :phone, :worktime)
               .where('LOWER(name) LIKE LOWER(?)', "%#{params[:name]}%")
               .where(area: area, worktime: 'круглосуточно')
               .order(order)
+            #SELECT id, name, address, phone, worktime FROM pharmacies
+            #WHERE LOWER(name) LIKE LOWER(name_param) AND area = area_param 
+            #AND worktime = 'круглосуточно' ORDER BY order_param
           end
         end
       end
@@ -72,6 +90,8 @@ class PharmaciesController < ApplicationController
       if !params[:search].blank?
         @searchedPharmacies = Pharmacy.select(:id, :name, :address)
           .where('LOWER(name) LIKE LOWER(?)', "%#{params[:search]}%")
+        #SELECT id, name, address FROM pharmacies 
+        #WHERE LOWER(name) LIKE LOWER(search_param)
       else
         @searchedPharmacies = nil
       end

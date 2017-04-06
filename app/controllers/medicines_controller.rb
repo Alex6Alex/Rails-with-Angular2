@@ -23,6 +23,10 @@ class MedicinesController < ApplicationController
         pharmacies.worktime, price_lists.id, price_lists.price, price_lists.count, price_lists.updated_at")
         .where("price_lists.medicine_id = #{@medicine.id}")
         .order(:name)
+      #SELECT pharmacies.id, pharmacies.name, pharmacies.address, pharmacies.phone,
+      #pharmacies.worktime, price_lists.id, price_lists.price, price_lists.count, price_lists.updated_at
+      #FROM pharmacies INNER JOIN price_lists ON pharmacies.id = price_lists.pharmacy_id
+      #WHERE price_lists.medicine_id = medicines.id ORDER BY pharmacies.name
 
       id ||= current_user.id if !current_user.nil?
 
@@ -41,6 +45,9 @@ class MedicinesController < ApplicationController
           .select(select_text)
           .joins(join_text)
           .where('LOWER(medicines.name) LIKE LOWER(?)', "%#{params[:search]}%")
+        #SELECT medicines.id, medicines.name, medicines.form, price_lists.price
+        #FROM medicines INNER JOIN price_lists ON price_lists.pharmacy_id = params_id
+        #WHERE LOWER(medicines.name) LIKE LOWER(search_param)
       else
         @searchedMedicines = nil
       end
@@ -48,7 +55,7 @@ class MedicinesController < ApplicationController
       format.json { render :json => @searchedMedicines.to_json(), 
         :callback => params[:callback] }
     end
-  end
+  end 
 
   def order
     time = params[:time]
@@ -61,6 +68,10 @@ class MedicinesController < ApplicationController
         .select(select_text)
         .where("price_lists.medicine_id = ?", params[:id])
         .order(params[:order])
+      #SELECT pharmacies.id, pharmacies.name, pharmacies.address, pharmacies.phone,
+      #pharmacies.worktime, price_lists.price, price_lists.count, price_lists.updated_at
+      #FROM pharmacies INNER JOIN price_lists ON pharmacies.id = price_lists.pharmacy_id
+      #WHERE price_lists.medicine_id = param_id ORDER BY param_order
     else
       if time == 'day'
         prices = Pharmacy.joins(join_text)
@@ -68,12 +79,22 @@ class MedicinesController < ApplicationController
           .where("price_lists.medicine_id = ?", params[:id])
           .where.not("pharmacies.worktime = 'круглосуточно'")
           .order(params[:order])
+        #SELECT pharmacies.id, pharmacies.name, pharmacies.address, pharmacies.phone,
+        #pharmacies.worktime, price_lists.price, price_lists.count, price_lists.updated_at
+        #FROM pharmacies INNER JOIN price_lists ON pharmacies.id = price_lists.pharmacy_id
+        #WHERE price_lists.medicine_id = param_id AND NOT pharmacies.worktime = 'круглосуточно' 
+        #ORDER BY param_order
       else
         prices = Pharmacy.joins(join_text)
           .select(select_text)
           .where("price_lists.medicine_id = ? AND pharmacies.worktime = 'круглосуточно'", 
             params[:id])
           .order(params[:order])
+        #SELECT pharmacies.id, pharmacies.name, pharmacies.address, pharmacies.phone,
+        #pharmacies.worktime, price_lists.price, price_lists.count, price_lists.updated_at
+        #FROM pharmacies INNER JOIN price_lists ON pharmacies.id = price_lists.pharmacy_id
+        #price_lists.medicine_id = param_id AND pharmacies.worktime = 'круглосуточно' 
+        #ORDER BY param_order
       end
     end
 

@@ -5,6 +5,7 @@ class GroupsController < ApplicationController
   # GET /groups.json
   def index
     	@groups = AtcGroup.select(:id, :code, :description)
+      #SELECT id, code, description FROM atc_groups
     	respond_to do |format|
       	format.html { render 'layouts/application' }
       	format.json { render :json => @groups.to_json() }
@@ -26,6 +27,8 @@ class GroupsController < ApplicationController
       if !params[:search].blank?
         @searchedMedicines = Medicine.select(:id, :name, :form)
           .where('LOWER(name) LIKE LOWER(?)', "%#{params[:search]}%")
+        #SELECT id, name, form FROM medicines 
+        #WHERE LOWER(name) LIKE LOWER(search_param)
       else
         @searchedMedicines = nil
       end
