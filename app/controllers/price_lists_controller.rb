@@ -14,13 +14,13 @@ class PriceListsController < ApplicationController
         @price = @medicine.priceLists.build(price_params)
       else
         respond_to do |format| 
-          format.json { render :json => { :status => false } }
+          format.json { render json: { status: false } }
         end
         return
       end
     else 
       respond_to do |format| 
-        format.json { render :json => { :status => false } }
+        format.json { render json: { status: false } }
       end
       return
     end
@@ -29,9 +29,9 @@ class PriceListsController < ApplicationController
       if @price.save
         id = @price.id
 
-        format.json { render :json => { :status => true, :id => id } }
+        format.json { render json: { status: true, id: id } }
       else
-        format.json { render :json => { :status => false, :errors => @price.errors } }
+        format.json { render json: { status: false, errors: @price.errors } }
       end
     end
   end

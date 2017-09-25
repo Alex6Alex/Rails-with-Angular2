@@ -1,0 +1,9 @@
+AllCops:
+  Exclude:
+    - public/node_modules/**/*
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/LineLength:
+  Max: 200

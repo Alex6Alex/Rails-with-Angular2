@@ -11,8 +11,8 @@ class SubGroupsController < ApplicationController
   def show
     respond_to do |format|
       format.html { render 'layouts/application' }
-      format.json { render :json => {:subgroup => @sub_group, 
-        :medicines => @sub_group.medicines }.to_json() }
+      format.json { render json: {subgroup: @sub_group, 
+        medicines: @sub_group.medicines }.to_json() }
     end
   end
 
@@ -23,7 +23,7 @@ class SubGroupsController < ApplicationController
       @sub_group = @group.atcSubGroups.build(sub_group_params)
     else 
       respond_to do |format| 
-        format.json { render :json => { :status => false } }
+        format.json { render json: { status: false } }
       end
       return
     end
@@ -32,9 +32,9 @@ class SubGroupsController < ApplicationController
       if @sub_group.save
         id = @sub_group.id
 
-        format.json { render :json => { :status => true, :id => id } }
+        format.json { render json: { status: true, id: id } }
       else
-        format.json { render :json => { :status => false, :errors => @sub_group.errors } }
+        format.json { render json: { status: false, errors: @sub_group.errors } }
       end
     end
   end
@@ -44,9 +44,9 @@ class SubGroupsController < ApplicationController
       @sub_group = AtcSubGroup.find(params[:subGroup][:id])
       respond_to do |format|
         if @sub_group.update(sub_group_params)
-          format.json { render :json => { :status => true } }
+          format.json { render json: { status: true } }
         else
-          format.json { render :json => { :status => false, :errors => @sub_group.errors } }
+          format.json { render json: { status: false, errors: @sub_group.errors } }
         end
       end
     end

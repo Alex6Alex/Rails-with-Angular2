@@ -6,11 +6,11 @@ class PharmaciesController < ApplicationController
   def index
     @pharmacies = Pharmacy.select(:id, :name, :address, :area, :phone, :worktime)
       .order(:name)
-    #SELECT id, name, address, area, phone, worktime FROM pharmacies
-    #ORDER BY name
+    # SELECT id, name, address, area, phone, worktime FROM pharmacies
+    # ORDER BY name
     respond_to do |format|
       format.html { render 'layouts/application' }
-      format.json { render :json => @pharmacies.to_json() }
+      format.json { render json: @pharmacies.to_json() }
     end
   end
 
@@ -23,26 +23,26 @@ class PharmaciesController < ApplicationController
         @pharmacies = Pharmacy.select(:id, :name, :address, :phone, :worktime)
           .where('LOWER(name) LIKE LOWER(?)', "%#{params[:name]}%")
           .order(order)
-        #SELECT id, name, address, phone, worktime FROM pharmacies
-        #WHERE LOWER(name) LIKE LOWER(name_param) ORDER BY order_param
+        # SELECT id, name, address, phone, worktime FROM pharmacies
+        # WHERE LOWER(name) LIKE LOWER(name_param) ORDER BY order_param
       else
         if time == 'day'
           @pharmacies = Pharmacy.select(:id, :name, :address, :phone, :worktime)
             .where('LOWER(name) LIKE LOWER(?)', "%#{params[:name]}%")
             .where.not(worktime: 'круглосуточно')
             .order(order)
-          #SELECT id, name, address, phone, worktime FROM pharmacies
-          #WHERE LOWER(name) LIKE LOWER(name_param) AND NOT worktime = 'круглосуточно'
-          #ORDER BY order_param
+          # SELECT id, name, address, phone, worktime FROM pharmacies
+          # WHERE LOWER(name) LIKE LOWER(name_param) AND NOT worktime = 'круглосуточно'
+          # ORDER BY order_param
         else
           if time == 'allday'
             @pharmacies = Pharmacy.select(:id, :name, :address, :phone, :worktime)
               .where('LOWER(name) LIKE LOWER(?)', "%#{params[:name]}%")
               .where(worktime: 'круглосуточно')
               .order(order)
-            #SELECT id, name, address, phone, worktime FROM pharmacies
-            #WHERE LOWER(name) LIKE LOWER(name_param) AND worktime = 'круглосуточно'
-            #ORDER BY order_param
+            # SELECT id, name, address, phone, worktime FROM pharmacies
+            # WHERE LOWER(name) LIKE LOWER(name_param) AND worktime = 'круглосуточно'
+            # ORDER BY order_param
           end
         end
       end
@@ -52,9 +52,9 @@ class PharmaciesController < ApplicationController
           .where('LOWER(name) LIKE LOWER(?)', "%#{params[:name]}%")
           .where(area: area)
           .order(order)
-        #SELECT id, name, address, phone, worktime FROM pharmacies
-        #WHERE LOWER(name) LIKE LOWER(name_param) AND area = area_param 
-        #ORDER BY order_param
+        # SELECT id, name, address, phone, worktime FROM pharmacies
+        # WHERE LOWER(name) LIKE LOWER(name_param) AND area = area_param
+        # ORDER BY order_param
       else
         if time == 'day'
           @pharmacies = Pharmacy.select(:id, :name, :address, :phone, :worktime)
@@ -62,42 +62,42 @@ class PharmaciesController < ApplicationController
             .where(area: area)
             .where.not(worktime: 'круглосуточно')
             .order(order)
-          #SELECT id, name, address, phone, worktime FROM pharmacies
-          #WHERE LOWER(name) LIKE LOWER(name_param) AND area = area_param 
-          #AND NOT worktime = 'круглосуточно' ORDER BY order_param
+          # SELECT id, name, address, phone, worktime FROM pharmacies
+          # WHERE LOWER(name) LIKE LOWER(name_param) AND area = area_param
+          # AND NOT worktime = 'круглосуточно' ORDER BY order_param
         else
           if time == 'allday'
             @pharmacies = Pharmacy.select(:id, :name, :address, :phone, :worktime)
               .where('LOWER(name) LIKE LOWER(?)', "%#{params[:name]}%")
               .where(area: area, worktime: 'круглосуточно')
               .order(order)
-            #SELECT id, name, address, phone, worktime FROM pharmacies
-            #WHERE LOWER(name) LIKE LOWER(name_param) AND area = area_param 
-            #AND worktime = 'круглосуточно' ORDER BY order_param
+            # SELECT id, name, address, phone, worktime FROM pharmacies
+            # WHERE LOWER(name) LIKE LOWER(name_param) AND area = area_param
+            # AND worktime = 'круглосуточно' ORDER BY order_param
           end
         end
       end
     end
     respond_to do |format|
-      #format.html { render 'layouts/application' }
-      format.json { render :json => @pharmacies.to_json() }
+      # format.html { render 'layouts/application' }
+      format.json { render json: @pharmacies.to_json() }
     end
   end
 
   def search
     respond_to do |format|
-      #format.html { render 'layouts/application' }
+      # format.html { render 'layouts/application' }
       if !params[:search].blank?
         @searchedPharmacies = Pharmacy.select(:id, :name, :address)
           .where('LOWER(name) LIKE LOWER(?)', "%#{params[:search]}%")
-        #SELECT id, name, address FROM pharmacies 
-        #WHERE LOWER(name) LIKE LOWER(search_param)
+        # SELECT id, name, address FROM pharmacies
+        # WHERE LOWER(name) LIKE LOWER(search_param)
       else
         @searchedPharmacies = nil
       end
         
-      format.json { render :json => @searchedPharmacies.to_json(), 
-        :callback => params[:callback] }
+      format.json { render json: @searchedPharmacies.to_json(),
+        callback: params[:callback] }
     end
   end
 
@@ -107,8 +107,8 @@ class PharmaciesController < ApplicationController
     if !@pharmacy.nil?
       respond_to do |format|
         format.html { render 'layouts/application' }
-        format.json { render :json => @pharmacy.to_json( 
-          :only => [:id, :name, :address, :phone, :worktime]) }
+        format.json { render json: @pharmacy.to_json(
+          only: [:id, :name, :address, :phone, :worktime]) }
       end
     end
   end
@@ -126,8 +126,8 @@ class PharmaciesController < ApplicationController
     if !@pharmacy.nil?
       respond_to do |format|
         format.html { render 'layouts/application' }
-        format.json { render :json => @pharmacy.to_json( 
-          :only => [:id, :name, :address, :area, :phone, :worktime]) }
+        format.json { render json: @pharmacy.to_json(
+          only: [:id, :name, :address, :area, :phone, :worktime]) }
       end
     end
   end
@@ -141,9 +141,9 @@ class PharmaciesController < ApplicationController
       if @pharmacy.save
         id = @pharmacy.id
 
-        format.json { render :json => { :status => true, :id => id } }
+        format.json { render json: { status: true, id: id } }
       else
-        format.json { render :json => { :status => false, :errors => @pharmacy.errors } }
+        format.json { render json: { status: false, errors: @pharmacy.errors } }
       end
     end
   end
@@ -156,9 +156,9 @@ class PharmaciesController < ApplicationController
         if @pharmacy.update(pharmacy_params)
           id = @pharmacy.id
 
-          format.json { render :json => { :status => true, :id => id } }
+          format.json { render json: { status: true, id: id } }
         else
-          format.json { render :json => { :status => false, :errors => @pharmacy.errors } }
+          format.json { render json: { status: false, errors: @pharmacy.errors } }
         end
       end
     end
@@ -168,10 +168,10 @@ class PharmaciesController < ApplicationController
   # DELETE /pharmacies/1.json
   def destroy
     @pharmacy.destroy if current_user.admin?
-    #respond_to do |format|
+    # respond_to do |format|
     #  format.html { redirect_to pharmacies_url, notice: 'Pharmacy was successfully destroyed.' }
     #  format.json { head :no_content }
-    #end
+    # end
   end
 
   private

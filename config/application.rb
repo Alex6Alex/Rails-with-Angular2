@@ -14,7 +14,7 @@ module LunchesV2
     config.middleware.insert_before 0, Rack::Cors do
       allow do
         origins '*'
-        resource '*', :headers => :any, :methods => [:get, :post, :options]
+        resource '*', headers: :any, methods: %i[get post options]
       end
     end
 
@@ -25,6 +25,5 @@ module LunchesV2
     config.i18n.default_locale = :ru
 
     config.active_record.raise_in_transactional_callbacks = true
-
   end
 end

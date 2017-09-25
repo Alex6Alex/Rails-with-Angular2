@@ -8,7 +8,7 @@ class GroupsController < ApplicationController
       #SELECT id, code, description FROM atc_groups
     	respond_to do |format|
       	format.html { render 'layouts/application' }
-      	format.json { render :json => @groups.to_json() }
+      	format.json { render json: @groups.to_json() }
     	end
   end
 
@@ -17,8 +17,7 @@ class GroupsController < ApplicationController
   def show
   	respond_to do |format|
       format.html { render 'layouts/application' }
-      format.json { render :json => @group.to_json(:only => [:id, :code, :description],
-        :include => [:atcSubGroups]) }
+      format.json { render json: @group.to_json(only: [:id, :code, :description], include: [:atcSubGroups]) }
     end
   end
 
@@ -27,14 +26,14 @@ class GroupsController < ApplicationController
       if !params[:search].blank?
         @searchedMedicines = Medicine.select(:id, :name, :form)
           .where('LOWER(name) LIKE LOWER(?)', "%#{params[:search]}%")
-        #SELECT id, name, form FROM medicines 
-        #WHERE LOWER(name) LIKE LOWER(search_param)
+        # SELECT id, name, form FROM medicines
+        # WHERE LOWER(name) LIKE LOWER(search_param)
       else
         @searchedMedicines = nil
       end
         
       format.json { render :json => @searchedMedicines.to_json(), 
-        :callback => params[:callback] }
+        callback: params[:callback] }
     end
   end
   

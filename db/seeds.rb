@@ -6,7 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-#pharmacies
+# pharmacies
 Pharmacy.create(name: 'АВиК', address: 'Нахимова, 10', phone: '65-34-21', worktime: '8.00 - 19.00', area: 'Ленинский')
 Pharmacy.create(name: 'Le+', address: 'Острякова, 5б', phone: '55-41-71', worktime: 'круглосуточно', area: 'Ленинский')
 Pharmacy.create(name: 'Аптека №22', address: 'Острякова, 155а', phone: '65-37-10', worktime: '8.00 - 22.00', area: 'Ленинский')
@@ -22,7 +22,7 @@ Pharmacy.create(name: 'Добрый доктор', address: '1 Мая, 1', phone
 Pharmacy.create(name: 'АВК', address: 'Новикова, 28', phone: '84-96-65', worktime: '7.00 - 21.00', area: 'Балаклавский')
 Pharmacy.create(name: 'Аптека №24', address: '1 Мая, 4', phone: '84-43-15', worktime: '7.00 - 20.00', area: 'Балаклавский')
 
-#main groups
+# main groups
 AtcGroup.create(code: 'A', description: 'Пищеварительный тракт и обмен веществ')
 AtcGroup.create(code: 'B', description: 'Кроветворение и кровь')
 AtcGroup.create(code: 'C', description: 'Сердечно-сосудистая система')
@@ -38,7 +38,7 @@ AtcGroup.create(code: 'R', description: 'Дыхательная система')
 AtcGroup.create(code: 'S', description: 'Органы чувств')
 AtcGroup.create(code: 'W', description: 'Прочие препараты')
 
-#sub groups
+# sub groups
 `AtcSubGroup.create(code: 'A10', description: 'Препараты для лечения сахарного диабета', atc_group_id: 1);
 AtcSubGroup.create(code: 'A11', description: 'Витамины', atc_group_id: 1);
 
@@ -81,26 +81,12 @@ AtcSubGroup.create(code: 'S02', description: 'Препараты для лече
 AtcSubGroup.create(code: 'V01', description: 'Аллергены', atc_group_id: 14);
 AtcSubGroup.create(code: 'V06', description: 'Препараты питания', atc_group_id: 14);
 
-#medicines
-Medicine.create(name: 'Видестим', 
-				form: 'Мазь', 
-				package: 'Туба', 
-				comment: 'Мазь наружного применения, светло-желтого цвета. Витамин А',
-				atc_sub_group_id: 2)
+# medicines
+Medicine.create(name: 'Видестим', form: 'Мазь', package: 'Туба', comment: 'Мазь наружного применения, светло-желтого цвета. Витамин А', atc_sub_group_id: 2)
+Medicine.create(name: 'Аскорбиновая кислота', form: 'Таблетки', package: 'Не указано', comment: 'Таблетки белого цвета, кислого вкуса', atc_sub_group_id: 2)
+Medicine.create(name: 'Йод', form: 'Раствор', package: 'Флакон', comment: 'Флакон 10мл для наружного применения содержит йода 0,1г, калия йодида 0,3г, спирта поливинилового 0,9г', atc_sub_group_id: 12)
 
-Medicine.create(name: 'Аскорбиновая кислота', 
-				form: 'Таблетки', 
-				package: 'Не указано', 
-				comment: 'Таблетки белого цвета, кислого вкуса', 
-				atc_sub_group_id: 2)
-
-Medicine.create(name: 'Йод', 
-				form: 'Раствор', 
-				package: 'Флакон', 
-				comment: 'Флакон 10мл для наружного применения содержит йода 0,1г, калия йодида 0,3г, спирта поливинилового 0,9г', 
-				atc_sub_group_id: 12)
-
-#prices
+# prices
 PriceList.create(medicine_id: 2, pharmacy_id: 3, price: 30, count: 100)
 PriceList.create(medicine_id: 2, pharmacy_id: 2, price: 39, count: 100)
 PriceList.create(medicine_id: 2, pharmacy_id: 12, price: 41, count: 100)

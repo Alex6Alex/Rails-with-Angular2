@@ -4,7 +4,7 @@ class ReservationsController < ApplicationController
   # POST /user_reservations
   # POSt /user_reservations.json
   def index
-    #@reservations = Reservation.where(user_id: params[:id])
+    # @reservations = Reservation.where(user_id: params[:id])
     sql = "SELECT reservations.id, price_lists.price, 
            medicines.id AS med_id, medicines.name AS medicine,
            pharmacies.id AS pharm_id, pharmacies.name AS pharmacy, 
@@ -17,7 +17,7 @@ class ReservationsController < ApplicationController
            ORDER BY reservations.created_at DESC"
     @reservations = ActiveRecord::Base.connection.execute(sql)
     respond_to do |format|
-      format.json { render :json => @reservations.to_json() }
+      format.json { render json: @reservations.to_json() }
     end
   end
 
@@ -46,9 +46,9 @@ class ReservationsController < ApplicationController
           priceList = PriceList.select(:count).find(@reservation.price_list_id)
           PriceList.where(id: @reservation.price_list_id).update_all(count: priceList.count - 1)
 
-          format.json { render :json => { :status => true } }
+          format.json { render json: { status: true } }
         else
-          format.json { render :json => { :status => false, :errors => @reservation.errors } }
+          format.json { render json: { status: false, errors: @reservation.errors } }
         end
       end
     end

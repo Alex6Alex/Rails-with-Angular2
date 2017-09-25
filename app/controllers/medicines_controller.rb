@@ -1,6 +1,6 @@
 class MedicinesController < ApplicationController
   before_action :set_medicine, only: [:show, :edit, :update, :destroy]
-  #before_action :set_sub_group, only: [:create]
+  # before_action :set_sub_group, only: [:create]
 
   # GET /medicines
   # GET /medicines.json
@@ -8,7 +8,7 @@ class MedicinesController < ApplicationController
     @groups = AtcGroup.select(:id, :code, :description)
     respond_to do |format|
       format.html { render 'layouts/application' }
-      format.json { render :json => @groups.to_json() }
+      format.json { render json: @groups.to_json() }
     end
   end
 
@@ -18,19 +18,19 @@ class MedicinesController < ApplicationController
     respond_to do |format|
       format.html { render 'layouts/application' }
 
-      prices = Pharmacy.joins("INNER JOIN price_lists ON pharmacies.id = price_lists.pharmacy_id")
-        .select("pharmacies.id, pharmacies.name, pharmacies.address, pharmacies.phone,
-        pharmacies.worktime, price_lists.id, price_lists.price, price_lists.count, price_lists.updated_at")
+      prices = Pharmacy.joins('INNER JOIN price_lists ON pharmacies.id = price_lists.pharmacy_id')
+        .select('pharmacies.id, pharmacies.name, pharmacies.address, pharmacies.phone,
+        pharmacies.worktime, price_lists.id, price_lists.price, price_lists.count, price_lists.updated_at')
         .where("price_lists.medicine_id = #{@medicine.id}")
         .order(:name)
-      #SELECT pharmacies.id, pharmacies.name, pharmacies.address, pharmacies.phone,
-      #pharmacies.worktime, price_lists.id, price_lists.price, price_lists.count, price_lists.updated_at
-      #FROM pharmacies INNER JOIN price_lists ON pharmacies.id = price_lists.pharmacy_id
-      #WHERE price_lists.medicine_id = medicines.id ORDER BY pharmacies.name
+      # SELECT pharmacies.id, pharmacies.name, pharmacies.address, pharmacies.phone,
+      # pharmacies.worktime, price_lists.id, price_lists.price, price_lists.count, price_lists.updated_at
+      # FROM pharmacies INNER JOIN price_lists ON pharmacies.id = price_lists.pharmacy_id
+      # WHERE price_lists.medicine_id = medicines.id ORDER BY pharmacies.name
 
       id ||= current_user.id if !current_user.nil?
 
-      format.json { render :json => { :medicine => @medicine, :prices => prices, :id => id } }
+      format.json { render json: { medicine: @medicine, prices: prices, id: id } }
     end
   end
 
@@ -39,67 +39,67 @@ class MedicinesController < ApplicationController
       if !params[:search].blank?
         join_text = "INNER JOIN price_lists ON price_lists.pharmacy_id = #{params[:id]} 
           AND price_lists.medicine_id = medicines.id"
-        select_text = "medicines.id, medicines.name, medicines.form, price_lists.price"
+        select_text = 'medicines.id, medicines.name, medicines.form, price_lists.price'
 
         @searchedMedicines = Medicine
           .select(select_text)
           .joins(join_text)
           .where('LOWER(medicines.name) LIKE LOWER(?)', "%#{params[:search]}%")
-        #SELECT medicines.id, medicines.name, medicines.form, price_lists.price
-        #FROM medicines INNER JOIN price_lists ON price_lists.pharmacy_id = params_id
-        #WHERE LOWER(medicines.name) LIKE LOWER(search_param)
+        # SELECT medicines.id, medicines.name, medicines.form, price_lists.price
+        # FROM medicines INNER JOIN price_lists ON price_lists.pharmacy_id = params_id
+        # WHERE LOWER(medicines.name) LIKE LOWER(search_param)
       else
         @searchedMedicines = nil
       end
         
-      format.json { render :json => @searchedMedicines.to_json(), 
-        :callback => params[:callback] }
+      format.json { render json: @searchedMedicines.to_json(),
+        callback: params[:callback] }
     end
   end 
 
   def order
     time = params[:time]
-    join_text = "INNER JOIN price_lists ON pharmacies.id = price_lists.pharmacy_id"
-    select_text = "pharmacies.id, pharmacies.name, pharmacies.address, pharmacies.phone,
-        pharmacies.worktime, price_lists.price, price_lists.count, price_lists.updated_at"
+    join_text = 'INNER JOIN price_lists ON pharmacies.id = price_lists.pharmacy_id'
+    select_text = 'pharmacies.id, pharmacies.name, pharmacies.address, pharmacies.phone,
+        pharmacies.worktime, price_lists.price, price_lists.count, price_lists.updated_at'
 
     if time == 'all'
       prices = Pharmacy.joins(join_text)
         .select(select_text)
-        .where("price_lists.medicine_id = ?", params[:id])
+        .where('price_lists.medicine_id = ?', params[:id])
         .order(params[:order])
-      #SELECT pharmacies.id, pharmacies.name, pharmacies.address, pharmacies.phone,
-      #pharmacies.worktime, price_lists.price, price_lists.count, price_lists.updated_at
-      #FROM pharmacies INNER JOIN price_lists ON pharmacies.id = price_lists.pharmacy_id
-      #WHERE price_lists.medicine_id = param_id ORDER BY param_order
+      # SELECT pharmacies.id, pharmacies.name, pharmacies.address, pharmacies.phone,
+      # pharmacies.worktime, price_lists.price, price_lists.count, price_lists.updated_at
+      # FROM pharmacies INNER JOIN price_lists ON pharmacies.id = price_lists.pharmacy_id
+      # WHERE price_lists.medicine_id = param_id ORDER BY param_order
     else
       if time == 'day'
         prices = Pharmacy.joins(join_text)
           .select(select_text)
-          .where("price_lists.medicine_id = ?", params[:id])
-          .where.not("pharmacies.worktime = 'круглосуточно'")
+          .where('price_lists.medicine_id = ?', params[:id])
+          .where.not('pharmacies.worktime = "круглосуточно"')
           .order(params[:order])
-        #SELECT pharmacies.id, pharmacies.name, pharmacies.address, pharmacies.phone,
-        #pharmacies.worktime, price_lists.price, price_lists.count, price_lists.updated_at
-        #FROM pharmacies INNER JOIN price_lists ON pharmacies.id = price_lists.pharmacy_id
-        #WHERE price_lists.medicine_id = param_id AND NOT pharmacies.worktime = 'круглосуточно' 
-        #ORDER BY param_order
+        # SELECT pharmacies.id, pharmacies.name, pharmacies.address, pharmacies.phone,
+        # pharmacies.worktime, price_lists.price, price_lists.count, price_lists.updated_at
+        # FROM pharmacies INNER JOIN price_lists ON pharmacies.id = price_lists.pharmacy_id
+        # WHERE price_lists.medicine_id = param_id AND NOT pharmacies.worktime = 'круглосуточно'
+        # ORDER BY param_order
       else
         prices = Pharmacy.joins(join_text)
           .select(select_text)
-          .where("price_lists.medicine_id = ? AND pharmacies.worktime = 'круглосуточно'", 
+          .where('price_lists.medicine_id = ? AND pharmacies.worktime = "круглосуточно"',
             params[:id])
           .order(params[:order])
-        #SELECT pharmacies.id, pharmacies.name, pharmacies.address, pharmacies.phone,
-        #pharmacies.worktime, price_lists.price, price_lists.count, price_lists.updated_at
-        #FROM pharmacies INNER JOIN price_lists ON pharmacies.id = price_lists.pharmacy_id
-        #price_lists.medicine_id = param_id AND pharmacies.worktime = 'круглосуточно' 
-        #ORDER BY param_order
+        # SELECT pharmacies.id, pharmacies.name, pharmacies.address, pharmacies.phone,
+        # pharmacies.worktime, price_lists.price, price_lists.count, price_lists.updated_at
+        # FROM pharmacies INNER JOIN price_lists ON pharmacies.id = price_lists.pharmacy_id
+        # price_lists.medicine_id = param_id AND pharmacies.worktime = 'круглосуточно'
+        # ORDER BY param_order
       end
     end
 
     respond_to do |format|
-      format.json { render :json => prices.to_json }
+      format.json { render json: prices.to_json }
     end
   end
 
@@ -119,7 +119,7 @@ class MedicinesController < ApplicationController
   def edit
     respond_to do |format|
       format.html { render 'layouts/application' }
-      format.json { render :json => @medicine.to_json(:include => [:atcSubGroup]) }
+      format.json { render json: @medicine.to_json(include: [:atcSubGroup]) }
     end
   end
 
@@ -132,7 +132,7 @@ class MedicinesController < ApplicationController
       @medicine = @sub_group.medicines.build(medicine_params)
     else 
       respond_to do |format| 
-        format.json { render :json => { :status => false } }
+        format.json { render json: { status: false } }
       end
       return
     end
@@ -149,9 +149,9 @@ class MedicinesController < ApplicationController
       if @medicine.save
         id = @medicine.id
 
-        format.json { render :json => { :status => true, :id => id } }
+        format.json { render json: { status: true, id: id } }
       else
-        format.json { render :json => { :status => false, :errors => @medicine.errors } }
+        format.json { render json: { status: false, errors: @medicine.errors } }
       end
     end
   end
@@ -171,9 +171,9 @@ class MedicinesController < ApplicationController
       respond_to do |format|
         if @medicine.update(medicine_params)
           id = @medicine.id
-          format.json { render :json => { :status => true, :id => id } }
+          format.json { render json: { status: true, id: id } }
         else
-          format.json { render :json => { :status => false, :errors => @medicine.errors } }
+          format.json { render json: { status: false, errors: @medicine.errors } }
         end
       end
     end

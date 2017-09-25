@@ -7,10 +7,10 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     @users = User.select(:id, :name, :email, :phone, :admin).order(:name)
-    #SELECT id, name, email, phone, admin FROM users ORDER BY name
+    # SELECT id, name, email, phone, admin FROM users ORDER BY name
     respond_to do |format|
       format.html { render 'layouts/application' }
-      format.json { render :json => @users.to_json()}
+      format.json { render json: @users.to_json()}
     end
   end
 
@@ -20,7 +20,7 @@ class UsersController < ApplicationController
     if !@user.nil?
       respond_to do |format|
         format.html { render 'layouts/application' }
-        format.json { render :json => @user.to_json( :only => [:id, :name, :email, 
+        format.json { render json: @user.to_json( only: [:id, :name, :email, 
           :phone, :created_at, :admin] )}
       end
     else
@@ -45,7 +45,7 @@ class UsersController < ApplicationController
     if !@user.nil?
       respond_to do |format|
         format.html { render 'layouts/application' }
-        format.json { render :json => @user.to_json( :only => [:id, :name, :email, 
+        format.json { render json: @user.to_json( only: [:id, :name, :email, 
           :phone] )}
       end
     else
@@ -72,9 +72,9 @@ class UsersController < ApplicationController
         sign_in @user
 
         id = @user.id
-        format.json { render :json => { :status => true, :id => id } }
+        format.json { render json: { status: true, id: id } }
       else
-        format.json { render :json => { :status => false, :errors => @user.errors } }
+        format.json { render json: { status: false, errors: @user.errors } }
       end
     end
   end
@@ -90,9 +90,9 @@ class UsersController < ApplicationController
 
       if @user.update(user_params)
         id = @user.id
-        format.json { render :json => { :status => true, :id => id } }
+        format.json { render json: { status: true, id: id } }
       else
-        format.json { render :json => { :status => false, :errors => @user.errors } }
+        format.json { render json: { status: false, errors: @user.errors } }
       end
     end
   end
