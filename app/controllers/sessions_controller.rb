@@ -10,12 +10,11 @@ class SessionsController < ApplicationController
 		respond_to do |format|
 			if user && user.authenticate(params[:session][:password])
 				sign_in user
-				user_data = {'id': user.id, 'name': user.name, 'email': user.email,
-							'admin': user.admin}
+				user_data = { 'id': user.id, 'name': user.name, 'email': user.email, 'admin': user.admin }
 				format.html { render 'layouts/application' }
-				format.json { render json: user_data.to_json() }
+				format.json { render json: user_data.to_json }
 			else
-				format.json { render json: "Invalid email or password".to_json(), status: :unprocessable_entity }
+				format.json { render json: "Invalid email or password".to_json, status: :unprocessable_entity }
 			end
 		end
 	end
@@ -24,7 +23,7 @@ class SessionsController < ApplicationController
 		sign_out
 		respond_to do |format|
 			format.html { render 'layouts/application' }
-			format.json { render json: signed_in?.to_json() }
+			format.json { render json: signed_in?.to_json }
 		end
 	end
 
@@ -32,7 +31,7 @@ class SessionsController < ApplicationController
 		respond_to do |format|
 			json_data = { 'sign' => signed_in?, 'user' => current_user }
 			format.html { render 'layouts/application' }
-			format.json { render json: json_data.to_json() }
+			format.json { render json: json_data.to_json }
 		end
 	end
 

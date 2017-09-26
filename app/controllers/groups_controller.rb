@@ -8,7 +8,7 @@ class GroupsController < ApplicationController
       #SELECT id, code, description FROM atc_groups
     	respond_to do |format|
       	format.html { render 'layouts/application' }
-      	format.json { render json: @groups.to_json() }
+      	format.json { render json: @groups.to_json }
     	end
   end
 
@@ -32,16 +32,13 @@ class GroupsController < ApplicationController
         @searchedMedicines = nil
       end
         
-      format.json { render :json => @searchedMedicines.to_json(), 
-        callback: params[:callback] }
+      format.json { render :json => @searchedMedicines.to_json, callback: params[:callback] }
     end
   end
   
-  def update
-  end
+  def update; end
 
-  def destroy
- 	end
+  def destroy; end
 
  	private
 		# Use callbacks to share common setup or constraints between actions.

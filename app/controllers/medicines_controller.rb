@@ -8,7 +8,7 @@ class MedicinesController < ApplicationController
     @groups = AtcGroup.select(:id, :code, :description)
     respond_to do |format|
       format.html { render 'layouts/application' }
-      format.json { render json: @groups.to_json() }
+      format.json { render json: @groups.to_json }
     end
   end
 
@@ -28,7 +28,7 @@ class MedicinesController < ApplicationController
       # FROM pharmacies INNER JOIN price_lists ON pharmacies.id = price_lists.pharmacy_id
       # WHERE price_lists.medicine_id = medicines.id ORDER BY pharmacies.name
 
-      id ||= current_user.id if !current_user.nil?
+      id ||= current_user.id unless current_user.nil?
 
       format.json { render json: { medicine: @medicine, prices: prices, id: id } }
     end
@@ -52,8 +52,7 @@ class MedicinesController < ApplicationController
         @searchedMedicines = nil
       end
         
-      format.json { render json: @searchedMedicines.to_json(),
-        callback: params[:callback] }
+      format.json { render json: @searchedMedicines.to_json, callback: params[:callback] }
     end
   end 
 
@@ -137,11 +136,11 @@ class MedicinesController < ApplicationController
       return
     end
 
-    if(@medicine.package == nil)
+    if @medicine.package == nil
       @medicine.package = 'не указана'
     end
 
-    if(@medicine.comment == nil)
+    if @medicine.comment == nil
       @medicine.comment = 'Описание отсутствует'
     end
 
@@ -160,11 +159,11 @@ class MedicinesController < ApplicationController
   # PATCH/PUT /medicines/1.json
   def update
     if current_user.admin?
-      if(params[:medicine][:pack].nil? || params[:medicine][:pack].empty?)
+      if params[:medicine][:pack].nil? || params[:medicine][:pack].empty?
         params[:medicine][:pack] = 'не указана'
       end
 
-      if(params[:medicine][:comment].nil? || params[:medicine][:comment].empty?)
+      if params[:medicine][:comment].nil? || params[:medicine][:comment].empty?
         params[:medicine][:comment] = 'Описание отсутствует'
       end
 

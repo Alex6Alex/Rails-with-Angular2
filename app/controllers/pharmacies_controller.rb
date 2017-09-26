@@ -10,7 +10,7 @@ class PharmaciesController < ApplicationController
     # ORDER BY name
     respond_to do |format|
       format.html { render 'layouts/application' }
-      format.json { render json: @pharmacies.to_json() }
+      format.json { render json: @pharmacies.to_json }
     end
   end
 
@@ -80,7 +80,7 @@ class PharmaciesController < ApplicationController
     end
     respond_to do |format|
       # format.html { render 'layouts/application' }
-      format.json { render json: @pharmacies.to_json() }
+      format.json { render json: @pharmacies.to_json }
     end
   end
 
@@ -96,8 +96,7 @@ class PharmaciesController < ApplicationController
         @searchedPharmacies = nil
       end
         
-      format.json { render json: @searchedPharmacies.to_json(),
-        callback: params[:callback] }
+      format.json { render json: @searchedPharmacies.to_json, callback: params[:callback] }
     end
   end
 
@@ -107,8 +106,7 @@ class PharmaciesController < ApplicationController
     if !@pharmacy.nil?
       respond_to do |format|
         format.html { render 'layouts/application' }
-        format.json { render json: @pharmacy.to_json(
-          only: [:id, :name, :address, :phone, :worktime]) }
+        format.json { render json: @pharmacy.to_json(only: [:id, :name, :address, :phone, :worktime]) }
       end
     end
   end
@@ -126,8 +124,7 @@ class PharmaciesController < ApplicationController
     if !@pharmacy.nil?
       respond_to do |format|
         format.html { render 'layouts/application' }
-        format.json { render json: @pharmacy.to_json(
-          only: [:id, :name, :address, :area, :phone, :worktime]) }
+        format.json { render json: @pharmacy.to_json(only: [:id, :name, :address, :area, :phone, :worktime]) }
       end
     end
   end

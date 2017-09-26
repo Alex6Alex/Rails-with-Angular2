@@ -5,26 +5,25 @@ class ReservationsController < ApplicationController
   # POSt /user_reservations.json
   def index
     # @reservations = Reservation.where(user_id: params[:id])
-    sql = "SELECT reservations.id, price_lists.price, 
+    sql = "SELECT reservations.id, price_lists.price,
            medicines.id AS med_id, medicines.name AS medicine,
-           pharmacies.id AS pharm_id, pharmacies.name AS pharmacy, 
+           pharmacies.id AS pharm_id, pharmacies.name AS pharmacy,
            pharmacies.address AS address, reservations.created_at
-           FROM reservations, price_lists, medicines, pharmacies 
-           WHERE price_lists.id = reservations.price_list_id 
+           FROM reservations, price_lists, medicines, pharmacies
+           WHERE price_lists.id = reservations.price_list_id
            AND medicines.id = price_lists.medicine_id
-           AND pharmacies.id = price_lists.pharmacy_id 
+           AND pharmacies.id = price_lists.pharmacy_id
            AND reservations.user_id = #{params[:id]}
            ORDER BY reservations.created_at DESC"
     @reservations = ActiveRecord::Base.connection.execute(sql)
     respond_to do |format|
-      format.json { render json: @reservations.to_json() }
+      format.json { render json: @reservations.to_json }
     end
   end
 
   # GET /reservations/1
   # GET /reservations/1.json
-  def show
-  end
+  def show; end
 
   # GET /reservations/new
   def new
@@ -38,7 +37,7 @@ class ReservationsController < ApplicationController
   # POST /reservations
   # POST /reservations.json
   def create
-    if !current_user.nil?
+    unless current_user.nil?
       @reservation = current_user.reservations.build(reservation_params)
 
       respond_to do |format|

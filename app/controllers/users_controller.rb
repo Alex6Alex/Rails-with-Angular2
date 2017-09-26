@@ -10,7 +10,7 @@ class UsersController < ApplicationController
     # SELECT id, name, email, phone, admin FROM users ORDER BY name
     respond_to do |format|
       format.html { render 'layouts/application' }
-      format.json { render json: @users.to_json()}
+      format.json { render json: @users.to_json }
     end
   end
 
@@ -20,8 +20,7 @@ class UsersController < ApplicationController
     if !@user.nil?
       respond_to do |format|
         format.html { render 'layouts/application' }
-        format.json { render json: @user.to_json( only: [:id, :name, :email, 
-          :phone, :created_at, :admin] )}
+        format.json { render json: @user.to_json(only: %i[id name email phone created_at admin]) }
       end
     else
       redirect_to root_url
@@ -45,8 +44,7 @@ class UsersController < ApplicationController
     if !@user.nil?
       respond_to do |format|
         format.html { render 'layouts/application' }
-        format.json { render json: @user.to_json( only: [:id, :name, :email, 
-          :phone] )}
+        format.json { render json: @user.to_json(only: [:id, :name, :email, :phone])}
       end
     else
       redirect_to root_url
@@ -58,7 +56,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     regExp = /^[\+][0-9]{1}[\(][0-9]{3}[\)][0-9]{3}[\-][0-9]{2}[\-][0-9]{2}$/
-    if !(regExp === @user.phone)
+    unless regExp === @user.phone
       @user.phone = 'не указан'
     end
 
@@ -84,7 +82,7 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       regExp = /^[\+][0-9]{1}[\(][0-9]{3}[\)][0-9]{3}[\-][0-9]{2}[\-][0-9]{2}$/
-      if !(regExp === params[:phone])
+      unless regExp === params[:phone]
         params[:phone] = 'не указан'
       end
 

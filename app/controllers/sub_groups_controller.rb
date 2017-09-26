@@ -3,16 +3,14 @@ class SubGroupsController < ApplicationController
 
 	# GET /groups/A
   # GET /groups/A.json
-  def index
-  end
+  def index; end
 
   # GET /groups/A/A1
   # GET /groups/A/A1.json
   def show
     respond_to do |format|
       format.html { render 'layouts/application' }
-      format.json { render json: {subgroup: @sub_group, 
-        medicines: @sub_group.medicines }.to_json() }
+      format.json { render json: { subgroup: @sub_group, medicines: @sub_group.medicines }.to_json }
     end
   end
 
@@ -54,17 +52,17 @@ class SubGroupsController < ApplicationController
 
   def destroy
     @sub_group.destroy if current_user.admin?
- 	end
+  end
 
  	private
-		# Use callbacks to share common setup or constraints between actions.
+
+  # Use callbacks to share common setup or constraints between actions.
     def set_sub_group
       @sub_group = AtcSubGroup.find_by!(code: params[:code])
-    end	
+    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
+  # Never trust parameters from the scary internet, only allow the white list through.
     def sub_group_params
       params.require(:subGroup).permit(:code, :description)
     end
-
 end
