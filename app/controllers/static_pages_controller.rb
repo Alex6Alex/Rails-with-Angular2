@@ -2,10 +2,10 @@ class StaticPagesController < ApplicationController
   prepend_view_path(Rails.root.join('public'))
 
   def home
-  	respond_to do |format|
-  		format.html { render 'layouts/application' }
+    respond_to do |format|
+      format.html { render 'layouts/application' }
       format.json { render json: 'qwert'.to_json }
-  	end
+    end
     # render :json => 'qwert'.to_json()
   end
 
@@ -22,5 +22,4 @@ class StaticPagesController < ApplicationController
       format.html { render 'layouts/application' }
     end
   end`
-
 end

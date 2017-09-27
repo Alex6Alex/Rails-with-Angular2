@@ -1,5 +1,5 @@
 class MedicinesController < ApplicationController
-  before_action :set_medicine, only: [:show, :edit, :update, :destroy]
+  before_action :set_medicine, only: %i[show edit update destroy]
   # before_action :set_sub_group, only: [:create]
 
   # GET /medicines
@@ -21,8 +21,7 @@ class MedicinesController < ApplicationController
       prices = Pharmacy.joins('INNER JOIN price_lists ON pharmacies.id = price_lists.pharmacy_id')
         .select('pharmacies.id, pharmacies.name, pharmacies.address, pharmacies.phone,
         pharmacies.worktime, price_lists.id, price_lists.price, price_lists.count, price_lists.updated_at')
-        .where("price_lists.medicine_id = #{@medicine.id}")
-        .order(:name)
+        .where("price_lists.medicine_id = #{@medicine.id}").order(:name)
       # SELECT pharmacies.id, pharmacies.name, pharmacies.address, pharmacies.phone,
       # pharmacies.worktime, price_lists.id, price_lists.price, price_lists.count, price_lists.updated_at
       # FROM pharmacies INNER JOIN price_lists ON pharmacies.id = price_lists.pharmacy_id
@@ -37,24 +36,19 @@ class MedicinesController < ApplicationController
   def search
     respond_to do |format|
       if !params[:search].blank?
-        join_text = "INNER JOIN price_lists ON price_lists.pharmacy_id = #{params[:id]} 
-          AND price_lists.medicine_id = medicines.id"
+        join_text = "INNER JOIN price_lists ON price_lists.pharmacy_id = #{params[:id]} AND price_lists.medicine_id = medicines.id"
         select_text = 'medicines.id, medicines.name, medicines.form, price_lists.price'
 
-        @searchedMedicines = Medicine
-          .select(select_text)
-          .joins(join_text)
-          .where('LOWER(medicines.name) LIKE LOWER(?)', "%#{params[:search]}%")
+        @searchedMedicines = Medicine.select(select_text).joins(join_text).where('LOWER(medicines.name) LIKE LOWER(?)', "%#{params[:search]}%")
         # SELECT medicines.id, medicines.name, medicines.form, price_lists.price
         # FROM medicines INNER JOIN price_lists ON price_lists.pharmacy_id = params_id
         # WHERE LOWER(medicines.name) LIKE LOWER(search_param)
       else
         @searchedMedicines = nil
       end
-        
       format.json { render json: @searchedMedicines.to_json, callback: params[:callback] }
     end
-  end 
+  end
 
   def order
     time = params[:time]
@@ -63,31 +57,22 @@ class MedicinesController < ApplicationController
         pharmacies.worktime, price_lists.price, price_lists.count, price_lists.updated_at'
 
     if time == 'all'
-      prices = Pharmacy.joins(join_text)
-        .select(select_text)
-        .where('price_lists.medicine_id = ?', params[:id])
-        .order(params[:order])
+      prices = Pharmacy.joins(join_text).select(select_text).where('price_lists.medicine_id = ?', params[:id]).order(params[:order])
       # SELECT pharmacies.id, pharmacies.name, pharmacies.address, pharmacies.phone,
       # pharmacies.worktime, price_lists.price, price_lists.count, price_lists.updated_at
       # FROM pharmacies INNER JOIN price_lists ON pharmacies.id = price_lists.pharmacy_id
       # WHERE price_lists.medicine_id = param_id ORDER BY param_order
     else
       if time == 'day'
-        prices = Pharmacy.joins(join_text)
-          .select(select_text)
-          .where('price_lists.medicine_id = ?', params[:id])
-          .where.not('pharmacies.worktime = "круглосуточно"')
-          .order(params[:order])
+        prices = Pharmacy.joins(join_text).select(select_text).where('price_lists.medicine_id = ?', params[:id])
+          .where.not('pharmacies.worktime = "круглосуточно"').order(params[:order])
         # SELECT pharmacies.id, pharmacies.name, pharmacies.address, pharmacies.phone,
         # pharmacies.worktime, price_lists.price, price_lists.count, price_lists.updated_at
         # FROM pharmacies INNER JOIN price_lists ON pharmacies.id = price_lists.pharmacy_id
         # WHERE price_lists.medicine_id = param_id AND NOT pharmacies.worktime = 'круглосуточно'
         # ORDER BY param_order
       else
-        prices = Pharmacy.joins(join_text)
-          .select(select_text)
-          .where('price_lists.medicine_id = ? AND pharmacies.worktime = "круглосуточно"',
-            params[:id])
+        prices = Pharmacy.joins(join_text).select(select_text).where('price_lists.medicine_id = ? AND pharmacies.worktime = "круглосуточно"', params[:id])
           .order(params[:order])
         # SELECT pharmacies.id, pharmacies.name, pharmacies.address, pharmacies.phone,
         # pharmacies.worktime, price_lists.price, price_lists.count, price_lists.updated_at
@@ -126,28 +111,23 @@ class MedicinesController < ApplicationController
   # POST /medicines.json
   def create
     @sub_group = AtcSubGroup.find_by(id: params[:medicine][:atc_sub_group_id])
-    
     if @sub_group
       @medicine = @sub_group.medicines.build(medicine_params)
-    else 
-      respond_to do |format| 
+    else
+      respond_to do |format|
         format.json { render json: { status: false } }
       end
       return
     end
-
-    if @medicine.package == nil
+    if @medicine.package.nil?
       @medicine.package = 'не указана'
     end
-
-    if @medicine.comment == nil
+    if @medicine.comment.nil?
       @medicine.comment = 'Описание отсутствует'
     end
-
     respond_to do |format|
       if @medicine.save
         id = @medicine.id
-
         format.json { render json: { status: true, id: id } }
       else
         format.json { render json: { status: false, errors: @medicine.errors } }
@@ -162,11 +142,9 @@ class MedicinesController < ApplicationController
       if params[:medicine][:pack].nil? || params[:medicine][:pack].empty?
         params[:medicine][:pack] = 'не указана'
       end
-
       if params[:medicine][:comment].nil? || params[:medicine][:comment].empty?
         params[:medicine][:comment] = 'Описание отсутствует'
       end
-
       respond_to do |format|
         if @medicine.update(medicine_params)
           id = @medicine.id
@@ -185,6 +163,7 @@ class MedicinesController < ApplicationController
   end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_medicine
       @medicine = Medicine.select(:id, :name, :form, :package, :comment, :atc_sub_group_id).find(params[:id])

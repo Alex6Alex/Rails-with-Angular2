@@ -1,25 +1,25 @@
 class PriceListsController < ApplicationController
-  before_action :set_price, only:[:destroy]
+  before_action :set_price, only: [:destroy]
 
   # POST /price_lists
   # POST /price_lists.json
   def create
     @medicine = Medicine.find(params[:price][:medicine_id])
     @pharmacy ||= Pharmacy.find_by(id: params[:price][:pharmacy_id])
-    
+
     if @medicine && @pharmacy
       record_count = @medicine.priceLists.where(pharmacy_id: @pharmacy.id).count('id')
       puts record_count
-      if record_count == 0
+      if record_count.zero?
         @price = @medicine.priceLists.build(price_params)
       else
-        respond_to do |format| 
+        respond_to do |format|
           format.json { render json: { status: false } }
         end
         return
       end
     else 
-      respond_to do |format| 
+      respond_to do |format|
         format.json { render json: { status: false } }
       end
       return
@@ -41,6 +41,7 @@ class PriceListsController < ApplicationController
   end
 
   private
+
     def set_price
       @price = PriceList.find(params[:id])
     end
@@ -49,5 +50,4 @@ class PriceListsController < ApplicationController
     def price_params
       params.require(:price).permit(:medicine_id, :pharmacy_id, :price, :count)
     end
-
 end

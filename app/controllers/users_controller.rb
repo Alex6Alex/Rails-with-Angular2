@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :admin_user, only: [:index, :destroy]
+  before_action :set_user, only: %i[show edit update destroy]
+  before_action :admin_user, only: %i[index destroy]
   exclude_xsrf_token_cookie
 
   # GET /users
@@ -44,7 +44,7 @@ class UsersController < ApplicationController
     if !@user.nil?
       respond_to do |format|
         format.html { render 'layouts/application' }
-        format.json { render json: @user.to_json(only: [:id, :name, :email, :phone])}
+        format.json { render json: @user.to_json(only: %i[id name email phone]) }
       end
     else
       redirect_to root_url
@@ -55,8 +55,8 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
-    regExp = /^[\+][0-9]{1}[\(][0-9]{3}[\)][0-9]{3}[\-][0-9]{2}[\-][0-9]{2}$/
-    unless regExp === @user.phone
+    reg_exp = /^[\+][0-9]{1}[\(][0-9]{3}[\)][0-9]{3}[\-][0-9]{2}[\-][0-9]{2}$/
+    unless reg_exp == @user.phone
       @user.phone = 'не указан'
     end
 
@@ -81,8 +81,8 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1.json
   def update
     respond_to do |format|
-      regExp = /^[\+][0-9]{1}[\(][0-9]{3}[\)][0-9]{3}[\-][0-9]{2}[\-][0-9]{2}$/
-      unless regExp === params[:phone]
+      reg_exp = /^[\+][0-9]{1}[\(][0-9]{3}[\)][0-9]{3}[\-][0-9]{2}[\-][0-9]{2}$/
+      unless reg_exp == params[:phone]
         params[:phone] = 'не указан'
       end
 
@@ -102,6 +102,7 @@ class UsersController < ApplicationController
   end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user ||= User.find(params[:id])
@@ -112,7 +113,7 @@ class UsersController < ApplicationController
       params.permit(:name, :email, :phone, :password, :password_confirmation)
     end
 
-    #only admin destroy
+    # only admin destroy
     def admin_user
       redirect_to(root_url) unless current_user.admin?
     end

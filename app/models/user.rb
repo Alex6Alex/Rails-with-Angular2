@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-	before_save {self.email = email.downcase}
+  before_save { self.email = email.downcase }
   before_create :create_remember_token
 
   has_many :reservations, dependent: :destroy

@@ -1,5 +1,5 @@
 class PriceList < ApplicationRecord
-	validates :medicine_id, presence: true
+  validates :medicine_id, presence: true
   validates :pharmacy_id, presence: true
 
   VALID_PRICE_REGEX = /\A\d+[.]?\d{2}\z/i

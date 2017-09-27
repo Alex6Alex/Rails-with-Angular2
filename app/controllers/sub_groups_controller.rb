@@ -1,7 +1,7 @@
 class SubGroupsController < ApplicationController
-	before_action :set_sub_group, only: [:show, :destroy]
+  before_action :set_sub_group, only: %i[show destroy]
 
-	# GET /groups/A
+  # GET /groups/A
   # GET /groups/A.json
   def index; end
 
@@ -16,20 +16,17 @@ class SubGroupsController < ApplicationController
 
   def create
     @group = AtcGroup.find_by(code: params[:atc_group_id])
-    
     if @group
       @sub_group = @group.atcSubGroups.build(sub_group_params)
-    else 
-      respond_to do |format| 
+    else
+      respond_to do |format|
         format.json { render json: { status: false } }
       end
       return
     end
-
     respond_to do |format|
       if @sub_group.save
         id = @sub_group.id
-
         format.json { render json: { status: true, id: id } }
       else
         format.json { render json: { status: false, errors: @sub_group.errors } }
@@ -54,7 +51,7 @@ class SubGroupsController < ApplicationController
     @sub_group.destroy if current_user.admin?
   end
 
- 	private
+  private
 
   # Use callbacks to share common setup or constraints between actions.
     def set_sub_group

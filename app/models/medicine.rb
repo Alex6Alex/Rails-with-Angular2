@@ -1,5 +1,5 @@
 class Medicine < ApplicationRecord
-	alias_attribute :pack, :package
+  alias_attribute :pack, :package
 
   validates :name, presence: true, length: { maximum: 25 }, uniqueness: { case_sensitive: false }
   validates :form, presence: true, length: { maximum: 20 }

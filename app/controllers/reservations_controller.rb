@@ -1,20 +1,15 @@
 class ReservationsController < ApplicationController
-  before_action :set_reservation, only: [:show, :edit, :update, :destroy]
+  before_action :set_reservation, only: %i[show edit update destroy]
 
   # POST /user_reservations
   # POSt /user_reservations.json
   def index
     # @reservations = Reservation.where(user_id: params[:id])
-    sql = "SELECT reservations.id, price_lists.price,
-           medicines.id AS med_id, medicines.name AS medicine,
-           pharmacies.id AS pharm_id, pharmacies.name AS pharmacy,
-           pharmacies.address AS address, reservations.created_at
-           FROM reservations, price_lists, medicines, pharmacies
-           WHERE price_lists.id = reservations.price_list_id
-           AND medicines.id = price_lists.medicine_id
-           AND pharmacies.id = price_lists.pharmacy_id
-           AND reservations.user_id = #{params[:id]}
-           ORDER BY reservations.created_at DESC"
+    sql = "SELECT reservations.id, price_lists.price, medicines.id AS med_id, medicines.name AS medicine,
+           pharmacies.id AS pharm_id, pharmacies.name AS pharmacy, pharmacies.address AS address, reservations.created_at
+           FROM reservations, price_lists, medicines, pharmacies WHERE price_lists.id = reservations.price_list_id
+           AND medicines.id = price_lists.medicine_id AND pharmacies.id = price_lists.pharmacy_id
+           AND reservations.user_id = #{params[:id]} ORDER BY reservations.created_at DESC"
     @reservations = ActiveRecord::Base.connection.execute(sql)
     respond_to do |format|
       format.json { render json: @reservations.to_json }
@@ -31,20 +26,17 @@ class ReservationsController < ApplicationController
   end
 
   # GET /reservations/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /reservations
   # POST /reservations.json
   def create
     unless current_user.nil?
       @reservation = current_user.reservations.build(reservation_params)
-
       respond_to do |format|
         if @reservation.save
           priceList = PriceList.select(:count).find(@reservation.price_list_id)
           PriceList.where(id: @reservation.price_list_id).update_all(count: priceList.count - 1)
-
           format.json { render json: { status: true } }
         else
           format.json { render json: { status: false, errors: @reservation.errors } }
@@ -78,6 +70,7 @@ class ReservationsController < ApplicationController
   end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_reservation
       @reservation = Reservation.find(params[:id])
